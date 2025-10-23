@@ -205,18 +205,86 @@ const MacroDietApp = () => {
   const MacroTag = ({ carbs, fats, protein }) => (
     <div className="flex gap-1.5 flex-wrap">
       {carbs > 0 && (
-        <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-red-500/20 text-red-300 border border-red-500/30">
+        <span style={{
+          padding: '0.25rem 0.5rem',
+          borderRadius: '9999px',
+          fontSize: '0.75rem',
+          fontWeight: '600',
+          background: 'rgba(239, 68, 68, 0.15)',
+          color: 'rgb(220, 38, 38)',
+          border: '1px solid rgba(239, 68, 68, 0.3)'
+        }}>
           C:{Math.round(carbs)}g
         </span>
       )}
       {fats > 0 && (
-        <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30">
+        <span style={{
+          padding: '0.25rem 0.5rem',
+          borderRadius: '9999px',
+          fontSize: '0.75rem',
+          fontWeight: '600',
+          background: 'rgba(59, 130, 246, 0.15)',
+          color: 'rgb(37, 99, 235)',
+          border: '1px solid rgba(59, 130, 246, 0.3)'
+        }}>
           G:{Math.round(fats)}g
         </span>
       )}
       {protein > 0 && (
-        <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-green-500/20 text-green-300 border border-green-500/30">
+        <span style={{
+          padding: '0.25rem 0.5rem',
+          borderRadius: '9999px',
+          fontSize: '0.75rem',
+          fontWeight: '600',
+          background: 'rgba(34, 197, 94, 0.15)',
+          color: 'rgb(22, 163, 74)',
+          border: '1px solid rgba(34, 197, 94, 0.3)'
+        }}>
           P:{Math.round(protein)}g
+        </span>
+      )}
+    </div>
+  );
+  
+  const MacroTagForPlanning = ({ carbs, fats, protein }) => (
+    <div style={{ display: 'flex', gap: '0.375rem', flexWrap: 'wrap' }}>
+      {carbs > 0 && (
+        <span style={{
+          padding: '0.25rem 0.5rem',
+          borderRadius: '9999px',
+          fontSize: '0.75rem',
+          fontWeight: '600',
+          background: 'rgba(34, 197, 94, 0.15)',
+          color: 'rgb(22, 163, 74)',
+          border: '1px solid rgba(34, 197, 94, 0.3)'
+        }}>
+          H:{Math.round(carbs)}g
+        </span>
+      )}
+      {protein > 0 && (
+        <span style={{
+          padding: '0.25rem 0.5rem',
+          borderRadius: '9999px',
+          fontSize: '0.75rem',
+          fontWeight: '600',
+          background: 'rgba(59, 130, 246, 0.15)',
+          color: 'rgb(37, 99, 235)',
+          border: '1px solid rgba(59, 130, 246, 0.3)'
+        }}>
+          P:{Math.round(protein)}g
+        </span>
+      )}
+      {fats > 0 && (
+        <span style={{
+          padding: '0.25rem 0.5rem',
+          borderRadius: '9999px',
+          fontSize: '0.75rem',
+          fontWeight: '600',
+          background: 'rgba(245, 158, 11, 0.15)',
+          color: 'rgb(217, 119, 6)',
+          border: '1px solid rgba(245, 158, 11, 0.3)'
+        }}>
+          G:{Math.round(fats)}g
         </span>
       )}
     </div>
@@ -478,54 +546,95 @@ const MacroDietApp = () => {
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             <button
               onClick={() => toggleMacroFilter('carbs')}
-              className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                macroFilters.carbs
-                  ? 'bg-green-500/30 text-green-700 border-2 border-green-500'
-                  : 'bg-green-500/10 text-green-600 border border-green-500/30'
-              }`}
+              style={{
+                padding: '0.375rem 0.75rem',
+                borderRadius: '9999px',
+                fontSize: '0.75rem',
+                fontWeight: '600',
+                background: macroFilters.carbs ? 'rgba(34, 197, 94, 0.25)' : 'rgba(34, 197, 94, 0.1)',
+                color: macroFilters.carbs ? 'rgb(21, 128, 61)' : 'rgb(22, 163, 74)',
+                border: macroFilters.carbs ? '2px solid rgb(34, 197, 94)' : '1px solid rgba(34, 197, 94, 0.3)',
+                cursor: 'pointer'
+              }}
             >
               Hidratos
             </button>
             <button
               onClick={() => toggleMacroFilter('protein')}
-              className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                macroFilters.protein
-                  ? 'bg-blue-500/30 text-blue-700 border-2 border-blue-500'
-                  : 'bg-blue-500/10 text-blue-600 border border-blue-500/30'
-              }`}
+              style={{
+                padding: '0.375rem 0.75rem',
+                borderRadius: '9999px',
+                fontSize: '0.75rem',
+                fontWeight: '600',
+                background: macroFilters.protein ? 'rgba(59, 130, 246, 0.25)' : 'rgba(59, 130, 246, 0.1)',
+                color: macroFilters.protein ? 'rgb(29, 78, 216)' : 'rgb(37, 99, 235)',
+                border: macroFilters.protein ? '2px solid rgb(59, 130, 246)' : '1px solid rgba(59, 130, 246, 0.3)',
+                cursor: 'pointer'
+              }}
             >
               Proteínas
             </button>
             <button
               onClick={() => toggleMacroFilter('fats')}
-              className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                macroFilters.fats
-                  ? 'bg-amber-500/30 text-amber-700 border-2 border-amber-500'
-                  : 'bg-amber-500/10 text-amber-600 border border-amber-500/30'
-              }`}
+              style={{
+                padding: '0.375rem 0.75rem',
+                borderRadius: '9999px',
+                fontSize: '0.75rem',
+                fontWeight: '600',
+                background: macroFilters.fats ? 'rgba(245, 158, 11, 0.25)' : 'rgba(245, 158, 11, 0.1)',
+                color: macroFilters.fats ? 'rgb(180, 83, 9)' : 'rgb(217, 119, 6)',
+                border: macroFilters.fats ? '2px solid rgb(245, 158, 11)' : '1px solid rgba(245, 158, 11, 0.3)',
+                cursor: 'pointer'
+              }}
             >
               Grasas
             </button>
           </div>
         </div>
 
-        <div className="space-y-2">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           {filteredFoods.map(food => (
-            <div key={food.id} className="food-item">
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <div className="font-semibold text-gray-800 text-sm">{food.name}</div>
-                    <span className="text-xs px-1.5 py-0.5 rounded bg-gray-200 text-gray-700 flex-shrink-0">
+            <div key={food.id} style={{
+              background: 'white',
+              border: '1px solid #e5e7eb',
+              borderRadius: '0.75rem',
+              padding: '0.875rem',
+              marginBottom: '0.5rem'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '0.75rem' }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
+                    <div style={{ fontWeight: '600', color: '#1f2937', fontSize: '0.875rem' }}>{food.name}</div>
+                    <span style={{
+                      fontSize: '0.75rem',
+                      padding: '0.125rem 0.375rem',
+                      borderRadius: '0.25rem',
+                      background: '#f3f4f6',
+                      color: '#374151',
+                      flexShrink: 0
+                    }}>
                       {food.label}
                     </span>
                   </div>
-                  <div className="text-xs text-gray-500 mb-2">{food.amount}</div>
-                  <MacroTag carbs={food.carbs} fats={food.fats} protein={food.protein} />
+                  <div style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '0.5rem' }}>{food.amount}</div>
+                  <MacroTagForPlanning carbs={food.carbs} fats={food.fats} protein={food.protein} />
                 </div>
                 <button
                   onClick={() => addFoodToMeal(food, 'Comida rápida')}
-                  className="btn-primary text-xs px-3 py-2 flex-shrink-0 flex items-center gap-1"
+                  style={{
+                    padding: '0.5rem 0.75rem',
+                    fontSize: '0.75rem',
+                    background: 'linear-gradient(135deg, #a855f7, #9333ea)',
+                    color: 'white',
+                    borderRadius: '0.5rem',
+                    fontWeight: '600',
+                    border: 'none',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.25rem',
+                    flexShrink: 0
+                  }}
                 >
                   <Plus size={14} />
                   Añadir
@@ -534,7 +643,9 @@ const MacroDietApp = () => {
             </div>
           ))}
           {filteredFoods.length === 0 && (
-            <p className="text-gray-500 text-center py-8 text-sm">No se encontraron alimentos</p>
+            <p style={{ color: '#6b7280', textAlign: 'center', padding: '2rem 0', fontSize: '0.875rem' }}>
+              No se encontraron alimentos
+            </p>
           )}
         </div>
       </div>
@@ -752,16 +863,60 @@ const MacroDietApp = () => {
             
             <div style={{
               marginTop: '1rem',
-              padding: '0.75rem',
-              background: '#f3f4f6',
-              borderRadius: '0.5rem',
-              fontSize: '0.875rem'
+              padding: '1rem',
+              background: 'linear-gradient(to bottom, #f0fdf4 0%, #f9fafb 100%)',
+              borderRadius: '0.75rem',
+              border: '1px solid #d1fae5'
             }}>
-              <div style={{ fontWeight: 'bold', color: '#1f2937', marginBottom: '0.5rem' }}>Totales actuales:</div>
-              <div style={{ color: '#4b5563' }}>
-                Carbohidratos: {Math.round(selectedTotals.carbs)}g | 
-                Proteínas: {Math.round(selectedTotals.protein)}g | 
-                Grasas: {Math.round(selectedTotals.fats)}g
+              <div style={{ fontWeight: 'bold', color: '#1f2937', marginBottom: '0.75rem', fontSize: '0.875rem' }}>
+                Totales actuales:
+              </div>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                {/* Hidratos */}
+                <div>
+                  <div style={{ 
+                    fontSize: '1rem', 
+                    fontWeight: '700', 
+                    color: 'rgb(22, 163, 74)',
+                    marginBottom: '0.25rem'
+                  }}>
+                    Hidratos: {(selectedTotals.carbs / 24).toFixed(1)} / {goals.carbs}
+                  </div>
+                  <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>
+                    {Math.round(selectedTotals.carbs)}g / {goals.carbs * 24}g
+                  </div>
+                </div>
+                
+                {/* Proteínas */}
+                <div>
+                  <div style={{ 
+                    fontSize: '1rem', 
+                    fontWeight: '700', 
+                    color: 'rgb(37, 99, 235)',
+                    marginBottom: '0.25rem'
+                  }}>
+                    Proteínas: {(selectedTotals.protein / 22).toFixed(1)} / {goals.protein}
+                  </div>
+                  <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>
+                    {Math.round(selectedTotals.protein)}g / {goals.protein * 22}g
+                  </div>
+                </div>
+                
+                {/* Grasas */}
+                <div>
+                  <div style={{ 
+                    fontSize: '1rem', 
+                    fontWeight: '700', 
+                    color: 'rgb(217, 119, 6)',
+                    marginBottom: '0.25rem'
+                  }}>
+                    Grasas: {(selectedTotals.fats / 10).toFixed(1)} / {goals.fats}
+                  </div>
+                  <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>
+                    {Math.round(selectedTotals.fats)}g / {goals.fats * 10}g
+                  </div>
+                </div>
               </div>
             </div>
 
