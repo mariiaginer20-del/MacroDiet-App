@@ -123,100 +123,173 @@ const MacroDietApp = () => {
 
   const ProgressBar = ({ current, goal, color }) => {
     const percentage = Math.min((current / goal) * 100, 100);
+    const colorMap = {
+      'bg-green-500': 'linear-gradient(90deg, rgb(34, 197, 94), rgb(74, 222, 128))',
+      'bg-blue-500': 'linear-gradient(90deg, rgb(59, 130, 246), rgb(96, 165, 250))',
+      'bg-amber-500': 'linear-gradient(90deg, rgb(245, 158, 11), rgb(251, 191, 36))',
+      'bg-purple-500': 'linear-gradient(90deg, rgb(168, 85, 247), rgb(192, 132, 252))'
+    };
+    
     return (
-      <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-        <div 
-          className={`h-full ${color} transition-all duration-500`}
-          style={{ width: `${percentage}%` }}
-        />
+      <div style={{ 
+        width: '100%', 
+        height: '0.5rem', 
+        background: '#e5e7eb', 
+        borderRadius: '9999px', 
+        overflow: 'hidden' 
+      }}>
+        <div style={{ 
+          height: '100%', 
+          background: colorMap[color], 
+          width: `${percentage}%`,
+          transition: 'width 0.5s ease',
+          borderRadius: '9999px'
+        }} />
       </div>
     );
   };
 
   const HomeTab = () => (
-    <div className="space-y-4 pb-24">
-      <div className="summary-card">
-        <h2 className="text-xl font-bold mb-6 flex items-center justify-center gap-2 text-gray-800">
+    <div className="pb-24" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <div style={{
+        background: 'linear-gradient(to bottom, #e0e7ff 0%, #f3f4f6 100%)',
+        border: '1px solid #d1d5db',
+        borderRadius: '1rem',
+        padding: '1.5rem',
+        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+      }}>
+        <h2 style={{ 
+          fontSize: '1.25rem', 
+          fontWeight: 'bold', 
+          marginBottom: '1.5rem', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center', 
+          gap: '0.5rem',
+          color: '#1f2937'
+        }}>
           <span>📊</span> Resumen del Día
         </h2>
         
         {/* Grid 2x2 de macros */}
-        <div className="grid grid-cols-2 gap-6 mb-6">
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(2, 1fr)', 
+          gap: '1.5rem', 
+          marginBottom: '1.5rem' 
+        }}>
           <div>
-            <div className="text-4xl font-bold text-green-600 mb-1">
-              {Math.round(totals.carbs)}.0 <span className="text-gray-600 text-2xl">/ {dailyGoals.carbs}</span>
+            <div style={{ fontSize: '2.25rem', fontWeight: 'bold', color: '#16a34a', marginBottom: '0.25rem' }}>
+              {Math.round(totals.carbs)}.0 <span style={{ color: '#4b5563', fontSize: '1.5rem' }}>/ {dailyGoals.carbs}</span>
             </div>
-            <div className="text-sm text-gray-600 mb-3">Unidades Hidratos</div>
+            <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.75rem' }}>Unidades Hidratos</div>
             <ProgressBar current={totals.carbs} goal={dailyGoals.carbs} color="bg-green-500" />
-            <div className="text-sm text-gray-800 font-semibold mt-2">Quedan {Math.round(remaining.carbs)}.0</div>
+            <div style={{ fontSize: '0.875rem', color: '#1f2937', fontWeight: '600', marginTop: '0.5rem' }}>
+              Quedan {Math.round(remaining.carbs)}.0
+            </div>
           </div>
 
           <div>
-            <div className="text-4xl font-bold text-blue-600 mb-1">
-              {Math.round(totals.protein)}.0 <span className="text-gray-600 text-2xl">/ {dailyGoals.protein}</span>
+            <div style={{ fontSize: '2.25rem', fontWeight: 'bold', color: '#2563eb', marginBottom: '0.25rem' }}>
+              {Math.round(totals.protein)}.0 <span style={{ color: '#4b5563', fontSize: '1.5rem' }}>/ {dailyGoals.protein}</span>
             </div>
-            <div className="text-sm text-gray-600 mb-3">Unidades Proteína</div>
+            <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.75rem' }}>Unidades Proteína</div>
             <ProgressBar current={totals.protein} goal={dailyGoals.protein} color="bg-blue-500" />
-            <div className="text-sm text-gray-800 font-semibold mt-2">Quedan {Math.round(remaining.protein)}.0</div>
+            <div style={{ fontSize: '0.875rem', color: '#1f2937', fontWeight: '600', marginTop: '0.5rem' }}>
+              Quedan {Math.round(remaining.protein)}.0
+            </div>
           </div>
 
           <div>
-            <div className="text-4xl font-bold text-amber-600 mb-1">
-              {Math.round(totals.fats)}.0 <span className="text-gray-600 text-2xl">/ {dailyGoals.fats}</span>
+            <div style={{ fontSize: '2.25rem', fontWeight: 'bold', color: '#d97706', marginBottom: '0.25rem' }}>
+              {Math.round(totals.fats)}.0 <span style={{ color: '#4b5563', fontSize: '1.5rem' }}>/ {dailyGoals.fats}</span>
             </div>
-            <div className="text-sm text-gray-600 mb-3">Unidades Grasa</div>
+            <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.75rem' }}>Unidades Grasa</div>
             <ProgressBar current={totals.fats} goal={dailyGoals.fats} color="bg-amber-500" />
-            <div className="text-sm text-gray-800 font-semibold mt-2">Quedan {Math.round(remaining.fats)}.0</div>
+            <div style={{ fontSize: '0.875rem', color: '#1f2937', fontWeight: '600', marginTop: '0.5rem' }}>
+              Quedan {Math.round(remaining.fats)}.0
+            </div>
           </div>
 
           <div>
-            <div className="text-4xl font-bold text-purple-600 mb-1">
-              0 <span className="text-gray-600 text-2xl">/ {dailyGoals.calories}</span>
+            <div style={{ fontSize: '2.25rem', fontWeight: 'bold', color: '#9333ea', marginBottom: '0.25rem' }}>
+              0 <span style={{ color: '#4b5563', fontSize: '1.5rem' }}>/ {dailyGoals.calories}</span>
             </div>
-            <div className="text-sm text-gray-600 mb-3">Calorías</div>
+            <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.75rem' }}>Calorías</div>
             <ProgressBar current={0} goal={dailyGoals.calories} color="bg-purple-500" />
-            <div className="text-sm text-gray-800 font-semibold mt-2">Quedan {dailyGoals.calories}</div>
+            <div style={{ fontSize: '0.875rem', color: '#1f2937', fontWeight: '600', marginTop: '0.5rem' }}>
+              Quedan {dailyGoals.calories}
+            </div>
           </div>
         </div>
 
         {/* Equivalente en gramos */}
-        <div className="bg-white rounded-xl p-4 border border-gray-200">
-          <h3 className="text-base font-bold mb-4 flex items-center gap-2 text-gray-800">
+        <div style={{
+          background: 'white',
+          borderRadius: '0.75rem',
+          padding: '1rem',
+          border: '1px solid #e5e7eb'
+        }}>
+          <h3 style={{ 
+            fontSize: '1rem', 
+            fontWeight: 'bold', 
+            marginBottom: '1rem', 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '0.5rem',
+            color: '#1f2937'
+          }}>
             <span>📏</span> Equivalente en gramos
           </h3>
-          <div className="grid grid-cols-3 gap-4 text-center">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', textAlign: 'center' }}>
             <div>
-              <div className="text-xl font-bold text-green-600">
-                {Math.round(totals.carbs)}g <span className="text-sm text-gray-500">/ 217g</span>
+              <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#16a34a' }}>
+                {Math.round(totals.carbs)}g <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>/ 217g</span>
               </div>
-              <div className="text-xs text-gray-600 mt-1 mb-2">Hidratos consumidos</div>
-              <div className="text-sm font-bold text-gray-800">Quedan 217g</div>
+              <div style={{ fontSize: '0.75rem', color: '#4b5563', marginTop: '0.25rem', marginBottom: '0.5rem' }}>
+                Hidratos consumidos
+              </div>
+              <div style={{ fontSize: '0.875rem', fontWeight: 'bold', color: '#1f2937' }}>Quedan 217g</div>
             </div>
             <div>
-              <div className="text-xl font-bold text-blue-600">
-                {Math.round(totals.protein)}g <span className="text-sm text-gray-500">/ 65g</span>
+              <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#2563eb' }}>
+                {Math.round(totals.protein)}g <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>/ 65g</span>
               </div>
-              <div className="text-xs text-gray-600 mt-1 mb-2">Proteína consumida</div>
-              <div className="text-sm font-bold text-gray-800">Quedan 65g</div>
+              <div style={{ fontSize: '0.75rem', color: '#4b5563', marginTop: '0.25rem', marginBottom: '0.5rem' }}>
+                Proteína consumida
+              </div>
+              <div style={{ fontSize: '0.875rem', fontWeight: 'bold', color: '#1f2937' }}>Quedan 65g</div>
             </div>
             <div>
-              <div className="text-xl font-bold text-amber-600">
-                {Math.round(totals.fats)}g <span className="text-sm text-gray-500">/ 64g</span>
+              <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d97706' }}>
+                {Math.round(totals.fats)}g <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>/ 64g</span>
               </div>
-              <div className="text-xs text-gray-600 mt-1 mb-2">Grasa consumida</div>
-              <div className="text-sm font-bold text-gray-800">Quedan 64g</div>
+              <div style={{ fontSize: '0.75rem', color: '#4b5563', marginTop: '0.25rem', marginBottom: '0.5rem' }}>
+                Grasa consumida
+              </div>
+              <div style={{ fontSize: '0.875rem', fontWeight: 'bold', color: '#1f2937' }}>Quedan 64g</div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Comidas registradas */}
-      <div className="card">
-        <h3 className="text-lg font-bold mb-3 text-gray-800">Comidas de Hoy</h3>
+      <div style={{
+        background: 'white',
+        border: '1px solid #e5e7eb',
+        borderRadius: '1rem',
+        padding: '1.25rem',
+        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+      }}>
+        <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', marginBottom: '0.75rem', color: '#1f2937' }}>
+          Comidas de Hoy
+        </h3>
         {meals.length === 0 ? (
-          <p className="text-gray-500 text-center py-8 text-sm">No hay comidas registradas</p>
+          <p style={{ color: '#6b7280', textAlign: 'center', padding: '2rem 0', fontSize: '0.875rem' }}>
+            No hay comidas registradas
+          </p>
         ) : (
-          <div className="space-y-2">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             {meals.map(meal => (
               <div key={meal.id} className="meal-item">
                 <button
