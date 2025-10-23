@@ -17,6 +17,20 @@ const MacroDietApp = () => {
     fats: 6,
     calories: 1709
   });
+  
+  // Estados para planificación
+  const [selectedMealType, setSelectedMealType] = useState('Desayuno');
+  const [selectedFoods, setSelectedFoods] = useState([]);
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [mealName, setMealName] = useState('');
+  const [savedMeals, setSavedMeals] = useState([]);
+  
+  const mealTypeGoals = {
+    'Desayuno': { carbs: 2.5, protein: 0, fats: 2 },
+    'Almuerzo': { carbs: 1, protein: 1, fats: 1 },
+    'Comida': { carbs: 3, protein: 1.5, fats: 2 },
+    'Cena': { carbs: 2.5, protein: 0.5, fats: 1 }
+  };
 
   // Base de datos de alimentos
   const foodDatabase = [
@@ -37,9 +51,14 @@ const MacroDietApp = () => {
   ];
 
   useEffect(() => {
-    const savedMeals = localStorage.getItem('meals');
-    if (savedMeals) {
-      setMeals(JSON.parse(savedMeals));
+    const savedMealsData = localStorage.getItem('meals');
+    if (savedMealsData) {
+      setMeals(JSON.parse(savedMealsData));
+    }
+    
+    const savedRecipes = localStorage.getItem('savedMeals');
+    if (savedRecipes) {
+      setSavedMeals(JSON.parse(savedRecipes));
     }
   }, []);
 
@@ -81,6 +100,88 @@ const MacroDietApp = () => {
     const updatedMeals = meals.filter(m => m.id !== mealId);
     setMeals(updatedMeals);
     localStorage.setItem('meals', JSON.stringify(updatedMeals));
+  };
+  
+  const addToSelectedFoods = (food) => {
+    const existing = selectedFoods.find(f => f.id === food.id);
+    if (existing) {
+      setSelectedFoods(selectedFoods.map(f => 
+        f.id === food.id ? { ...f, quantity: f.quantity + 1 } : f
+      ));
+    } else {
+      setSelectedFoods([...selectedFoods, { ...food, quantity: 1 }]);
+    }
+  };
+  
+  const removeFromSelectedFoods = (foodId) => {
+    setSelectedFoods(selectedFoods.filter(f => f.id !== foodId));
+  };
+  
+  const updateFoodQuantity = (foodId, quantity) => {
+    setSelectedFoods(selectedFoods.map(f => 
+      f.id === foodId ? { ...f, quantity: Math.max(1, parseInt(quantity) || 1) } : f
+    ));
+  };
+  
+  const calculateOptimalPortions = () => {
+    if (selectedFoods.length === 0) return;
+    
+    const goals = mealTypeGoals[selectedMealType];
+    const totalCarbs = selectedFoods.reduce((sum, f) => sum + (f.carbs * f.quantity), 0);
+    const totalProtein = selectedFoods.reduce((sum, f) => sum + (f.protein * f.quantity), 0);
+    const totalFats = selectedFoods.reduce((sum, f) => sum + (f.fats * f.quantity), 0);
+    
+    // Calcular factor de ajuste (simplificado)
+    const carbFactor = goals.carbs > 0 ? (goals.carbs * 24) / Math.max(totalCarbs, 1) : 1;
+    const proteinFactor = goals.protein > 0 ? (goals.protein * 22) / Math.max(totalProtein, 1) : 1;
+    const fatFactor = goals.fats > 0 ? (goals.fats * 10) / Math.max(totalFats, 1) : 1;
+    
+    const avgFactor = (carbFactor + proteinFactor + fatFactor) / 3;
+    
+    setSelectedFoods(selectedFoods.map(f => ({
+      ...f,
+      quantity: Math.max(1, Math.round(f.quantity * avgFactor))
+    })));
+  };
+  
+  const registerInMyDay = () => {
+    if (selectedFoods.length === 0) return;
+    
+    const newMeal = {
+      id: Date.now(),
+      name: selectedMealType,
+      time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
+      foods: selectedFoods.map(f => ({
+        ...f,
+        carbs: f.carbs * f.quantity,
+        fats: f.fats * f.quantity,
+        protein: f.protein * f.quantity
+      }))
+    };
+    
+    const updatedMeals = [...meals, newMeal];
+    setMeals(updatedMeals);
+    localStorage.setItem('meals', JSON.stringify(updatedMeals));
+    setSelectedFoods([]);
+    setActiveTab('home');
+  };
+  
+  const saveMealRecipe = () => {
+    if (selectedFoods.length === 0 || !mealName.trim()) return;
+    
+    const newRecipe = {
+      id: Date.now(),
+      name: mealName,
+      type: selectedMealType,
+      foods: selectedFoods
+    };
+    
+    const updatedRecipes = [...savedMeals, newRecipe];
+    setSavedMeals(updatedRecipes);
+    localStorage.setItem('savedMeals', JSON.stringify(updatedRecipes));
+    setMealName('');
+    setShowSaveModal(false);
+    setSelectedFoods([]);
   };
 
   const getTotalMacros = () => {
@@ -341,8 +442,15 @@ const MacroDietApp = () => {
   );
 
   const SearchTab = () => (
-    <div className="space-y-4 pb-24">
-      <div className="card">
+    <div className="pb-24">
+      <div style={{
+        background: 'white',
+        border: '1px solid #e5e7eb',
+        borderRadius: '1rem',
+        padding: '1.25rem',
+        marginBottom: '1rem',
+        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+      }}>
         <h2 className="text-xl font-bold mb-4 text-gray-800">Buscar Alimentos</h2>
         
         <input
@@ -420,6 +528,380 @@ const MacroDietApp = () => {
       </div>
     </div>
   );
+
+  const PlanningTab = () => {
+    const goals = mealTypeGoals[selectedMealType];
+    const selectedTotals = selectedFoods.reduce((sum, f) => ({
+      carbs: sum.carbs + (f.carbs * f.quantity),
+      protein: sum.protein + (f.protein * f.quantity),
+      fats: sum.fats + (f.fats * f.quantity)
+    }), { carbs: 0, protein: 0, fats: 0 });
+    
+    return (
+      <div className="pb-24">
+        {/* Selector de tipo de comida */}
+        <div style={{
+          background: 'linear-gradient(to bottom, #e0e7ff 0%, #f3f4f6 100%)',
+          border: '1px solid #d1d5db',
+          borderRadius: '1rem',
+          padding: '1rem',
+          marginBottom: '1rem'
+        }}>
+          <label style={{ fontSize: '0.875rem', color: '#4b5563', fontWeight: '600', display: 'block', marginBottom: '0.5rem' }}>
+            Selecciona tipo de comida:
+          </label>
+          <select 
+            value={selectedMealType}
+            onChange={(e) => setSelectedMealType(e.target.value)}
+            style={{
+              width: '100%',
+              padding: '0.75rem',
+              background: 'white',
+              border: '1px solid #d1d5db',
+              borderRadius: '0.5rem',
+              fontSize: '1rem',
+              fontWeight: '600'
+            }}
+          >
+            <option>Desayuno</option>
+            <option>Almuerzo</option>
+            <option>Comida</option>
+            <option>Cena</option>
+          </select>
+          
+          <div style={{ marginTop: '0.75rem', textAlign: 'center' }}>
+            <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.25rem' }}>Objetivo:</div>
+            <div style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#1f2937' }}>
+              {goals.carbs}H | {goals.protein}P | {goals.fats}G
+            </div>
+          </div>
+        </div>
+
+        {/* Lista de alimentos */}
+        <div style={{
+          background: 'white',
+          border: '1px solid #e5e7eb',
+          borderRadius: '1rem',
+          padding: '1.25rem',
+          marginBottom: '1rem'
+        }}>
+          <input
+            type="text"
+            placeholder="Buscar alimentos..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{ marginBottom: '1rem' }}
+          />
+
+          <div style={{ fontSize: '0.75rem', color: '#4b5563', fontWeight: '600', marginBottom: '0.5rem' }}>
+            Filtrar por:
+          </div>
+          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
+            <button
+              onClick={() => toggleMacroFilter('carbs')}
+              style={{
+                padding: '0.375rem 0.75rem',
+                borderRadius: '9999px',
+                fontSize: '0.75rem',
+                fontWeight: '600',
+                background: macroFilters.carbs ? 'rgba(34, 197, 94, 0.25)' : 'rgba(34, 197, 94, 0.1)',
+                color: macroFilters.carbs ? 'rgb(21, 128, 61)' : 'rgb(22, 163, 74)',
+                border: macroFilters.carbs ? '2px solid rgb(34, 197, 94)' : '1px solid rgba(34, 197, 94, 0.3)'
+              }}
+            >
+              Hidratos {macroFilters.carbs && '✓'}
+            </button>
+            <button
+              onClick={() => toggleMacroFilter('protein')}
+              style={{
+                padding: '0.375rem 0.75rem',
+                borderRadius: '9999px',
+                fontSize: '0.75rem',
+                fontWeight: '600',
+                background: macroFilters.protein ? 'rgba(59, 130, 246, 0.25)' : 'rgba(59, 130, 246, 0.1)',
+                color: macroFilters.protein ? 'rgb(29, 78, 216)' : 'rgb(37, 99, 235)',
+                border: macroFilters.protein ? '2px solid rgb(59, 130, 246)' : '1px solid rgba(59, 130, 246, 0.3)'
+              }}
+            >
+              Proteínas {macroFilters.protein && '✓'}
+            </button>
+            <button
+              onClick={() => toggleMacroFilter('fats')}
+              style={{
+                padding: '0.375rem 0.75rem',
+                borderRadius: '9999px',
+                fontSize: '0.75rem',
+                fontWeight: '600',
+                background: macroFilters.fats ? 'rgba(245, 158, 11, 0.25)' : 'rgba(245, 158, 11, 0.1)',
+                color: macroFilters.fats ? 'rgb(180, 83, 9)' : 'rgb(217, 119, 6)',
+                border: macroFilters.fats ? '2px solid rgb(245, 158, 11)' : '1px solid rgba(245, 158, 11, 0.3)'
+              }}
+            >
+              Grasas {macroFilters.fats && '✓'}
+            </button>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.5rem', maxHeight: '400px', overflowY: 'auto' }}>
+            {filteredFoods.map(food => (
+              <div 
+                key={food.id}
+                onClick={() => addToSelectedFoods(food)}
+                style={{
+                  background: selectedFoods.find(f => f.id === food.id) ? '#f0fdf4' : 'white',
+                  border: selectedFoods.find(f => f.id === food.id) ? '2px solid #22c55e' : '1px solid #e5e7eb',
+                  borderRadius: '0.75rem',
+                  padding: '0.75rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <div style={{ fontWeight: '600', fontSize: '0.875rem', color: '#1f2937', marginBottom: '0.25rem' }}>
+                  {food.name}
+                </div>
+                <div style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '0.375rem' }}>
+                  {food.amount}
+                </div>
+                <span style={{
+                  padding: '0.125rem 0.375rem',
+                  borderRadius: '0.25rem',
+                  fontSize: '0.625rem',
+                  background: '#f3f4f6',
+                  color: '#374151',
+                  fontWeight: '600'
+                }}>
+                  {food.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Alimentos seleccionados */}
+        {selectedFoods.length > 0 && (
+          <div style={{
+            background: 'white',
+            border: '1px solid #e5e7eb',
+            borderRadius: '1rem',
+            padding: '1.25rem',
+            marginBottom: '1rem'
+          }}>
+            <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '1rem' }}>
+              Alimentos seleccionados:
+            </h3>
+            
+            {selectedFoods.map(food => (
+              <div key={food.id} style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '0.75rem',
+                background: '#f9fafb',
+                borderRadius: '0.5rem',
+                marginBottom: '0.5rem'
+              }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: '600', fontSize: '0.875rem', color: '#1f2937' }}>
+                    {food.name}
+                  </div>
+                  <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>
+                    {food.amount}
+                  </div>
+                </div>
+                <input
+                  type="number"
+                  value={food.quantity}
+                  onChange={(e) => updateFoodQuantity(food.id, e.target.value)}
+                  onClick={(e) => e.stopPropagation()}
+                  style={{
+                    width: '60px',
+                    padding: '0.375rem',
+                    textAlign: 'center',
+                    border: '1px solid #d1d5db',
+                    borderRadius: '0.375rem',
+                    marginRight: '0.5rem'
+                  }}
+                  min="1"
+                />
+                <button
+                  onClick={() => removeFromSelectedFoods(food.id)}
+                  style={{
+                    color: '#ef4444',
+                    padding: '0.375rem',
+                    background: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontSize: '1.25rem'
+                  }}
+                >
+                  🗑️
+                </button>
+              </div>
+            ))}
+            
+            <div style={{
+              marginTop: '1rem',
+              padding: '0.75rem',
+              background: '#f3f4f6',
+              borderRadius: '0.5rem',
+              fontSize: '0.875rem'
+            }}>
+              <div style={{ fontWeight: 'bold', color: '#1f2937', marginBottom: '0.5rem' }}>Totales actuales:</div>
+              <div style={{ color: '#4b5563' }}>
+                Carbohidratos: {Math.round(selectedTotals.carbs)}g | 
+                Proteínas: {Math.round(selectedTotals.protein)}g | 
+                Grasas: {Math.round(selectedTotals.fats)}g
+              </div>
+            </div>
+
+            {/* Botones de acción */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem', marginTop: '1rem' }}>
+              <button
+                onClick={calculateOptimalPortions}
+                style={{
+                  padding: '0.75rem',
+                  background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
+                  color: 'white',
+                  borderRadius: '0.5rem',
+                  fontWeight: '600',
+                  fontSize: '0.875rem',
+                  border: 'none',
+                  cursor: 'pointer'
+                }}
+              >
+                Calcular
+              </button>
+              <button
+                onClick={calculateOptimalPortions}
+                style={{
+                  padding: '0.75rem',
+                  background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                  color: 'white',
+                  borderRadius: '0.5rem',
+                  fontWeight: '600',
+                  fontSize: '0.875rem',
+                  border: 'none',
+                  cursor: 'pointer'
+                }}
+              >
+                Optimizar
+              </button>
+              <button
+                onClick={registerInMyDay}
+                style={{
+                  padding: '0.75rem',
+                  background: 'linear-gradient(135deg, #a855f7, #9333ea)',
+                  color: 'white',
+                  borderRadius: '0.5rem',
+                  fontWeight: '600',
+                  fontSize: '0.875rem',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.25rem'
+                }}
+              >
+                📅 Registrar
+              </button>
+            </div>
+            
+            <button
+              onClick={() => setShowSaveModal(true)}
+              style={{
+                width: '100%',
+                padding: '0.75rem',
+                marginTop: '0.5rem',
+                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                color: 'white',
+                borderRadius: '0.5rem',
+                fontWeight: '600',
+                fontSize: '0.875rem',
+                border: 'none',
+                cursor: 'pointer'
+              }}
+            >
+              💾 Guardar Comida
+            </button>
+          </div>
+        )}
+        
+        {/* Modal para guardar comida */}
+        {showSaveModal && (
+          <div style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000
+          }}>
+            <div style={{
+              background: 'white',
+              borderRadius: '1rem',
+              padding: '1.5rem',
+              maxWidth: '400px',
+              width: '90%'
+            }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>
+                Guardar Comida
+              </h3>
+              <input
+                type="text"
+                placeholder="Nombre de la comida..."
+                value={mealName}
+                onChange={(e) => setMealName(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '0.5rem',
+                  marginBottom: '1rem',
+                  fontSize: '1rem'
+                }}
+              />
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <button
+                  onClick={() => setShowSaveModal(false)}
+                  style={{
+                    flex: 1,
+                    padding: '0.75rem',
+                    background: '#f3f4f6',
+                    color: '#374151',
+                    borderRadius: '0.5rem',
+                    fontWeight: '600',
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={saveMealRecipe}
+                  style={{
+                    flex: 1,
+                    padding: '0.75rem',
+                    background: 'linear-gradient(135deg, #a855f7, #9333ea)',
+                    color: 'white',
+                    borderRadius: '0.5rem',
+                    fontWeight: '600',
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Guardar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
 
   const tabs = [
     { id: 'home', label: 'Inicio', icon: Home },
