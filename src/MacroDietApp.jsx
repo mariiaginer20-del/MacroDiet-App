@@ -781,8 +781,49 @@ const MacroDietApp = () => {
                 <div style={{ fontWeight: '600', fontSize: '0.875rem', color: '#1f2937', marginBottom: '0.25rem' }}>
                   {food.name}
                 </div>
-                <div style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '0.375rem' }}>
+                <div style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '0.5rem' }}>
                   {food.amount}
+                </div>
+                <div style={{ display: 'flex', gap: '0.25rem', flexWrap: 'wrap', marginBottom: '0.375rem' }}>
+                  {food.carbs > 0 && (
+                    <span style={{
+                      padding: '0.125rem 0.375rem',
+                      borderRadius: '9999px',
+                      fontSize: '0.625rem',
+                      fontWeight: '600',
+                      background: 'rgba(34, 197, 94, 0.15)',
+                      color: 'rgb(22, 163, 74)',
+                      border: '1px solid rgba(34, 197, 94, 0.3)'
+                    }}>
+                      H:{Math.round(food.carbs)}
+                    </span>
+                  )}
+                  {food.protein > 0 && (
+                    <span style={{
+                      padding: '0.125rem 0.375rem',
+                      borderRadius: '9999px',
+                      fontSize: '0.625rem',
+                      fontWeight: '600',
+                      background: 'rgba(59, 130, 246, 0.15)',
+                      color: 'rgb(37, 99, 235)',
+                      border: '1px solid rgba(59, 130, 246, 0.3)'
+                    }}>
+                      P:{Math.round(food.protein)}
+                    </span>
+                  )}
+                  {food.fats > 0 && (
+                    <span style={{
+                      padding: '0.125rem 0.375rem',
+                      borderRadius: '9999px',
+                      fontSize: '0.625rem',
+                      fontWeight: '600',
+                      background: 'rgba(245, 158, 11, 0.15)',
+                      color: 'rgb(217, 119, 6)',
+                      border: '1px solid rgba(245, 158, 11, 0.3)'
+                    }}>
+                      G:{Math.round(food.fats)}
+                    </span>
+                  )}
                 </div>
                 <span style={{
                   padding: '0.125rem 0.375rem',
