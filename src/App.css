@@ -10,44 +10,212 @@
   backdrop-filter: blur(10px);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 1rem;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   animation: fadeIn 0.3s ease-out;
 }
 
-/* ===== ITEMS DE COMIDA Y ALIMENTOS ===== */
-.meal-item,
-.food-item {
-  background: rgba(51, 65, 85, 0.5);
-  border: 1px solid rgba(148, 163, 184, 0.3);
+/* ===== COMIDAS (Desplegables) ===== */
+.meal-item {
+  background: rgba(51, 65, 85, 0.6);
+  border: 1px solid rgba(100, 116, 139, 0.4);
   border-radius: 0.75rem;
-  padding: 1rem;
-  margin-bottom: 0.75rem;
+  padding: 0.875rem;
+  margin-bottom: 0.5rem;
   transition: all 0.2s ease;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
-  will-change: transform;
-  backface-visibility: hidden;
-  transform: translateZ(0);
 }
 
-.meal-item:active,
+.meal-item:active {
+  transform: scale(0.98);
+}
+
+.meal-item button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+/* Contenedor de alimentos desplegable */
+.meal-item > div:last-child {
+  animation: slideDown 0.3s ease-out;
+}
+
+/* Items de alimentos dentro del desplegable */
+.meal-item .bg-slate-600\/30 {
+  background: rgba(71, 85, 105, 0.3);
+  border: 1px solid rgba(100, 116, 139, 0.2);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+/* ===== ALIMENTOS EN BÚSQUEDA ===== */
+.food-item {
+  background: rgba(51, 65, 85, 0.5);
+  border: 1px solid rgba(100, 116, 139, 0.3);
+  border-radius: 0.75rem;
+  padding: 0.875rem;
+  margin-bottom: 0.5rem;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
 .food-item:active {
   transform: scale(0.98);
 }
 
-.meal-item:hover,
 .food-item:hover {
-  border-color: rgba(168, 85, 247, 0.5);
+  border-color: rgba(168, 85, 247, 0.4);
   background: rgba(51, 65, 85, 0.7);
 }
+
+/* ===== TAGS DE MACROS EN ALIMENTOS (Colores pastel) ===== */
+/* Carbohidratos - ROJO pastel */
+.bg-red-500\/20 {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: rgb(252, 165, 165);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+/* Grasas - AZUL pastel */
+.bg-blue-500\/20 {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: rgb(147, 197, 253);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+/* Proteínas - VERDE pastel */
+.bg-green-500\/20 {
+  background-color: rgba(34, 197, 94, 0.15);
+  color: rgb(134, 239, 172);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.text-red-300 { color: rgb(252, 165, 165); }
+.text-blue-300 { color: rgb(147, 197, 253); }
+.text-green-300 { color: rgb(134, 239, 172); }
+
+.border-red-500\/30 { border-color: rgba(239, 68, 68, 0.3); }
+.border-blue-500\/30 { border-color: rgba(59, 130, 246, 0.3); }
+.border-green-500\/30 { border-color: rgba(34, 197, 94, 0.3); }
+
+/* ===== FILTROS DE MACROS (Botones de filtro) ===== */
+/* Hidratos - VERDE */
+.bg-green-500\/10 {
+  background-color: rgba(34, 197, 94, 0.1);
+  color: rgb(134, 239, 172);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.bg-green-500\/30 {
+  background-color: rgba(34, 197, 94, 0.3);
+  color: rgb(134, 239, 172);
+  border: 2px solid rgb(34, 197, 94);
+}
+
+/* Proteínas - AZUL */
+.bg-blue-500\/10 {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: rgb(147, 197, 253);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.bg-blue-500\/30 {
+  background-color: rgba(59, 130, 246, 0.3);
+  color: rgb(147, 197, 253);
+  border: 2px solid rgb(59, 130, 246);
+}
+
+/* Grasas - ÁMBAR/AMARILLO */
+.bg-amber-500\/10 {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: rgb(252, 211, 77);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.bg-amber-500\/30 {
+  background-color: rgba(245, 158, 11, 0.3);
+  color: rgb(252, 211, 77);
+  border: 2px solid rgb(245, 158, 11);
+}
+
+.text-green-400 { color: rgb(134, 239, 172); }
+.text-blue-400 { color: rgb(147, 197, 253); }
+.text-amber-400 { color: rgb(252, 211, 77); }
+
+.border-green-500 { border-color: rgb(34, 197, 94); }
+.border-blue-500 { border-color: rgb(59, 130, 246); }
+.border-amber-500 { border-color: rgb(245, 158, 11); }
+
+/* ===== BARRAS DE PROGRESO ===== */
+.h-2 {
+  height: 0.5rem;
+}
+
+.bg-slate-700 {
+  background-color: rgb(51, 65, 85);
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.bg-green-500 {
+  background: linear-gradient(90deg, rgb(34, 197, 94), rgb(74, 222, 128));
+}
+
+.bg-blue-500 {
+  background: linear-gradient(90deg, rgb(59, 130, 246), rgb(96, 165, 250));
+}
+
+.bg-amber-500 {
+  background: linear-gradient(90deg, rgb(245, 158, 11), rgb(251, 191, 36));
+}
+
+.bg-purple-500 {
+  background: linear-gradient(90deg, rgb(168, 85, 247), rgb(192, 132, 252));
+}
+
+/* ===== COLORES DE TEXTO PARA RESUMEN ===== */
+.text-green-400 { color: rgb(74, 222, 128); }
+.text-blue-400 { color: rgb(96, 165, 250); }
+.text-amber-400 { color: rgb(251, 191, 36); }
+.text-purple-400 { color: rgb(192, 132, 252); }
+
+.text-gray-400 { color: rgb(156, 163, 175); }
+.text-white { color: rgb(255, 255, 255); }
 
 /* ===== BOTONES ===== */
 button,
 .btn {
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
+  font-family: inherit;
+  font-size: 0.875rem;
   font-weight: 600;
   border: none;
   border-radius: 0.5rem;
@@ -59,111 +227,43 @@ button,
 
 button:active,
 .btn:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
 }
 
 .btn-primary {
   background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
   color: white;
-  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+  padding: 0.5rem 1rem;
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.25);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 .btn-primary:hover {
-  box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
+  box-shadow: 0 6px 16px rgba(168, 85, 247, 0.35);
 }
 
 .btn-primary:active {
-  box-shadow: 0 2px 10px rgba(168, 85, 247, 0.3);
+  box-shadow: 0 2px 8px rgba(168, 85, 247, 0.25);
+  transform: scale(0.95);
 }
 
-/* ===== TAGS DE MACROS ===== */
-.macro-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  border: 1px solid;
-  transition: all 0.2s ease;
-}
-
-/* Carbohidratos - Rojo pastel */
-.bg-red-500\/20 {
-  background-color: rgba(239, 68, 68, 0.2);
-  color: rgb(252, 165, 165);
-  border-color: rgba(239, 68, 68, 0.3);
-}
-
-/* Grasas - Azul pastel */
-.bg-blue-500\/20 {
-  background-color: rgba(59, 130, 246, 0.2);
-  color: rgb(147, 197, 253);
-  border-color: rgba(59, 130, 246, 0.3);
-}
-
-/* Proteínas - Verde pastel */
-.bg-green-500\/20 {
-  background-color: rgba(34, 197, 94, 0.2);
-  color: rgb(134, 239, 172);
-  border-color: rgba(34, 197, 94, 0.3);
-}
-
-/* ===== FILTROS DE MACROS ===== */
-.filter-button {
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  transition: all 0.2s ease;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.filter-button.active {
-  transform: scale(1.05);
-}
-
-.bg-red-500\/10 {
-  background-color: rgba(239, 68, 68, 0.1);
+/* Botón eliminar */
+.text-red-400 {
   color: rgb(248, 113, 113);
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
 }
 
-.bg-red-500\/30 {
-  background-color: rgba(239, 68, 68, 0.3);
+.text-red-400:hover {
   color: rgb(252, 165, 165);
-  border: 2px solid rgb(239, 68, 68);
-}
-
-.bg-blue-500\/10 {
-  background-color: rgba(59, 130, 246, 0.1);
-  color: rgb(96, 165, 250);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-}
-
-.bg-blue-500\/30 {
-  background-color: rgba(59, 130, 246, 0.3);
-  color: rgb(147, 197, 253);
-  border: 2px solid rgb(59, 130, 246);
-}
-
-.bg-green-500\/10 {
-  background-color: rgba(34, 197, 94, 0.1);
-  color: rgb(74, 222, 128);
-  border: 1px solid rgba(34, 197, 94, 0.3);
-}
-
-.bg-green-500\/30 {
-  background-color: rgba(34, 197, 94, 0.3);
-  color: rgb(134, 239, 172);
-  border: 2px solid rgb(34, 197, 94);
 }
 
 /* ===== NAVEGACIÓN INFERIOR ===== */
 nav {
-  background: rgba(30, 41, 59, 0.95);
-  backdrop-filter: blur(10px);
+  background: rgba(30, 41, 59, 0.98);
+  backdrop-filter: blur(12px);
   border-top: 1px solid rgba(148, 163, 184, 0.2);
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
 }
@@ -172,15 +272,24 @@ nav button {
   transition: all 0.2s ease;
   background: transparent;
   border: none;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.125rem;
 }
 
 nav button:active {
   transform: scale(0.95);
 }
 
-nav button.active {
-  color: #a855f7;
+/* Color activo - púrpura */
+.text-purple-400 {
+  color: rgb(192, 132, 252);
+}
+
+nav .text-gray-400 {
+  color: rgb(156, 163, 175);
 }
 
 /* ===== INPUTS ===== */
@@ -190,7 +299,7 @@ select,
 textarea {
   width: 100%;
   padding: 0.875rem 1rem;
-  background: rgba(51, 65, 85, 0.5);
+  background: rgba(51, 65, 85, 0.6);
   border: 2px solid rgba(148, 163, 184, 0.2);
   border-radius: 0.5rem;
   color: #f1f5f9;
@@ -204,11 +313,26 @@ select:focus,
 textarea:focus {
   background: rgba(51, 65, 85, 0.8);
   border-color: #a855f7;
-  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
 }
 
 input::placeholder {
   color: #94a3b8;
+}
+
+/* ===== SECCIÓN "EQUIVALENTE EN GRAMOS" ===== */
+.bg-slate-700\/30 {
+  background: rgba(51, 65, 85, 0.3);
+  border: 1px solid rgba(100, 116, 139, 0.3);
+}
+
+/* ===== ETIQUETAS DE ALIMENTOS (H:1, P:1, etc) ===== */
+.bg-slate-600\/50 {
+  background: rgba(71, 85, 105, 0.5);
+  color: rgb(203, 213, 225);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
 }
 
 /* ===== ANIMACIONES ===== */
@@ -223,20 +347,17 @@ input::placeholder {
   }
 }
 
-@keyframes slideIn {
+@keyframes slideDown {
   from {
     opacity: 0;
-    transform: translateX(-10px);
+    max-height: 0;
+    transform: translateY(-5px);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    max-height: 1000px;
+    transform: translateY(0);
   }
-}
-
-/* ===== GRÁFICO DONUT ===== */
-svg circle {
-  transition: stroke-dashoffset 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ===== SCROLLBAR ===== */
@@ -257,26 +378,221 @@ svg circle {
   background: #9333ea;
 }
 
-/* ===== ESPACIADO PARA PESTAÑAS ===== */
+/* ===== ESPACIADO ===== */
 .pb-24 {
   padding-bottom: 6rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mb-3 {
+  margin-bottom: 0.75rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.p-3 {
+  padding: 0.75rem;
+}
+
+.p-2 {
+  padding: 0.5rem;
+}
+
+/* ===== GRID Y LAYOUTS ===== */
+.grid {
+  display: grid;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.gap-3 {
+  gap: 0.75rem;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.gap-1 {
+  gap: 0.25rem;
+}
+
+.gap-1\.5 {
+  gap: 0.375rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+/* ===== TAMAÑOS ===== */
+.w-full {
+  width: 100%;
+}
+
+.min-w-0 {
+  min-width: 0;
+}
+
+/* ===== TIPOGRAFÍA ===== */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+/* ===== ESPACIADO INTERNO ===== */
+.space-y-2 > * + * {
+  margin-top: 0.5rem;
+}
+
+.space-y-3 > * + * {
+  margin-top: 0.75rem;
+}
+
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+.space-y-6 > * + * {
+  margin-top: 1.5rem;
+}
+
+/* ===== BORDES ===== */
+.border {
+  border-width: 1px;
+}
+
+.border-t {
+  border-top-width: 1px;
+}
+
+.border-slate-600\/50 {
+  border-color: rgba(71, 85, 105, 0.5);
+}
+
+.border-slate-700 {
+  border-color: rgb(51, 65, 85);
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.rounded-xl {
+  border-radius: 0.75rem;
+}
+
+/* ===== TRANSICIONES ===== */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.duration-500 {
+  transition-duration: 500ms;
+}
+
+.duration-200 {
+  transition-duration: 200ms;
 }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 640px) {
   .card {
-    padding: 1.25rem;
+    padding: 1rem;
   }
 
   .meal-item,
   .food-item {
-    padding: 0.875rem;
-  }
-
-  button,
-  .btn {
-    padding: 0.625rem 1.25rem;
-    font-size: 0.875rem;
+    padding: 0.75rem;
   }
 }
 
@@ -286,16 +602,6 @@ svg circle {
   .meal-item,
   .food-item {
     min-height: 44px;
-    min-width: 44px;
-  }
-}
-
-/* ===== PREVENIR ZOOM EN iOS ===== */
-@supports (-webkit-touch-callout: none) {
-  input,
-  select,
-  textarea {
-    font-size: 16px !important;
   }
 }
 
@@ -307,59 +613,10 @@ html {
 /* ===== SAFE AREA (iPhone notch) ===== */
 @supports (padding: env(safe-area-inset-bottom)) {
   nav {
-    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+    padding-bottom: calc(0.25rem + env(safe-area-inset-bottom));
   }
-}
-
-/* ===== UTILIDADES ===== */
-.text-center {
-  text-align: center;
-}
-
-.font-bold {
-  font-weight: 700;
-}
-
-.font-semibold {
-  font-weight: 600;
-}
-
-.rounded-full {
-  border-radius: 9999px;
-}
-
-.shadow-xl {
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-.transition-all {
-  transition: all 0.2s ease;
-}
-
-.transition-transform {
-  transition: transform 0.2s ease;
-}
-
-/* ===== ESTADOS DE CARGA ===== */
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.loading {
-  animation: spin 1s linear infinite;
-}
-
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
+  
+  .pb-24 {
+    padding-bottom: calc(6rem + env(safe-area-inset-bottom));
   }
 }

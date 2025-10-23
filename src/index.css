@@ -7,7 +7,6 @@
     --primary: #a855f7;
     --primary-dark: #9333ea;
     --secondary: #10b981;
-    --secondary-dark: #059669;
     
     --bg-primary: #0f172a;
     --bg-secondary: #1e293b;
@@ -18,10 +17,25 @@
     --text-muted: #94a3b8;
     
     --border: rgba(148, 163, 184, 0.2);
+    
+    /* Colores pastel para macros */
+    --carbs-bg: rgba(34, 197, 94, 0.15);
+    --carbs-text: rgb(134, 239, 172);
+    --carbs-border: rgba(34, 197, 94, 0.3);
+    
+    --protein-bg: rgba(59, 130, 246, 0.15);
+    --protein-text: rgb(147, 197, 253);
+    --protein-border: rgba(59, 130, 246, 0.3);
+    
+    --fats-bg: rgba(245, 158, 11, 0.15);
+    --fats-text: rgb(252, 211, 77);
+    --fats-border: rgba(245, 158, 11, 0.3);
   }
 
   * {
     @apply box-border;
+    margin: 0;
+    padding: 0;
   }
 
   body {
@@ -39,9 +53,10 @@
     min-height: 100vh;
   }
 
+  /* Inputs base */
   input, select, textarea {
     @apply w-full px-4 py-3 rounded-lg outline-none;
-    background: rgba(51, 65, 85, 0.5);
+    background: rgba(51, 65, 85, 0.6);
     border: 2px solid rgba(148, 163, 184, 0.2);
     color: var(--text-primary);
     font-size: 16px;
@@ -51,38 +66,68 @@
   input:focus, select:focus, textarea:focus {
     background: rgba(51, 65, 85, 0.8);
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
   }
 
   input::placeholder {
     color: var(--text-muted);
   }
 
+  /* Botones base */
   button {
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    font-family: inherit;
+  }
+
+  /* Prevenir zoom en iOS */
+  @supports (-webkit-touch-callout: none) {
+    input, select, textarea {
+      font-size: 16px !important;
+    }
   }
 }
 
 @layer components {
+  /* Tarjetas */
   .card {
-    @apply bg-slate-800 rounded-2xl p-5 shadow-xl border border-slate-700;
+    @apply bg-slate-800/95 rounded-2xl p-5 shadow-xl;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    backdrop-filter: blur(10px);
   }
 
-  .meal-item, .food-item {
-    @apply bg-slate-700/50 rounded-xl p-4 border border-slate-600/50 transition-all;
+  /* Items de comida */
+  .meal-item {
+    @apply bg-slate-700/60 rounded-xl p-3 border transition-all;
+    border-color: rgba(100, 116, 139, 0.4);
   }
 
-  .meal-item:active, .food-item:active {
-    @apply scale-95;
+  .meal-item:active {
+    @apply scale-[0.98];
   }
 
+  /* Items de alimentos */
+  .food-item {
+    @apply bg-slate-700/50 rounded-lg p-3 border transition-all;
+    border-color: rgba(100, 116, 139, 0.3);
+  }
+
+  .food-item:active {
+    @apply scale-[0.98];
+  }
+
+  /* Botón primario */
   .btn-primary {
     @apply bg-gradient-to-r from-purple-600 to-purple-500 text-white font-semibold rounded-lg shadow-lg;
-    @apply active:scale-95 transition-transform;
+    @apply active:scale-95 transition-all duration-200;
+  }
+
+  .btn-primary:hover {
+    @apply shadow-purple-500/30;
   }
 }
 
+/* Scrollbar personalizado */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -96,8 +141,41 @@
   border-radius: 3px;
 }
 
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}
+
+/* Safe area para dispositivos con notch */
 @supports (padding: env(safe-area-inset-bottom)) {
   body {
     padding-bottom: env(safe-area-inset-bottom);
   }
+}
+
+/* Animaciones globales */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+  }
+}
+
+/* Scroll suave */
+html {
+  scroll-behavior: smooth;
 }
