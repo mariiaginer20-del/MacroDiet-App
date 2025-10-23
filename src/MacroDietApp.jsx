@@ -442,7 +442,7 @@ const MacroDietApp = () => {
   );
 
   const SearchTab = () => (
-    <div className="pb-24">
+    <div style={{ paddingBottom: '6rem' }}>
       <div style={{
         background: 'white',
         border: '1px solid #e5e7eb',
@@ -451,19 +451,31 @@ const MacroDietApp = () => {
         marginBottom: '1rem',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
       }}>
-        <h2 className="text-xl font-bold mb-4 text-gray-800">Buscar Alimentos</h2>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>
+          Buscar Alimentos
+        </h2>
         
         <input
           type="text"
           placeholder="Buscar alimento..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full mb-4"
+          style={{
+            width: '100%',
+            padding: '0.875rem 1rem',
+            background: 'white',
+            border: '1px solid #d1d5db',
+            borderRadius: '0.5rem',
+            fontSize: '1rem',
+            marginBottom: '1rem'
+          }}
         />
 
-        <div className="mb-4">
-          <div className="text-xs text-gray-600 mb-2 font-semibold">Filtrar por:</div>
-          <div className="flex gap-2 flex-wrap">
+        <div style={{ marginBottom: '1rem' }}>
+          <div style={{ fontSize: '0.75rem', color: '#4b5563', fontWeight: '600', marginBottom: '0.5rem' }}>
+            Filtrar por:
+          </div>
+          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             <button
               onClick={() => toggleMacroFilter('carbs')}
               className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
@@ -538,7 +550,7 @@ const MacroDietApp = () => {
     }), { carbs: 0, protein: 0, fats: 0 });
     
     return (
-      <div className="pb-24">
+      <div style={{ paddingBottom: '6rem' }}>
         {/* Selector de tipo de comida */}
         <div style={{
           background: 'linear-gradient(to bottom, #e0e7ff 0%, #f3f4f6 100%)',
@@ -911,9 +923,18 @@ const MacroDietApp = () => {
   ];
 
   return (
-    <div className="max-w-md mx-auto min-h-screen bg-gray-50">
-      <div className="p-4">
-        <h1 className="text-2xl font-bold text-center mb-6 bg-gradient-to-r from-purple-600 to-green-600 bg-clip-text text-transparent">
+    <div style={{ maxWidth: '28rem', margin: '0 auto', minHeight: '100vh', background: '#f9fafb' }}>
+      <div style={{ padding: '1rem' }}>
+        <h1 style={{ 
+          fontSize: '1.5rem', 
+          fontWeight: 'bold', 
+          textAlign: 'center', 
+          marginBottom: '1.5rem',
+          background: 'linear-gradient(to right, rgb(147, 51, 234), rgb(22, 163, 74))',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text'
+        }}>
           Macro Diet
         </h1>
 
@@ -939,22 +960,40 @@ const MacroDietApp = () => {
         )}
       </div>
 
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-2 py-1 max-w-md mx-auto">
-        <div className="flex justify-around">
+      <nav style={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        background: 'white',
+        borderTop: '1px solid #e5e7eb',
+        padding: '0.25rem 0.5rem',
+        maxWidth: '28rem',
+        margin: '0 auto',
+        boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.05)'
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
           {tabs.map(tab => {
             const Icon = tab.icon;
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex flex-col items-center py-2 px-3 rounded-lg transition-all ${
-                  activeTab === tab.id
-                    ? 'text-purple-600'
-                    : 'text-gray-500'
-                }`}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  padding: '0.5rem 0.75rem',
+                  borderRadius: '0.5rem',
+                  transition: 'all 0.2s',
+                  background: 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: activeTab === tab.id ? 'rgb(147, 51, 234)' : 'rgb(107, 114, 128)'
+                }}
               >
                 <Icon size={22} />
-                <span className="text-xs mt-0.5">{tab.label}</span>
+                <span style={{ fontSize: '0.75rem', marginTop: '0.125rem' }}>{tab.label}</span>
               </button>
             );
           })}
