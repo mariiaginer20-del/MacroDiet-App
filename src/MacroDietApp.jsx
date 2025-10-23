@@ -904,9 +904,9 @@ const MacroDietApp = () => {
   };
 
   const tabs = [
-    { id: 'home', label: 'Inicio', icon: Home },
+    { id: 'home', label: 'Mi Día', icon: Home },
     { id: 'search', label: 'Buscar', icon: Search },
-    { id: 'calendar', label: 'Calendario', icon: Calendar },
+    { id: 'calendar', label: 'Planificar', icon: Calendar },
     { id: 'settings', label: 'Ajustes', icon: Settings }
   ];
 
@@ -919,16 +919,22 @@ const MacroDietApp = () => {
 
         {activeTab === 'home' && <HomeTab />}
         {activeTab === 'search' && <SearchTab />}
-        {activeTab === 'calendar' && (
-          <div className="card pb-24">
-            <h2 className="text-xl font-bold mb-4 text-gray-800">Planificación</h2>
-            <p className="text-gray-500 text-center py-8 text-sm">Próximamente...</p>
-          </div>
-        )}
+        {activeTab === 'calendar' && <PlanningTab />}
         {activeTab === 'settings' && (
-          <div className="card pb-24">
-            <h2 className="text-xl font-bold mb-4 text-gray-800">Ajustes</h2>
-            <p className="text-gray-500 text-center py-8 text-sm">Próximamente...</p>
+          <div style={{
+            background: 'white',
+            border: '1px solid #e5e7eb',
+            borderRadius: '1rem',
+            padding: '1.25rem',
+            marginBottom: '1rem',
+            paddingBottom: '6rem'
+          }}>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>
+              Ajustes
+            </h2>
+            <p style={{ color: '#6b7280', textAlign: 'center', padding: '2rem 0', fontSize: '0.875rem' }}>
+              Próximamente...
+            </p>
           </div>
         )}
       </div>
