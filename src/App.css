@@ -1,31 +1,37 @@
 /* ===== LAYOUT PRINCIPAL ===== */
 .App {
   min-height: 100vh;
-  background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+  background: #f9fafb;
 }
 
 /* ===== TARJETAS ===== */
 .card {
-  background: rgba(30, 41, 59, 0.95);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: white;
+  border: 1px solid #e5e7eb;
   border-radius: 1rem;
   padding: 1.25rem;
   margin-bottom: 1rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  animation: fadeIn 0.3s ease-out;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Tarjeta especial para el resumen */
+.summary-card {
+  background: linear-gradient(to bottom, #e0e7ff 0%, #f3f4f6 100%);
+  border: 1px solid #d1d5db;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 /* ===== COMIDAS (Desplegables) ===== */
 .meal-item {
-  background: rgba(51, 65, 85, 0.6);
-  border: 1px solid rgba(100, 116, 139, 0.4);
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
   border-radius: 0.75rem;
   padding: 0.875rem;
   margin-bottom: 0.5rem;
   transition: all 0.2s ease;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
 }
 
 .meal-item:active {
@@ -42,148 +48,42 @@
   text-align: left;
 }
 
-/* Contenedor de alimentos desplegable */
-.meal-item > div:last-child {
-  animation: slideDown 0.3s ease-out;
-}
-
-/* Items de alimentos dentro del desplegable */
-.meal-item .bg-slate-600\/30 {
-  background: rgba(71, 85, 105, 0.3);
-  border: 1px solid rgba(100, 116, 139, 0.2);
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-}
-
 /* ===== ALIMENTOS EN BÚSQUEDA ===== */
 .food-item {
-  background: rgba(51, 65, 85, 0.5);
-  border: 1px solid rgba(100, 116, 139, 0.3);
+  background: white;
+  border: 1px solid #e5e7eb;
   border-radius: 0.75rem;
   padding: 0.875rem;
   margin-bottom: 0.5rem;
   transition: all 0.2s ease;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
 }
 
 .food-item:active {
   transform: scale(0.98);
 }
 
-.food-item:hover {
-  border-color: rgba(168, 85, 247, 0.4);
-  background: rgba(51, 65, 85, 0.7);
-}
-
-/* ===== TAGS DE MACROS EN ALIMENTOS (Colores pastel) ===== */
-/* Carbohidratos - ROJO pastel */
+/* ===== TAGS DE MACROS ===== */
 .bg-red-500\/20 {
   background-color: rgba(239, 68, 68, 0.15);
-  color: rgb(252, 165, 165);
+  color: rgb(220, 38, 38);
   border: 1px solid rgba(239, 68, 68, 0.3);
-  padding: 0.25rem 0.5rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  display: inline-block;
 }
 
-/* Grasas - AZUL pastel */
 .bg-blue-500\/20 {
   background-color: rgba(59, 130, 246, 0.15);
-  color: rgb(147, 197, 253);
+  color: rgb(37, 99, 235);
   border: 1px solid rgba(59, 130, 246, 0.3);
-  padding: 0.25rem 0.5rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  display: inline-block;
 }
 
-/* Proteínas - VERDE pastel */
 .bg-green-500\/20 {
   background-color: rgba(34, 197, 94, 0.15);
-  color: rgb(134, 239, 172);
-  border: 1px solid rgba(34, 197, 94, 0.3);
-  padding: 0.25rem 0.5rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  display: inline-block;
-}
-
-.text-red-300 { color: rgb(252, 165, 165); }
-.text-blue-300 { color: rgb(147, 197, 253); }
-.text-green-300 { color: rgb(134, 239, 172); }
-
-.border-red-500\/30 { border-color: rgba(239, 68, 68, 0.3); }
-.border-blue-500\/30 { border-color: rgba(59, 130, 246, 0.3); }
-.border-green-500\/30 { border-color: rgba(34, 197, 94, 0.3); }
-
-/* ===== FILTROS DE MACROS (Botones de filtro) ===== */
-/* Hidratos - VERDE */
-.bg-green-500\/10 {
-  background-color: rgba(34, 197, 94, 0.1);
-  color: rgb(134, 239, 172);
+  color: rgb(22, 163, 74);
   border: 1px solid rgba(34, 197, 94, 0.3);
 }
-
-.bg-green-500\/30 {
-  background-color: rgba(34, 197, 94, 0.3);
-  color: rgb(134, 239, 172);
-  border: 2px solid rgb(34, 197, 94);
-}
-
-/* Proteínas - AZUL */
-.bg-blue-500\/10 {
-  background-color: rgba(59, 130, 246, 0.1);
-  color: rgb(147, 197, 253);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-}
-
-.bg-blue-500\/30 {
-  background-color: rgba(59, 130, 246, 0.3);
-  color: rgb(147, 197, 253);
-  border: 2px solid rgb(59, 130, 246);
-}
-
-/* Grasas - ÁMBAR/AMARILLO */
-.bg-amber-500\/10 {
-  background-color: rgba(245, 158, 11, 0.1);
-  color: rgb(252, 211, 77);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-}
-
-.bg-amber-500\/30 {
-  background-color: rgba(245, 158, 11, 0.3);
-  color: rgb(252, 211, 77);
-  border: 2px solid rgb(245, 158, 11);
-}
-
-.text-green-400 { color: rgb(134, 239, 172); }
-.text-blue-400 { color: rgb(147, 197, 253); }
-.text-amber-400 { color: rgb(252, 211, 77); }
-
-.border-green-500 { border-color: rgb(34, 197, 94); }
-.border-blue-500 { border-color: rgb(59, 130, 246); }
-.border-amber-500 { border-color: rgb(245, 158, 11); }
 
 /* ===== BARRAS DE PROGRESO ===== */
-.h-2 {
-  height: 0.5rem;
-}
-
-.bg-slate-700 {
-  background-color: rgb(51, 65, 85);
-}
-
-.rounded-full {
-  border-radius: 9999px;
-}
-
-.overflow-hidden {
-  overflow: hidden;
+.bg-gray-200 {
+  background-color: #e5e7eb;
 }
 
 .bg-green-500 {
@@ -202,74 +102,82 @@
   background: linear-gradient(90deg, rgb(168, 85, 247), rgb(192, 132, 252));
 }
 
-/* ===== COLORES DE TEXTO PARA RESUMEN ===== */
-.text-green-400 { color: rgb(74, 222, 128); }
-.text-blue-400 { color: rgb(96, 165, 250); }
-.text-amber-400 { color: rgb(251, 191, 36); }
-.text-purple-400 { color: rgb(192, 132, 252); }
+/* ===== COLORES DE TEXTO ===== */
+.text-green-600 { color: rgb(22, 163, 74); }
+.text-blue-600 { color: rgb(37, 99, 235); }
+.text-amber-600 { color: rgb(217, 119, 6); }
+.text-purple-600 { color: rgb(147, 51, 234); }
 
-.text-gray-400 { color: rgb(156, 163, 175); }
-.text-white { color: rgb(255, 255, 255); }
+.text-gray-500 { color: rgb(107, 114, 128); }
+.text-gray-600 { color: rgb(75, 85, 99); }
+.text-gray-700 { color: rgb(55, 65, 81); }
+.text-gray-800 { color: rgb(31, 41, 55); }
 
 /* ===== BOTONES ===== */
-button,
-.btn {
-  font-family: inherit;
-  font-size: 0.875rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
-}
-
-button:active,
-.btn:active {
-  transform: scale(0.96);
-}
-
 .btn-primary {
   background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
   color: white;
   padding: 0.5rem 1rem;
-  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.25);
+  border-radius: 0.5rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(168, 85, 247, 0.3);
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-}
-
-.btn-primary:hover {
-  box-shadow: 0 6px 16px rgba(168, 85, 247, 0.35);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .btn-primary:active {
-  box-shadow: 0 2px 8px rgba(168, 85, 247, 0.25);
   transform: scale(0.95);
 }
 
-/* Botón eliminar */
-.text-red-400 {
-  color: rgb(248, 113, 113);
-  font-size: 0.75rem;
-  padding: 0.25rem 0.5rem;
+/* Botones de filtro */
+.bg-green-500\/10 {
+  background-color: rgba(34, 197, 94, 0.1);
+  color: rgb(22, 163, 74);
+  border: 1px solid rgba(34, 197, 94, 0.3);
 }
 
-.text-red-400:hover {
-  color: rgb(252, 165, 165);
+.bg-green-500\/30 {
+  background-color: rgba(34, 197, 94, 0.25);
+  color: rgb(21, 128, 61);
+  border: 2px solid rgb(34, 197, 94);
+}
+
+.bg-blue-500\/10 {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: rgb(37, 99, 235);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.bg-blue-500\/30 {
+  background-color: rgba(59, 130, 246, 0.25);
+  color: rgb(29, 78, 216);
+  border: 2px solid rgb(59, 130, 246);
+}
+
+.bg-amber-500\/10 {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: rgb(217, 119, 6);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.bg-amber-500\/30 {
+  background-color: rgba(245, 158, 11, 0.25);
+  color: rgb(180, 83, 9);
+  border: 2px solid rgb(245, 158, 11);
 }
 
 /* ===== NAVEGACIÓN INFERIOR ===== */
 nav {
-  background: rgba(30, 41, 59, 0.98);
-  backdrop-filter: blur(12px);
-  border-top: 1px solid rgba(148, 163, 184, 0.2);
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  background: white;
+  border-top: 1px solid #e5e7eb;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
 }
 
 nav button {
-  transition: all 0.2s ease;
   background: transparent;
   border: none;
   padding: 0.5rem 0.75rem;
@@ -277,19 +185,17 @@ nav button {
   flex-direction: column;
   align-items: center;
   gap: 0.125rem;
+  color: rgb(107, 114, 128);
+  transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 nav button:active {
   transform: scale(0.95);
 }
 
-/* Color activo - púrpura */
-.text-purple-400 {
-  color: rgb(192, 132, 252);
-}
-
-nav .text-gray-400 {
-  color: rgb(156, 163, 175);
+.text-purple-600 {
+  color: rgb(147, 51, 234);
 }
 
 /* ===== INPUTS ===== */
@@ -299,10 +205,10 @@ select,
 textarea {
   width: 100%;
   padding: 0.875rem 1rem;
-  background: rgba(51, 65, 85, 0.6);
-  border: 2px solid rgba(148, 163, 184, 0.2);
+  background: white;
+  border: 1px solid #d1d5db;
   border-radius: 0.5rem;
-  color: #f1f5f9;
+  color: #1f2937;
   font-size: 16px;
   outline: none;
   transition: all 0.3s ease;
@@ -311,111 +217,44 @@ textarea {
 input:focus,
 select:focus,
 textarea:focus {
-  background: rgba(51, 65, 85, 0.8);
   border-color: #a855f7;
-  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
 }
 
 input::placeholder {
-  color: #94a3b8;
+  color: #9ca3af;
 }
 
-/* ===== SECCIÓN "EQUIVALENTE EN GRAMOS" ===== */
-.bg-slate-700\/30 {
-  background: rgba(51, 65, 85, 0.3);
-  border: 1px solid rgba(100, 116, 139, 0.3);
+/* ===== UTILIDADES GENERALES ===== */
+.bg-white {
+  background-color: white;
 }
 
-/* ===== ETIQUETAS DE ALIMENTOS (H:1, P:1, etc) ===== */
-.bg-slate-600\/50 {
-  background: rgba(71, 85, 105, 0.5);
-  color: rgb(203, 213, 225);
-  padding: 0.125rem 0.375rem;
-  border-radius: 0.25rem;
-  font-size: 0.75rem;
+.bg-gray-50 {
+  background-color: #f9fafb;
 }
 
-/* ===== ANIMACIONES ===== */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.bg-gray-200 {
+  background-color: #e5e7eb;
 }
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    max-height: 0;
-    transform: translateY(-5px);
-  }
-  to {
-    opacity: 1;
-    max-height: 1000px;
-    transform: translateY(0);
-  }
+.border-gray-200 {
+  border-color: #e5e7eb;
 }
 
-/* ===== SCROLLBAR ===== */
-::-webkit-scrollbar {
-  width: 6px;
+.rounded-lg {
+  border-radius: 0.5rem;
 }
 
-::-webkit-scrollbar-track {
-  background: #0f172a;
+.rounded-xl {
+  border-radius: 0.75rem;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #a855f7;
-  border-radius: 3px;
+.rounded-full {
+  border-radius: 9999px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #9333ea;
-}
-
-/* ===== ESPACIADO ===== */
-.pb-24 {
-  padding-bottom: 6rem;
-}
-
-.mb-4 {
-  margin-bottom: 1rem;
-}
-
-.mb-3 {
-  margin-bottom: 0.75rem;
-}
-
-.mb-2 {
-  margin-bottom: 0.5rem;
-}
-
-.mb-1 {
-  margin-bottom: 0.25rem;
-}
-
-.mt-1 {
-  margin-top: 0.25rem;
-}
-
-.p-4 {
-  padding: 1rem;
-}
-
-.p-3 {
-  padding: 0.75rem;
-}
-
-.p-2 {
-  padding: 0.5rem;
-}
-
-/* ===== GRID Y LAYOUTS ===== */
+/* ===== GRID ===== */
 .grid {
   display: grid;
 }
@@ -426,6 +265,10 @@ input::placeholder {
 
 .grid-cols-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.gap-6 {
+  gap: 1.5rem;
 }
 
 .gap-4 {
@@ -448,6 +291,7 @@ input::placeholder {
   gap: 0.375rem;
 }
 
+/* ===== FLEX ===== */
 .flex {
   display: flex;
 }
@@ -460,8 +304,16 @@ input::placeholder {
   align-items: center;
 }
 
+.items-start {
+  align-items: flex-start;
+}
+
 .justify-between {
   justify-content: space-between;
+}
+
+.justify-center {
+  justify-content: center;
 }
 
 .flex-1 {
@@ -472,9 +324,101 @@ input::placeholder {
   flex-shrink: 0;
 }
 
+.flex-col {
+  flex-direction: column;
+}
+
+/* ===== ESPACIADO ===== */
+.pb-24 {
+  padding-bottom: 6rem;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.p-2 {
+  padding: 0.5rem;
+}
+
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.py-0\.5 {
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+}
+
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.py-1\.5 {
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-3 {
+  margin-bottom: 0.75rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.mt-0\.5 {
+  margin-top: 0.125rem;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.pt-3 {
+  padding-top: 0.75rem;
+}
+
 /* ===== TAMAÑOS ===== */
 .w-full {
   width: 100%;
+}
+
+.h-2 {
+  height: 0.5rem;
 }
 
 .min-w-0 {
@@ -512,6 +456,11 @@ input::placeholder {
   line-height: 1.25rem;
 }
 
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
 .text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
@@ -527,21 +476,9 @@ input::placeholder {
   line-height: 2rem;
 }
 
-/* ===== ESPACIADO INTERNO ===== */
-.space-y-2 > * + * {
-  margin-top: 0.5rem;
-}
-
-.space-y-3 > * + * {
-  margin-top: 0.75rem;
-}
-
-.space-y-4 > * + * {
-  margin-top: 1rem;
-}
-
-.space-y-6 > * + * {
-  margin-top: 1.5rem;
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 
 /* ===== BORDES ===== */
@@ -553,20 +490,21 @@ input::placeholder {
   border-top-width: 1px;
 }
 
-.border-slate-600\/50 {
-  border-color: rgba(71, 85, 105, 0.5);
+.border-2 {
+  border-width: 2px;
 }
 
-.border-slate-700 {
-  border-color: rgb(51, 65, 85);
+.overflow-hidden {
+  overflow: hidden;
 }
 
-.rounded-lg {
-  border-radius: 0.5rem;
+/* ===== ESPACIADO INTERNO ===== */
+.space-y-2 > * + * {
+  margin-top: 0.5rem;
 }
 
-.rounded-xl {
-  border-radius: 0.75rem;
+.space-y-4 > * + * {
+  margin-top: 1rem;
 }
 
 /* ===== TRANSICIONES ===== */
@@ -580,13 +518,33 @@ input::placeholder {
   transition-duration: 500ms;
 }
 
-.duration-200 {
-  transition-duration: 200ms;
+/* ===== ANIMACIONES ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 1000px;
+  }
 }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 640px) {
-  .card {
+  .card,
+  .summary-card {
     padding: 1rem;
   }
 
@@ -605,12 +563,7 @@ input::placeholder {
   }
 }
 
-/* ===== SCROLL SUAVE ===== */
-html {
-  scroll-behavior: smooth;
-}
-
-/* ===== SAFE AREA (iPhone notch) ===== */
+/* ===== SAFE AREA ===== */
 @supports (padding: env(safe-area-inset-bottom)) {
   nav {
     padding-bottom: calc(0.25rem + env(safe-area-inset-bottom));
