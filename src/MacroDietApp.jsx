@@ -1353,12 +1353,20 @@ const MacroDietApp = () => {
             </p>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {savedMeals.map(recipe => {
+            {filteredRecipes.map(recipe => {
               const totals = recipe.foods.reduce((sum, f) => ({
                 carbs: sum.carbs + (f.carbs * f.quantity),
                 protein: sum.protein + (f.protein * f.quantity),
                 fats: sum.fats + (f.fats * f.quantity)
               }), { carbs: 0, protein: 0, fats: 0 });
+              
+              const timeColors = {
+                poco: { bg: '#dcfce7', text: '#16a34a', border: '#86efac' },
+                medio: { bg: '#fef3c7', text: '#d97706', border: '#fcd34d' },
+                mucho: { bg: '#fee2e2', text: '#dc2626', border: '#fca5a5' }
+              };
+              
+              const timeColor = timeColors[recipe.timeInvested] || timeColors.medio;
               
               return (
                 <div key={recipe.id} style={{
@@ -1369,20 +1377,34 @@ const MacroDietApp = () => {
                   transition: 'all 0.2s'
                 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '0.75rem' }}>
-                    <div>
-                      <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '0.25rem' }}>
+                    <div style={{ flex: 1 }}>
+                      <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '0.5rem' }}>
                         {recipe.name}
                       </h3>
-                      <span style={{
-                        fontSize: '0.75rem',
-                        padding: '0.25rem 0.5rem',
-                        background: 'linear-gradient(135deg, #e0e7ff, #dbeafe)',
-                        color: '#3b82f6',
-                        borderRadius: '9999px',
-                        fontWeight: '600'
-                      }}>
-                        {recipe.type}
-                      </span>
+                      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                        <span style={{
+                          fontSize: '0.75rem',
+                          padding: '0.25rem 0.5rem',
+                          background: 'linear-gradient(135deg, #e0e7ff, #dbeafe)',
+                          color: '#3b82f6',
+                          borderRadius: '9999px',
+                          fontWeight: '600'
+                        }}>
+                          {recipe.type}
+                        </span>
+                        <span style={{
+                          fontSize: '0.75rem',
+                          padding: '0.25rem 0.5rem',
+                          background: timeColor.bg,
+                          color: timeColor.text,
+                          border: `1px solid ${timeColor.border}`,
+                          borderRadius: '9999px',
+                          fontWeight: '600',
+                          textTransform: 'capitalize'
+                        }}>
+                          ⏱️ {recipe.timeInvested}
+                        </span>
+                      </div>
                     </div>
                     <div style={{ display: 'flex', gap: '0.5rem' }}>
                       <button
