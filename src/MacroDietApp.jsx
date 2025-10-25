@@ -429,7 +429,7 @@ const MacroDietApp = () => {
     { id: 'home', label: 'Mi Día', icon: Home },
     { id: 'search', label: 'Alimentos', icon: Search },
     { id: 'calendar', label: 'Comidas', icon: Calendar },
-    { id: 'recipes', label: 'Recetas', icon: Book },
+    { id: 'recipes', label: 'Recetas', icon: () => <span style={{ fontSize: '22px' }}>📖</span> },
     { id: 'settings', label: 'Ajustes', icon: Settings }
   ];
 
