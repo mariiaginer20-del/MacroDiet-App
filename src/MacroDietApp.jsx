@@ -208,8 +208,9 @@ const MacroDietApp = () => {
   };
 
   const updateFoodQuantity = (foodId, quantity) => {
+    const parsedQty = parseFloat(quantity);
     setSelectedFoods(selectedFoods.map(f => 
-      f.id === foodId ? { ...f, quantity: Math.max(1, parseInt(quantity) || 1) } : f
+      f.id === foodId ? { ...f, quantity: Math.max(0.1, isNaN(parsedQty) ? 1 : parsedQty) } : f
     ));
   };
 
@@ -452,29 +453,97 @@ const MacroDietApp = () => {
                 📊 Resumen del Día
               </h2>
               
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem', marginBottom: '1.5rem' }}>
                 <div>
                   <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#16a34a' }}>
                     {totals.carbs.toFixed(1)} <span style={{ fontSize: '1.25rem', color: '#6b7280' }}>/ {dailyGoals.carbs}</span>
                   </div>
-                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Hidratos</div>
+                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Unidades Hidratos</div>
                   <ProgressBar current={totals.carbs} goal={dailyGoals.carbs} color="bg-green-500" />
+                  <div style={{ fontSize: '0.875rem', color: '#1f2937', fontWeight: '600', marginTop: '0.5rem' }}>
+                    Quedan {remaining.carbs.toFixed(1)}
+                  </div>
                 </div>
 
                 <div>
                   <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#2563eb' }}>
                     {totals.protein.toFixed(1)} <span style={{ fontSize: '1.25rem', color: '#6b7280' }}>/ {dailyGoals.protein}</span>
                   </div>
-                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Proteína</div>
+                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Unidades Proteína</div>
                   <ProgressBar current={totals.protein} goal={dailyGoals.protein} color="bg-blue-500" />
+                  <div style={{ fontSize: '0.875rem', color: '#1f2937', fontWeight: '600', marginTop: '0.5rem' }}>
+                    Quedan {remaining.protein.toFixed(1)}
+                  </div>
                 </div>
 
                 <div>
                   <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#d97706' }}>
                     {totals.fats.toFixed(1)} <span style={{ fontSize: '1.25rem', color: '#6b7280' }}>/ {dailyGoals.fats}</span>
                   </div>
-                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Grasa</div>
+                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Unidades Grasa</div>
                   <ProgressBar current={totals.fats} goal={dailyGoals.fats} color="bg-amber-500" />
+                  <div style={{ fontSize: '0.875rem', color: '#1f2937', fontWeight: '600', marginTop: '0.5rem' }}>
+                    Quedan {remaining.fats.toFixed(1)}
+                  </div>
+                </div>
+
+                <div>
+                  <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#9333ea' }}>
+                    0 <span style={{ fontSize: '1.25rem', color: '#6b7280' }}>/ {dailyGoals.calories}</span>
+                  </div>
+                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Calorías</div>
+                  <ProgressBar current={0} goal={dailyGoals.calories} color="bg-amber-500" />
+                  <div style={{ fontSize: '0.875rem', color: '#1f2937', fontWeight: '600', marginTop: '0.5rem' }}>
+                    Quedan {dailyGoals.calories}
+                  </div>
+                </div>
+              </div>
+
+              <div style={{
+                background: 'white',
+                borderRadius: '0.75rem',
+                padding: '1rem',
+                border: '1px solid #e5e7eb'
+              }}>
+                <h3 style={{ 
+                  fontSize: '1rem', 
+                  fontWeight: 'bold', 
+                  marginBottom: '1rem', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '0.5rem',
+                  color: '#1f2937'
+                }}>
+                  <span>📏</span> Equivalente en gramos
+                </h3>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', textAlign: 'center' }}>
+                  <div>
+                    <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#16a34a' }}>
+                      {Math.round(totals.carbs * conversions.carbs)}g <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>/ {dailyGoals.carbs * conversions.carbs}g</span>
+                    </div>
+                    <div style={{ fontSize: '0.75rem', color: '#4b5563', marginTop: '0.25rem', marginBottom: '0.5rem' }}>
+                      Hidratos consumidos
+                    </div>
+                    <div style={{ fontSize: '0.875rem', fontWeight: 'bold', color: '#1f2937' }}>Quedan {Math.round(remaining.carbs * conversions.carbs)}g</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#2563eb' }}>
+                      {Math.round(totals.protein * conversions.protein)}g <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>/ {dailyGoals.protein * conversions.protein}g</span>
+                    </div>
+                    <div style={{ fontSize: '0.75rem', color: '#4b5563', marginTop: '0.25rem', marginBottom: '0.5rem' }}>
+                      Proteína consumida
+                    </div>
+                    <div style={{ fontSize: '0.875rem', fontWeight: 'bold', color: '#1f2937' }}>Quedan {Math.round(remaining.protein * conversions.protein)}g</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d97706' }}>
+                      {Math.round(totals.fats * conversions.fats)}g <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>/ {dailyGoals.fats * conversions.fats}g</span>
+                    </div>
+                    <div style={{ fontSize: '0.75rem', color: '#4b5563', marginTop: '0.25rem', marginBottom: '0.5rem' }}>
+                      Grasa consumida
+                    </div>
+                    <div style={{ fontSize: '0.875rem', fontWeight: 'bold', color: '#1f2937' }}>Quedan {Math.round(remaining.fats * conversions.fats)}g</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -771,7 +840,10 @@ const MacroDietApp = () => {
                         {food.name}
                       </div>
                       <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>
-                        {food.amount}
+                        {food.quantity > 1 
+                          ? `${Math.round(parseFloat(food.amount) * food.quantity)}${food.amount.replace(/[0-9.]/g, '')}`
+                          : food.amount
+                        }
                       </div>
                     </div>
                     <input
@@ -780,14 +852,15 @@ const MacroDietApp = () => {
                       onChange={(e) => updateFoodQuantity(food.id, e.target.value)}
                       onClick={(e) => e.stopPropagation()}
                       style={{
-                        width: '60px',
+                        width: '70px',
                         padding: '0.375rem',
                         textAlign: 'center',
                         border: '1px solid #d1d5db',
                         borderRadius: '0.375rem',
                         marginRight: '0.5rem'
                       }}
-                      min="1"
+                      min="0.1"
+                      step="0.1"
                     />
                     <button
                       onClick={() => removeFromSelectedFoods(food.id)}
