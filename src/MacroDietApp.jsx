@@ -51,7 +51,6 @@ const MacroDietApp = () => {
   }, {});
 
   const foodDatabase = [
- // HIDRATOS (H:1)
     { id: 1, name: 'Patata', amount: '130g', carbs: 24, fats: 0.1, protein: 2.0, label: 'H:1' },
     { id: 2, name: 'Arroz/Pasta/Quinoa', amount: '30g', carbs: 24, fats: 0.5, protein: 2.5, label: 'H:1' },
     { id: 3, name: 'Boniato', amount: '120g', carbs: 24, fats: 0.1, protein: 1.6, label: 'H:1' },
@@ -74,8 +73,6 @@ const MacroDietApp = () => {
     { id: 20, name: 'Palomitas Popitas Zero', amount: '30g', carbs: 24, fats: 3, protein: 3, label: 'H:1' },
     { id: 21, name: 'Papilla de cereales', amount: '2g', carbs: 24, fats: 0, protein: 0.1, label: 'H:1' },
     { id: 22, name: 'Azúcar de mesa', amount: '25g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
-    
-    // PROTEÃNA (P:1)
     { id: 23, name: 'Pescado blanco', amount: '120g', carbs: 0, fats: 2, protein: 22, label: 'P:1' },
     { id: 24, name: 'Molusco', amount: '120g', carbs: 0, fats: 2, protein: 22, label: 'P:1' },
     { id: 25, name: 'Marisco', amount: '65g', carbs: 0, fats: 1.5, protein: 22, label: 'P:1' },
@@ -92,8 +89,6 @@ const MacroDietApp = () => {
     { id: 36, name: 'Seitán', amount: '100g', carbs: 4, fats: 2, protein: 22, label: 'P:1' },
     { id: 37, name: 'Levadura nutricional', amount: '35g', carbs: 3, fats: 1, protein: 22, label: 'P:1' },
     { id: 38, name: 'Aislado proteína vegetal', amount: '30g', carbs: 1, fats: 0.5, protein: 22, label: 'P:1' },
-    
-    // GRASA (G:1)
     { id: 39, name: 'AOVE (cuchara sopera)', amount: '12g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
     { id: 40, name: 'Frutos secos', amount: '15g', carbs: 2, fats: 10, protein: 3, label: 'G:1' },
     { id: 41, name: 'Cacahuete/Crema', amount: '15g', carbs: 2, fats: 10, protein: 4, label: 'G:1' },
@@ -109,22 +104,18 @@ const MacroDietApp = () => {
     { id: 51, name: 'Yogur griego', amount: '80g', carbs: 3, fats: 10, protein: 5, label: 'G:1' },
     { id: 52, name: 'Queso curado/semicurado', amount: '25g', carbs: 0, fats: 10, protein: 6, label: 'G:1' },
     { id: 53, name: 'Tahini', amount: '15g', carbs: 1, fats: 10, protein: 3, label: 'G:1' },
-    
-    // 0.5P + 0.5H
     { id: 54, name: 'Salsa de soja', amount: '140g', carbs: 12, fats: 1, protein: 11, label: '0.5P+0.5H' },
-    { id: 55, name: 'Leche desnatada', amount: '290ml', carbs: 6, fats: 5, protein: 4.4, label: '0.5P+0.5H' },
-    { id: 56, name: 'Leche+proteínas desnatada', amount: '230ml', carbs: 6, fats: 5, protein: 4.4, label: '0.5P+0.5H' },
-    { id: 57, name: 'Yogur+proteínas fresa', amount: '125g', carbs: 12, fats: 2.5, protein: 5.5, label: '0.5P+0.5H' },
-    { id: 58, name: 'Yogur+proteínas arándanos', amount: '200g', carbs: 12, fats: 2.5, protein: 5.5, label: '0.5P+0.5H' },
-    { id: 59, name: 'Yogur griego desnatado', amount: '170g', carbs: 6, fats: 5, protein: 4.4, label: '0.5P+0.5H' },
-    { id: 60, name: 'Yogur desnatado', amount: '280g', carbs: 6, fats: 5, protein: 4.4, label: '0.5P+0.5H' },
+    { id: 55, name: 'Leche desnatada', amount: '290ml', carbs: 12, fats: 0.5, protein: 11, label: '0.5P+0.5H' },
+    { id: 56, name: 'Leche+proteínas desnatada', amount: '230ml', carbs: 12, fats: 0.5, protein: 11, label: '0.5P+0.5H' },
+    { id: 57, name: 'Yogur+proteínas fresa', amount: '125g', carbs: 12, fats: 0.5, protein: 11, label: '0.5P+0.5H' },
+    { id: 58, name: 'Yogur+proteínas arándanos', amount: '200g', carbs: 12, fats: 0.5, protein: 11, label: '0.5P+0.5H' },
+    { id: 59, name: 'Yogur griego desnatado', amount: '170g', carbs: 12, fats: 1, protein: 11, label: '0.5P+0.5H' },
+    { id: 60, name: 'Yogur desnatado', amount: '280g', carbs: 12, fats: 0.5, protein: 11, label: '0.5P+0.5H' },
     { id: 61, name: 'Legumbres cocidas', amount: '120g', carbs: 12, fats: 1, protein: 11, label: '0.5P+0.5H' },
     { id: 62, name: 'Legumbres secas', amount: '30g', carbs: 12, fats: 1, protein: 11, label: '0.5P+0.5H' },
     { id: 63, name: 'Harina de garbanzo', amount: '30g', carbs: 12, fats: 1.5, protein: 11, label: '0.5P+0.5H' },
     { id: 64, name: 'Pasta lentejas rojas', amount: '30g', carbs: 12, fats: 0.5, protein: 11, label: '0.5P+0.5H' },
     { id: 65, name: 'Alpro coco/avena', amount: '200ml', carbs: 12, fats: 2, protein: 11, label: '0.5P+0.5H' },
-    
-    // 0.5P + 0.5G
     { id: 66, name: 'Beyond Burger', amount: '40g', carbs: 1, fats: 5, protein: 11, label: '0.5P+0.5G' },
     { id: 67, name: 'Choriburguer Heura', amount: '65g', carbs: 1, fats: 5, protein: 11, label: '0.5P+0.5G' },
     { id: 68, name: 'Huevo', amount: '1ud (60-70g)', carbs: 1, fats: 5, protein: 11, label: '0.5P+0.5G' },
@@ -147,17 +138,11 @@ const MacroDietApp = () => {
     { id: 85, name: 'Edamame', amount: '80g', carbs: 2, fats: 5, protein: 11, label: '0.5P+0.5G' },
     { id: 86, name: 'Bebida soja sin azúcar', amount: '330ml', carbs: 2, fats: 5, protein: 11, label: '0.5P+0.5G' },
     { id: 87, name: 'Yogur Alpro Skyr', amount: '150g', carbs: 2, fats: 5, protein: 11, label: '0.5P+0.5G' },
-    
-    // 0.25H + 0.2P + 0.5G
     { id: 88, name: 'Leche entera', amount: '165ml', carbs: 6, fats: 5, protein: 4.4, label: '0.25H+0.2P+0.5G' },
     { id: 89, name: 'Kéfir', amount: '150ml', carbs: 6, fats: 5, protein: 4.4, label: '0.25H+0.2P+0.5G' },
     { id: 90, name: 'Yogur natural', amount: '165g', carbs: 6, fats: 5, protein: 4.4, label: '0.25H+0.2P+0.5G' },
     { id: 91, name: 'Bebida soja calcio', amount: '230ml', carbs: 6, fats: 5, protein: 4.4, label: '0.25H+0.2P+0.5G' },
-    
-    // 0.5H + 0.25P + 0.25G
     { id: 92, name: 'Leche semidesnatada', amount: '220ml', carbs: 12, fats: 2.5, protein: 5.5, label: '0.5H+0.25P+0.25G' },
-    
-    // 0.25H + 0.5P + 0.25G
     { id: 93, name: 'Cacahuete polvo desgraso', amount: '25g', carbs: 6, fats: 2.5, protein: 11, label: '0.25H+0.5P+0.25G' },
     { id: 94, name: 'Cacao puro desgrasado', amount: '25g', carbs: 6, fats: 2.5, protein: 11, label: '0.25H+0.5P+0.25G' },
   ];
@@ -207,6 +192,129 @@ const MacroDietApp = () => {
     localStorage.setItem('meals', JSON.stringify(updatedMeals));
   };
 
+  const addToSelectedFoods = (food) => {
+    const existing = selectedFoods.find(f => f.id === food.id);
+    if (existing) {
+      setSelectedFoods(selectedFoods.map(f => 
+        f.id === food.id ? { ...f, quantity: f.quantity + 1 } : f
+      ));
+    } else {
+      setSelectedFoods([...selectedFoods, { ...food, quantity: 1 }]);
+    }
+  };
+
+  const removeFromSelectedFoods = (foodId) => {
+    setSelectedFoods(selectedFoods.filter(f => f.id !== foodId));
+  };
+
+  const updateFoodQuantity = (foodId, quantity) => {
+    setSelectedFoods(selectedFoods.map(f => 
+      f.id === foodId ? { ...f, quantity: Math.max(1, parseInt(quantity) || 1) } : f
+    ));
+  };
+
+  const calculateOptimalPortions = () => {
+    if (selectedFoods.length === 0) return;
+    
+    const goals = mealTypeGoals[selectedMealType];
+    const totalCarbs = selectedFoods.reduce((sum, f) => sum + (f.carbs * f.quantity), 0);
+    const totalProtein = selectedFoods.reduce((sum, f) => sum + (f.protein * f.quantity), 0);
+    const totalFats = selectedFoods.reduce((sum, f) => sum + (f.fats * f.quantity), 0);
+    
+    const carbFactor = goals.carbs > 0 ? (goals.carbs * conversions.carbs) / Math.max(totalCarbs, 1) : 1;
+    const proteinFactor = goals.protein > 0 ? (goals.protein * conversions.protein) / Math.max(totalProtein, 1) : 1;
+    const fatFactor = goals.fats > 0 ? (goals.fats * conversions.fats) / Math.max(totalFats, 1) : 1;
+    
+    const avgFactor = (carbFactor + proteinFactor + fatFactor) / 3;
+    
+    setSelectedFoods(selectedFoods.map(f => ({
+      ...f,
+      quantity: Math.max(1, Math.round(f.quantity * avgFactor))
+    })));
+  };
+
+  const registerInMyDay = () => {
+    if (selectedFoods.length === 0) return;
+    
+    const newMeal = {
+      id: Date.now(),
+      name: selectedMealType,
+      time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
+      foods: selectedFoods.map(f => ({ ...f }))
+    };
+    
+    const updatedMeals = [...meals, newMeal];
+    setMeals(updatedMeals);
+    localStorage.setItem('meals', JSON.stringify(updatedMeals));
+    setSelectedFoods([]);
+    setActiveTab('home');
+  };
+
+  const saveMealRecipe = () => {
+    if (selectedFoods.length === 0 || !mealName.trim()) return;
+    
+    const newRecipe = {
+      id: Date.now(),
+      name: mealName,
+      type: selectedMealType,
+      timeInvested: timeInvested,
+      foods: selectedFoods
+    };
+    
+    const updatedRecipes = [...savedMeals, newRecipe];
+    setSavedMeals(updatedRecipes);
+    localStorage.setItem('savedMeals', JSON.stringify(updatedRecipes));
+    setMealName('');
+    setTimeInvested('medio');
+    setShowSaveModal(false);
+    setSelectedFoods([]);
+  };
+
+  const addMealType = () => {
+    const newMeal = {
+      id: Date.now(),
+      name: 'Nueva Comida',
+      carbs: 1,
+      protein: 1,
+      fats: 1
+    };
+    const updated = [...mealTypes, newMeal];
+    setMealTypes(updated);
+    localStorage.setItem('mealTypes', JSON.stringify(updated));
+  };
+
+  const updateMealType = (id, field, value) => {
+    const updated = mealTypes.map(m => 
+      m.id === id ? { ...m, [field]: field === 'name' ? value : parseFloat(value) || 0 } : m
+    );
+    setMealTypes(updated);
+    localStorage.setItem('mealTypes', JSON.stringify(updated));
+  };
+
+  const deleteMealType = (id) => {
+    const updated = mealTypes.filter(m => m.id !== id);
+    setMealTypes(updated);
+    localStorage.setItem('mealTypes', JSON.stringify(updated));
+  };
+
+  const updateConversion = (macro, value) => {
+    const updated = { ...conversions, [macro]: parseFloat(value) || 1 };
+    setConversions(updated);
+    localStorage.setItem('conversions', JSON.stringify(updated));
+  };
+
+  const deleteRecipe = (id) => {
+    const updated = savedMeals.filter(m => m.id !== id);
+    setSavedMeals(updated);
+    localStorage.setItem('savedMeals', JSON.stringify(updated));
+  };
+
+  const loadRecipe = (recipe) => {
+    setSelectedFoods(recipe.foods);
+    setSelectedMealType(recipe.type);
+    setActiveTab('calendar');
+  };
+
   const getTotalMacros = () => {
     return meals.reduce((total, meal) => {
       meal.foods.forEach(food => {
@@ -225,6 +333,66 @@ const MacroDietApp = () => {
     protein: Math.max(0, dailyGoals.protein - totals.protein),
     fats: Math.max(0, dailyGoals.fats - totals.fats),
   };
+
+  const MacroTag = ({ carbs, fats, protein, conversions }) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+      <div style={{ display: 'flex', gap: '0.375rem', flexWrap: 'wrap' }}>
+        {carbs > 0 && (
+          <span style={{
+            padding: '0.25rem 0.5rem',
+            borderRadius: '9999px',
+            fontSize: '0.75rem',
+            fontWeight: '600',
+            background: 'rgba(34, 197, 94, 0.15)',
+            color: 'rgb(22, 163, 74)',
+            border: '1px solid rgba(34, 197, 94, 0.3)'
+          }}>
+            H:{(carbs / conversions.carbs).toFixed(1)}
+          </span>
+        )}
+        {protein > 0 && (
+          <span style={{
+            padding: '0.25rem 0.5rem',
+            borderRadius: '9999px',
+            fontSize: '0.75rem',
+            fontWeight: '600',
+            background: 'rgba(59, 130, 246, 0.15)',
+            color: 'rgb(37, 99, 235)',
+            border: '1px solid rgba(59, 130, 246, 0.3)'
+          }}>
+            P:{(protein / conversions.protein).toFixed(1)}
+          </span>
+        )}
+        {fats > 0 && (
+          <span style={{
+            padding: '0.25rem 0.5rem',
+            borderRadius: '9999px',
+            fontSize: '0.75rem',
+            fontWeight: '600',
+            background: 'rgba(245, 158, 11, 0.15)',
+            color: 'rgb(217, 119, 6)',
+            border: '1px solid rgba(245, 158, 11, 0.3)'
+          }}>
+            G:{(fats / conversions.fats).toFixed(1)}
+          </span>
+        )}
+      </div>
+      <div style={{ display: 'flex', gap: '0.375rem', flexWrap: 'wrap' }}>
+        <span style={{
+          fontSize: '0.625rem',
+          padding: '0.125rem 0.375rem',
+          borderRadius: '0.25rem',
+          background: '#f3f4f6',
+          color: '#374151',
+          fontWeight: '600'
+        }}>
+          {carbs > 0 && `${Math.round(carbs)}g H`}
+          {protein > 0 && (carbs > 0 ? ' | ' : '') + `${Math.round(protein)}g P`}
+          {fats > 0 && (carbs > 0 || protein > 0 ? ' | ' : '') + `${Math.round(fats)}g G`}
+        </span>
+      </div>
+    </div>
+  );
 
   const ProgressBar = ({ current, goal, color }) => {
     const percentage = Math.min((current / goal) * 100, 100);
@@ -326,34 +494,43 @@ const MacroDietApp = () => {
                 </p>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  {meals.map(meal => (
-                    <div key={meal.id} style={{
-                      background: '#f9fafb',
-                      border: '1px solid #e5e7eb',
-                      borderRadius: '0.75rem',
-                      padding: '0.875rem'
-                    }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <div>
-                          <div style={{ fontWeight: '600', color: '#1f2937' }}>{meal.name}</div>
-                          <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>{meal.time}</div>
+                  {meals.map(meal => {
+                    const mealTotals = meal.foods.reduce((sum, f) => ({
+                      carbs: sum.carbs + (f.carbs * (f.quantity || 1)),
+                      protein: sum.protein + (f.protein * (f.quantity || 1)),
+                      fats: sum.fats + (f.fats * (f.quantity || 1))
+                    }), { carbs: 0, protein: 0, fats: 0 });
+
+                    return (
+                      <div key={meal.id} style={{
+                        background: '#f9fafb',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '0.75rem',
+                        padding: '0.875rem'
+                      }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '0.5rem' }}>
+                          <div style={{ flex: 1 }}>
+                            <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.25rem' }}>{meal.name}</div>
+                            <div style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '0.5rem' }}>{meal.time}</div>
+                            <MacroTag carbs={mealTotals.carbs} fats={mealTotals.fats} protein={mealTotals.protein} conversions={conversions} />
+                          </div>
+                          <button
+                            onClick={() => deleteMeal(meal.id)}
+                            style={{
+                              color: '#ef4444',
+                              fontSize: '0.75rem',
+                              padding: '0.25rem 0.5rem',
+                              background: 'transparent',
+                              border: 'none',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            Eliminar
+                          </button>
                         </div>
-                        <button
-                          onClick={() => deleteMeal(meal.id)}
-                          style={{
-                            color: '#ef4444',
-                            fontSize: '0.75rem',
-                            padding: '0.25rem 0.5rem',
-                            background: 'transparent',
-                            border: 'none',
-                            cursor: 'pointer'
-                          }}
-                        >
-                          Eliminar
-                        </button>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -397,10 +574,11 @@ const MacroDietApp = () => {
                     borderRadius: '0.75rem',
                     padding: '0.875rem'
                   }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div>
-                        <div style={{ fontWeight: '600', color: '#1f2937' }}>{food.name}</div>
-                        <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>{food.amount}</div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '0.75rem' }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.25rem' }}>{food.name}</div>
+                        <div style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '0.5rem' }}>{food.amount}</div>
+                        <MacroTag carbs={food.carbs} fats={food.fats} protein={food.protein} conversions={conversions} />
                       </div>
                       <button
                         onClick={() => addFoodToMeal(food)}
@@ -412,7 +590,8 @@ const MacroDietApp = () => {
                           borderRadius: '0.5rem',
                           fontWeight: '600',
                           border: 'none',
-                          cursor: 'pointer'
+                          cursor: 'pointer',
+                          flexShrink: 0
                         }}
                       >
                         + Añadir
@@ -425,6 +604,12 @@ const MacroDietApp = () => {
           </div>
         )}
 
+        {activeTab === 'calendar' && (
+          <div style={{ paddingBottom: '6rem', textAlign: 'center', padding: '3rem 1rem' }}>
+            <p style={{ color: '#6b7280' }}>Sección de comidas (próximamente)</p>
+          </div>
+        )}
+
         {activeTab === 'recipes' && (
           <div style={{ paddingBottom: '6rem', textAlign: 'center', padding: '3rem 1rem' }}>
             <p style={{ color: '#6b7280' }}>Sección de recetas (próximamente)</p>
@@ -432,8 +617,271 @@ const MacroDietApp = () => {
         )}
 
         {activeTab === 'settings' && (
-          <div style={{ paddingBottom: '6rem', textAlign: 'center', padding: '3rem 1rem' }}>
-            <p style={{ color: '#6b7280' }}>Ajustes (próximamente)</p>
+          <div style={{ paddingBottom: '6rem' }}>
+            <div style={{
+              background: 'white',
+              border: '1px solid #e5e7eb',
+              borderRadius: '1rem',
+              padding: '1.25rem',
+              marginBottom: '1rem'
+            }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>
+                ⚙️ Conversiones de Macros
+              </h2>
+              <p style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '1rem' }}>
+                Define cuántos gramos equivalen a 1 unidad de cada macro
+              </p>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <div>
+                  <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#16a34a', display: 'block', marginBottom: '0.5rem' }}>
+                    1 Unidad de Hidratos =
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="number"
+                      value={conversions.carbs}
+                      onChange={(e) => updateConversion('carbs', e.target.value)}
+                      style={{
+                        flex: 1,
+                        padding: '0.75rem',
+                        border: '2px solid #16a34a',
+                        borderRadius: '0.5rem',
+                        fontSize: '1rem',
+                        fontWeight: '600'
+                      }}
+                      min="1"
+                    />
+                    <span style={{ fontSize: '1rem', fontWeight: '600', color: '#1f2937' }}>gramos</span>
+                  </div>
+                </div>
+                
+                <div>
+                  <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#2563eb', display: 'block', marginBottom: '0.5rem' }}>
+                    1 Unidad de Proteína =
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="number"
+                      value={conversions.protein}
+                      onChange={(e) => updateConversion('protein', e.target.value)}
+                      style={{
+                        flex: 1,
+                        padding: '0.75rem',
+                        border: '2px solid #2563eb',
+                        borderRadius: '0.5rem',
+                        fontSize: '1rem',
+                        fontWeight: '600'
+                      }}
+                      min="1"
+                    />
+                    <span style={{ fontSize: '1rem', fontWeight: '600', color: '#1f2937' }}>gramos</span>
+                  </div>
+                </div>
+                
+                <div>
+                  <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#d97706', display: 'block', marginBottom: '0.5rem' }}>
+                    1 Unidad de Grasa =
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="number"
+                      value={conversions.fats}
+                      onChange={(e) => updateConversion('fats', e.target.value)}
+                      style={{
+                        flex: 1,
+                        padding: '0.75rem',
+                        border: '2px solid #d97706',
+                        borderRadius: '0.5rem',
+                        fontSize: '1rem',
+                        fontWeight: '600'
+                      }}
+                      min="1"
+                    />
+                    <span style={{ fontSize: '1rem', fontWeight: '600', color: '#1f2937' }}>gramos</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div style={{
+              background: 'white',
+              border: '1px solid #e5e7eb',
+              borderRadius: '1rem',
+              padding: '1.25rem',
+              marginBottom: '1rem'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#1f2937' }}>
+                  🍽️ Tipos de Comidas
+                </h2>
+                <button
+                  onClick={addMealType}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    background: 'linear-gradient(135deg, #10b981, #059669)',
+                    color: 'white',
+                    borderRadius: '0.5rem',
+                    fontSize: '0.875rem',
+                    fontWeight: '600',
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
+                  + Añadir
+                </button>
+              </div>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                {mealTypes.map(meal => (
+                  <div key={meal.id} style={{
+                    background: '#f9fafb',
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '0.5rem',
+                    padding: '1rem'
+                  }}>
+                    {editingMealType === meal.id ? (
+                      <>
+                        <input
+                          type="text"
+                          value={meal.name}
+                          onChange={(e) => updateMealType(meal.id, 'name', e.target.value)}
+                          style={{
+                            width: '100%',
+                            padding: '0.5rem',
+                            border: '1px solid #d1d5db',
+                            borderRadius: '0.375rem',
+                            marginBottom: '0.75rem',
+                            fontWeight: '600',
+                            fontSize: '1rem'
+                          }}
+                        />
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                          <div>
+                            <label style={{ fontSize: '0.625rem', color: '#16a34a', fontWeight: '600', display: 'block', marginBottom: '0.25rem' }}>
+                              Hidratos
+                            </label>
+                            <input
+                              type="number"
+                              value={meal.carbs}
+                              onChange={(e) => updateMealType(meal.id, 'carbs', e.target.value)}
+                              style={{
+                                width: '100%',
+                                padding: '0.5rem',
+                                border: '2px solid #16a34a',
+                                borderRadius: '0.375rem',
+                                fontSize: '0.875rem',
+                                fontWeight: '600'
+                              }}
+                              step="0.5"
+                            />
+                          </div>
+                          <div>
+                            <label style={{ fontSize: '0.625rem', color: '#2563eb', fontWeight: '600', display: 'block', marginBottom: '0.25rem' }}>
+                              Proteína
+                            </label>
+                            <input
+                              type="number"
+                              value={meal.protein}
+                              onChange={(e) => updateMealType(meal.id, 'protein', e.target.value)}
+                              style={{
+                                width: '100%',
+                                padding: '0.5rem',
+                                border: '2px solid #2563eb',
+                                borderRadius: '0.375rem',
+                                fontSize: '0.875rem',
+                                fontWeight: '600'
+                              }}
+                              step="0.5"
+                            />
+                          </div>
+                          <div>
+                            <label style={{ fontSize: '0.625rem', color: '#d97706', fontWeight: '600', display: 'block', marginBottom: '0.25rem' }}>
+                              Grasa
+                            </label>
+                            <input
+                              type="number"
+                              value={meal.fats}
+                              onChange={(e) => updateMealType(meal.id, 'fats', e.target.value)}
+                              style={{
+                                width: '100%',
+                                padding: '0.5rem',
+                                border: '2px solid #d97706',
+                                borderRadius: '0.375rem',
+                                fontSize: '0.875rem',
+                                fontWeight: '600'
+                              }}
+                              step="0.5"
+                            />
+                          </div>
+                        </div>
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                          <button
+                            onClick={() => setEditingMealType(null)}
+                            style={{
+                              flex: 1,
+                              padding: '0.5rem',
+                              background: '#10b981',
+                              color: 'white',
+                              borderRadius: '0.375rem',
+                              fontSize: '0.75rem',
+                              fontWeight: '600',
+                              border: 'none',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            Guardar
+                          </button>
+                          <button
+                            onClick={() => deleteMealType(meal.id)}
+                            style={{
+                              padding: '0.5rem',
+                              background: '#ef4444',
+                              color: 'white',
+                              borderRadius: '0.375rem',
+                              fontSize: '0.75rem',
+                              fontWeight: '600',
+                              border: 'none',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            🗑️
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                          <h3 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#1f2937' }}>
+                            {meal.name}
+                          </h3>
+                          <button
+                            onClick={() => setEditingMealType(meal.id)}
+                            style={{
+                              padding: '0.375rem 0.75rem',
+                              background: '#f3f4f6',
+                              color: '#374151',
+                              borderRadius: '0.375rem',
+                              fontSize: '0.75rem',
+                              fontWeight: '600',
+                              border: 'none',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            Editar
+                          </button>
+                        </div>
+                        <div style={{ fontSize: '0.875rem', color: '#6b7280' }}>
+                          <span style={{ color: '#16a34a', fontWeight: '600' }}>{meal.carbs}H</span> | 
+                          <span style={{ color: '#2563eb', fontWeight: '600' }}> {meal.protein}P</span> | 
+                          <span style={{ color: '#d97706', fontWeight: '600' }}> {meal.fats}G</span>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         )}
       </div>
