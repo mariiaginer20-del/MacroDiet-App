@@ -108,7 +108,7 @@ const MacroDietApp = () => {
     { id: 50, name: 'Mayonesa', amount: '20g', carbs: 0, fats: 10, protein: 0.5, label: 'G:1' },
     { id: 51, name: 'Yogur griego', amount: '80g', carbs: 3, fats: 10, protein: 5, label: 'G:1' },
     { id: 52, name: 'Queso curado/semicurado', amount: '25g', carbs: 0, fats: 10, protein: 6, label: 'G:1' },
-    { id: 53, name: 'Tahini', amount: '15g', carbs: 1, fats: 10, protein: 3, label: 'G:1' }
+    { id: 53, name: 'Tahini', amount: '15g', carbs: 1, fats: 10, protein: 3, label: 'G:1' },
     
     // 0.5P + 0.5H
     { id: 54, name: 'Salsa de soja', amount: '140g', carbs: 12, fats: 1, protein: 11, label: '0.5P+0.5H' },
