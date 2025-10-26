@@ -230,7 +230,7 @@ const MacroDietApp = () => {
     
     setSelectedFoods(selectedFoods.map(f => ({
       ...f,
-      quantity: Math.max(1, Math.round(f.quantity * avgFactor))
+      quantity: Math.max(0.1, Math.round((f.quantity * avgFactor) * 10) / 10)
     })));
   };
 
@@ -562,7 +562,60 @@ const MacroDietApp = () => {
                   No hay comidas registradas
                 </p>
               ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <div style={{ marginBottom: '1rem' }}>
+                <div style={{ fontSize: '0.75rem', color: '#4b5563', fontWeight: '600', marginBottom: '0.5rem' }}>
+                  Filtrar por:
+                </div>
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  <button
+                    onClick={() => toggleMacroFilter('carbs')}
+                    style={{
+                      padding: '0.375rem 0.75rem',
+                      borderRadius: '9999px',
+                      fontSize: '0.75rem',
+                      fontWeight: '600',
+                      background: macroFilters.carbs ? 'rgba(34, 197, 94, 0.25)' : 'rgba(34, 197, 94, 0.1)',
+                      color: macroFilters.carbs ? 'rgb(21, 128, 61)' : 'rgb(22, 163, 74)',
+                      border: macroFilters.carbs ? '2px solid rgb(34, 197, 94)' : '1px solid rgba(34, 197, 94, 0.3)',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Hidratos {macroFilters.carbs && '✓'}
+                  </button>
+                  <button
+                    onClick={() => toggleMacroFilter('protein')}
+                    style={{
+                      padding: '0.375rem 0.75rem',
+                      borderRadius: '9999px',
+                      fontSize: '0.75rem',
+                      fontWeight: '600',
+                      background: macroFilters.protein ? 'rgba(59, 130, 246, 0.25)' : 'rgba(59, 130, 246, 0.1)',
+                      color: macroFilters.protein ? 'rgb(29, 78, 216)' : 'rgb(37, 99, 235)',
+                      border: macroFilters.protein ? '2px solid rgb(59, 130, 246)' : '1px solid rgba(59, 130, 246, 0.3)',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Proteínas {macroFilters.protein && '✓'}
+                  </button>
+                  <button
+                    onClick={() => toggleMacroFilter('fats')}
+                    style={{
+                      padding: '0.375rem 0.75rem',
+                      borderRadius: '9999px',
+                      fontSize: '0.75rem',
+                      fontWeight: '600',
+                      background: macroFilters.fats ? 'rgba(245, 158, 11, 0.25)' : 'rgba(245, 158, 11, 0.1)',
+                      color: macroFilters.fats ? 'rgb(180, 83, 9)' : 'rgb(217, 119, 6)',
+                      border: macroFilters.fats ? '2px solid rgb(245, 158, 11)' : '1px solid rgba(245, 158, 11, 0.3)',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Grasas {macroFilters.fats && '✓'}
+                  </button>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   {meals.map(meal => {
                     const mealTotals = meal.foods.reduce((sum, f) => ({
                       carbs: sum.carbs + (f.carbs * (f.quantity || 1)),
@@ -733,6 +786,59 @@ const MacroDietApp = () => {
                   marginBottom: '1rem'
                 }}
               />
+
+              <div style={{ marginBottom: '1rem' }}>
+                <div style={{ fontSize: '0.75rem', color: '#4b5563', fontWeight: '600', marginBottom: '0.5rem' }}>
+                  Filtrar por:
+                </div>
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  <button
+                    onClick={() => toggleMacroFilter('carbs')}
+                    style={{
+                      padding: '0.375rem 0.75rem',
+                      borderRadius: '9999px',
+                      fontSize: '0.75rem',
+                      fontWeight: '600',
+                      background: macroFilters.carbs ? 'rgba(34, 197, 94, 0.25)' : 'rgba(34, 197, 94, 0.1)',
+                      color: macroFilters.carbs ? 'rgb(21, 128, 61)' : 'rgb(22, 163, 74)',
+                      border: macroFilters.carbs ? '2px solid rgb(34, 197, 94)' : '1px solid rgba(34, 197, 94, 0.3)',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Hidratos {macroFilters.carbs && '✓'}
+                  </button>
+                  <button
+                    onClick={() => toggleMacroFilter('protein')}
+                    style={{
+                      padding: '0.375rem 0.75rem',
+                      borderRadius: '9999px',
+                      fontSize: '0.75rem',
+                      fontWeight: '600',
+                      background: macroFilters.protein ? 'rgba(59, 130, 246, 0.25)' : 'rgba(59, 130, 246, 0.1)',
+                      color: macroFilters.protein ? 'rgb(29, 78, 216)' : 'rgb(37, 99, 235)',
+                      border: macroFilters.protein ? '2px solid rgb(59, 130, 246)' : '1px solid rgba(59, 130, 246, 0.3)',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Proteínas {macroFilters.protein && '✓'}
+                  </button>
+                  <button
+                    onClick={() => toggleMacroFilter('fats')}
+                    style={{
+                      padding: '0.375rem 0.75rem',
+                      borderRadius: '9999px',
+                      fontSize: '0.75rem',
+                      fontWeight: '600',
+                      background: macroFilters.fats ? 'rgba(245, 158, 11, 0.25)' : 'rgba(245, 158, 11, 0.1)',
+                      color: macroFilters.fats ? 'rgb(180, 83, 9)' : 'rgb(217, 119, 6)',
+                      border: macroFilters.fats ? '2px solid rgb(245, 158, 11)' : '1px solid rgba(245, 158, 11, 0.3)',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Grasas {macroFilters.fats && '✓'}
+                  </button>
+                </div>
+              </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.5rem', maxHeight: '400px', overflowY: 'auto' }}>
                 {filteredFoods.map(food => (
