@@ -222,91 +222,35 @@ const calculateOptimalPortions = () => {
   const targetProtein = goals.protein * conversions.protein;
   const targetFats = goals.fats * conversions.fats;
   
-  // Iterative optimization algorithm
-  let optimizedFoods = selectedFoods.map(f => ({ ...f }));
-  let bestError = Infinity;
-  let iterations = 0;
-  const maxIterations = 100;
+  // Calculate current totals with quantity = 1 for each food
+  const totalCarbs = selectedFoods.reduce((sum, f) => sum + f.carbs, 0);
+  const totalProtein = selectedFoods.reduce((sum, f) => sum + f.protein, 0);
+  const totalFats = selectedFoods.reduce((sum, f) => sum + f.fats, 0);
   
-  // Start with a reasonable initial scale factor
-  const initialCarbs = selectedFoods.reduce((sum, f) => sum + f.carbs * f.quantity, 0);
-  const initialProtein = selectedFoods.reduce((sum, f) => sum + f.protein * f.quantity, 0);
-  const initialFats = selectedFoods.reduce((sum, f) => sum + f.fats * f.quantity, 0);
-  
+  // Calculate scale factors for each macro
   let scaleFactor = 1;
-  if (initialCarbs > 0 || initialProtein > 0 || initialFats > 0) {
-    const carbRatio = targetCarbs > 0 && initialCarbs > 0 ? targetCarbs / initialCarbs : 1;
-    const proteinRatio = targetProtein > 0 && initialProtein > 0 ? targetProtein / initialProtein : 1;
-    const fatRatio = targetFats > 0 && initialFats > 0 ? targetFats / initialFats : 1;
-    
-    // Use weighted average based on which macros have goals
-    let totalWeight = 0;
-    let weightedSum = 0;
-    if (goals.carbs > 0) { weightedSum += carbRatio * goals.carbs; totalWeight += goals.carbs; }
-    if (goals.protein > 0) { weightedSum += proteinRatio * goals.protein; totalWeight += goals.protein; }
-    if (goals.fats > 0) { weightedSum += fatRatio * goals.fats; totalWeight += goals.fats; }
-    
-    scaleFactor = totalWeight > 0 ? weightedSum / totalWeight : 1;
+  let factorCount = 0;
+  
+  if (goals.carbs > 0 && totalCarbs > 0) {
+    scaleFactor += targetCarbs / totalCarbs;
+    factorCount++;
+  }
+  if (goals.protein > 0 && totalProtein > 0) {
+    scaleFactor += targetProtein / totalProtein;
+    factorCount++;
+  }
+  if (goals.fats > 0 && totalFats > 0) {
+    scaleFactor += targetFats / totalFats;
+    factorCount++;
   }
   
-  // Apply initial scale
-  optimizedFoods = optimizedFoods.map(f => ({
-    ...f,
-    quantity: f.quantity * scaleFactor
-  }));
+  // Average the scale factors
+  scaleFactor = factorCount > 0 ? scaleFactor / factorCount : 1;
   
-  // Fine-tune with gradient descent
-  while (iterations < maxIterations) {
-    const currentCarbs = optimizedFoods.reduce((sum, f) => sum + f.carbs * f.quantity, 0);
-    const currentProtein = optimizedFoods.reduce((sum, f) => sum + f.protein * f.quantity, 0);
-    const currentFats = optimizedFoods.reduce((sum, f) => sum + f.fats * f.quantity, 0);
-    
-    const carbError = targetCarbs > 0 ? (currentCarbs - targetCarbs) / targetCarbs : 0;
-    const proteinError = targetProtein > 0 ? (currentProtein - targetProtein) / targetProtein : 0;
-    const fatError = targetFats > 0 ? (currentFats - targetFats) / targetFats : 0;
-    
-    const totalError = Math.abs(carbError) + Math.abs(proteinError) + Math.abs(fatError);
-    
-    if (totalError < 0.01 || totalError >= bestError) break; // Converged or not improving
-    
-    bestError = totalError;
-    
-    // Adjust quantities based on error
-    const learningRate = 0.1;
-    optimizedFoods = optimizedFoods.map(f => {
-      let adjustment = 1;
-      let adjustmentCount = 0;
-      
-      if (goals.carbs > 0 && f.carbs > 0) {
-        adjustment += -carbError * learningRate * (f.carbs / currentCarbs);
-        adjustmentCount++;
-      }
-      if (goals.protein > 0 && f.protein > 0) {
-        adjustment += -proteinError * learningRate * (f.protein / currentProtein);
-        adjustmentCount++;
-      }
-      if (goals.fats > 0 && f.fats > 0) {
-        adjustment += -fatError * learningRate * (f.fats / currentFats);
-        adjustmentCount++;
-      }
-      
-      if (adjustmentCount > 0) {
-        adjustment = adjustment / (adjustmentCount + 1);
-      }
-      
-      return {
-        ...f,
-        quantity: Math.max(0.01, f.quantity * adjustment)
-      };
-    });
-    
-    iterations++;
-  }
-  
-  // Round to 2 decimal places for cleaner display
-  setSelectedFoods(optimizedFoods.map(f => ({
+  // Apply scale factor to all foods
+  setSelectedFoods(selectedFoods.map(f => ({
     ...f,
-    quantity: Math.round(f.quantity * 100) / 100
+    quantity: Math.round(f.quantity * scaleFactor * 100) / 100
   })));
 };
 
@@ -824,58 +768,7 @@ const calculateOptimalPortions = () => {
                 }}
               />
 
-<div style={{ marginBottom: '1rem' }}>
-  <div style={{ fontSize: '0.75rem', color: '#4b5563', fontWeight: '600', marginBottom: '0.5rem' }}>
-    Filtrar por:
-  </div>
-  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-    <button
-      onClick={() => toggleMacroFilter('carbs')}
-      style={{
-        padding: '0.375rem 0.75rem',
-        borderRadius: '9999px',
-        fontSize: '0.75rem',
-        fontWeight: '600',
-        background: macroFilters.carbs ? 'rgba(34, 197, 94, 0.25)' : 'rgba(34, 197, 94, 0.1)',
-        color: macroFilters.carbs ? 'rgb(21, 128, 61)' : 'rgb(22, 163, 74)',
-        border: macroFilters.carbs ? '2px solid rgb(34, 197, 94)' : '1px solid rgba(34, 197, 94, 0.3)',
-        cursor: 'pointer'
-      }}
-    >
-      Hidratos {macroFilters.carbs && '✓'}
-    </button>
-    <button
-      onClick={() => toggleMacroFilter('protein')}
-      style={{
-        padding: '0.375rem 0.75rem',
-        borderRadius: '9999px',
-        fontSize: '0.75rem',
-        fontWeight: '600',
-        background: macroFilters.protein ? 'rgba(59, 130, 246, 0.25)' : 'rgba(59, 130, 246, 0.1)',
-        color: macroFilters.protein ? 'rgb(29, 78, 216)' : 'rgb(37, 99, 235)',
-        border: macroFilters.protein ? '2px solid rgb(59, 130, 246)' : '1px solid rgba(59, 130, 246, 0.3)',
-        cursor: 'pointer'
-      }}
-    >
-      Proteínas {macroFilters.protein && '✓'}
-    </button>
-    <button
-      onClick={() => toggleMacroFilter('fats')}
-      style={{
-        padding: '0.375rem 0.75rem',
-        borderRadius: '9999px',
-        fontSize: '0.75rem',
-        fontWeight: '600',
-        background: macroFilters.fats ? 'rgba(245, 158, 11, 0.25)' : 'rgba(245, 158, 11, 0.1)',
-        color: macroFilters.fats ? 'rgb(180, 83, 9)' : 'rgb(217, 119, 6)',
-        border: macroFilters.fats ? '2px solid rgb(245, 158, 11)' : '1px solid rgba(245, 158, 11, 0.3)',
-        cursor: 'pointer'
-      }}
-    >
-      Grasas {macroFilters.fats && '✓'}
-    </button>
-  </div>
-</div>
+
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 {filteredFoods.map(food => (
