@@ -1126,38 +1126,38 @@ const calculateOptimalPortions = () => {
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem', marginTop: '1rem' }}>
-                  <button
-                    onClick={calculateOptimalPortions}
-                    style={{
-                      padding: '0.75rem',
-                      background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
-                      color: 'white',
-                      borderRadius: '0.5rem',
-                      fontWeight: '600',
-                      fontSize: '0.875rem',
-                      border: 'none',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    Calcular
-                  </button>
-                  <button
-                    onClick={calculateOptimalPortions}
-                    style={{
-                      padding: '0.75rem',
-                      background: 'linear-gradient(135deg, #22c55e, #16a34a)',
-                      color: 'white',
-                      borderRadius: '0.5rem',
-                      fontWeight: '600',
-                      fontSize: '0.875rem',
-                      border: 'none',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    Registrar
-                  </button>
-                </div>
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.5rem', marginTop: '1rem' }}>
+  <button
+    onClick={calculateOptimalPortions}
+    style={{
+      padding: '0.75rem',
+      background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
+      color: 'white',
+      borderRadius: '0.5rem',
+      fontWeight: '600',
+      fontSize: '0.875rem',
+      border: 'none',
+      cursor: 'pointer'
+    }}
+  >
+    Calcular
+  </button>
+  <button
+    onClick={registerInMyDay}
+    style={{
+      padding: '0.75rem',
+      background: 'linear-gradient(135deg, #a855f7, #9333ea)',
+      color: 'white',
+      borderRadius: '0.5rem',
+      fontWeight: '600',
+      fontSize: '0.875rem',
+      border: 'none',
+      cursor: 'pointer'
+    }}
+  >
+    Registrar
+  </button>
+</div>
                 
                 <button
                   onClick={() => setShowSaveModal(true)}
