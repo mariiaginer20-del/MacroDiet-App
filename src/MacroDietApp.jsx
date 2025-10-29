@@ -215,44 +215,48 @@ const MacroDietApp = () => {
   };
 
 const calculateOptimalPortions = () => {
-  if (selectedFoods.length === 0) return;
-  
-  const goals = mealTypeGoals[selectedMealType];
-  const targetCarbs = goals.carbs * conversions.carbs;
-  const targetProtein = goals.protein * conversions.protein;
-  const targetFats = goals.fats * conversions.fats;
-  
-  // Calculate current totals with quantity = 1 for each food
-  const totalCarbs = selectedFoods.reduce((sum, f) => sum + f.carbs, 0);
-  const totalProtein = selectedFoods.reduce((sum, f) => sum + f.protein, 0);
-  const totalFats = selectedFoods.reduce((sum, f) => sum + f.fats, 0);
-  
-  // Calculate scale factors for each macro
-  let scaleFactor = 1;
-  let factorCount = 0;
-  
-  if (goals.carbs > 0 && totalCarbs > 0) {
-    scaleFactor += targetCarbs / totalCarbs;
-    factorCount++;
-  }
-  if (goals.protein > 0 && totalProtein > 0) {
-    scaleFactor += targetProtein / totalProtein;
-    factorCount++;
-  }
-  if (goals.fats > 0 && totalFats > 0) {
-    scaleFactor += targetFats / totalFats;
-    factorCount++;
-  }
-  
-  // Average the scale factors
-  scaleFactor = factorCount > 0 ? scaleFactor / factorCount : 1;
-  
-  // Apply scale factor to all foods
-  setSelectedFoods(selectedFoods.map(f => ({
-    ...f,
-    quantity: Math.round(f.quantity * scaleFactor * 100) / 100
-  })));
-};
+    if (selectedFoods.length === 0) return;
+    
+    const goals = mealTypeGoals[selectedMealType];
+    
+    // Calcular cuántos gramos actuales tenemos de cada macro
+    const currentCarbs = selectedFoods.reduce((sum, f) => sum + (f.carbs * f.quantity), 0);
+    const currentProtein = selectedFoods.reduce((sum, f) => sum + (f.protein * f.quantity), 0);
+    const currentFats = selectedFoods.reduce((sum, f) => sum + (f.fats * f.quantity), 0);
+    
+    // Calcular cuántos gramos necesitamos de cada macro
+    const targetCarbs = goals.carbs * conversions.carbs;
+    const targetProtein = goals.protein * conversions.protein;
+    const targetFats = goals.fats * conversions.fats;
+    
+    // Regla de tres: Si tengo X gramos y necesito Y gramos, multiplico cantidad por (Y/X)
+    let scaleFactor = 1;
+    let factorCount = 0;
+    
+    if (goals.carbs > 0 && currentCarbs > 0) {
+      scaleFactor += targetCarbs / currentCarbs;
+      factorCount++;
+    }
+    if (goals.protein > 0 && currentProtein > 0) {
+      scaleFactor += targetProtein / currentProtein;
+      factorCount++;
+    }
+    if (goals.fats > 0 && currentFats > 0) {
+      scaleFactor += targetFats / currentFats;
+      factorCount++;
+    }
+    
+    // Promedio de los factores
+    if (factorCount > 0) {
+      scaleFactor = scaleFactor / factorCount;
+    }
+    
+    // Aplicar el factor a todas las cantidades (regla de tres)
+    setSelectedFoods(selectedFoods.map(f => ({
+      ...f,
+      quantity: Math.round((f.quantity * scaleFactor) * 100) / 100
+    })));
+  };
 
   const registerInMyDay = () => {
     if (selectedFoods.length === 0) return;
