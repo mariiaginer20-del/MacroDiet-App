@@ -214,25 +214,101 @@ const MacroDietApp = () => {
     ));
   };
 
-  const calculateOptimalPortions = () => {
-    if (selectedFoods.length === 0) return;
+const calculateOptimalPortions = () => {
+  if (selectedFoods.length === 0) return;
+  
+  const goals = mealTypeGoals[selectedMealType];
+  const targetCarbs = goals.carbs * conversions.carbs;
+  const targetProtein = goals.protein * conversions.protein;
+  const targetFats = goals.fats * conversions.fats;
+  
+  // Iterative optimization algorithm
+  let optimizedFoods = selectedFoods.map(f => ({ ...f }));
+  let bestError = Infinity;
+  let iterations = 0;
+  const maxIterations = 100;
+  
+  // Start with a reasonable initial scale factor
+  const initialCarbs = selectedFoods.reduce((sum, f) => sum + f.carbs * f.quantity, 0);
+  const initialProtein = selectedFoods.reduce((sum, f) => sum + f.protein * f.quantity, 0);
+  const initialFats = selectedFoods.reduce((sum, f) => sum + f.fats * f.quantity, 0);
+  
+  let scaleFactor = 1;
+  if (initialCarbs > 0 || initialProtein > 0 || initialFats > 0) {
+    const carbRatio = targetCarbs > 0 && initialCarbs > 0 ? targetCarbs / initialCarbs : 1;
+    const proteinRatio = targetProtein > 0 && initialProtein > 0 ? targetProtein / initialProtein : 1;
+    const fatRatio = targetFats > 0 && initialFats > 0 ? targetFats / initialFats : 1;
     
-    const goals = mealTypeGoals[selectedMealType];
-    const totalCarbs = selectedFoods.reduce((sum, f) => sum + (f.carbs * f.quantity), 0);
-    const totalProtein = selectedFoods.reduce((sum, f) => sum + (f.protein * f.quantity), 0);
-    const totalFats = selectedFoods.reduce((sum, f) => sum + (f.fats * f.quantity), 0);
+    // Use weighted average based on which macros have goals
+    let totalWeight = 0;
+    let weightedSum = 0;
+    if (goals.carbs > 0) { weightedSum += carbRatio * goals.carbs; totalWeight += goals.carbs; }
+    if (goals.protein > 0) { weightedSum += proteinRatio * goals.protein; totalWeight += goals.protein; }
+    if (goals.fats > 0) { weightedSum += fatRatio * goals.fats; totalWeight += goals.fats; }
     
-    const carbFactor = goals.carbs > 0 ? (goals.carbs * conversions.carbs) / Math.max(totalCarbs, 1) : 1;
-    const proteinFactor = goals.protein > 0 ? (goals.protein * conversions.protein) / Math.max(totalProtein, 1) : 1;
-    const fatFactor = goals.fats > 0 ? (goals.fats * conversions.fats) / Math.max(totalFats, 1) : 1;
+    scaleFactor = totalWeight > 0 ? weightedSum / totalWeight : 1;
+  }
+  
+  // Apply initial scale
+  optimizedFoods = optimizedFoods.map(f => ({
+    ...f,
+    quantity: f.quantity * scaleFactor
+  }));
+  
+  // Fine-tune with gradient descent
+  while (iterations < maxIterations) {
+    const currentCarbs = optimizedFoods.reduce((sum, f) => sum + f.carbs * f.quantity, 0);
+    const currentProtein = optimizedFoods.reduce((sum, f) => sum + f.protein * f.quantity, 0);
+    const currentFats = optimizedFoods.reduce((sum, f) => sum + f.fats * f.quantity, 0);
     
-    const avgFactor = (carbFactor + proteinFactor + fatFactor) / 3;
+    const carbError = targetCarbs > 0 ? (currentCarbs - targetCarbs) / targetCarbs : 0;
+    const proteinError = targetProtein > 0 ? (currentProtein - targetProtein) / targetProtein : 0;
+    const fatError = targetFats > 0 ? (currentFats - targetFats) / targetFats : 0;
     
-    setSelectedFoods(selectedFoods.map(f => ({
-      ...f,
-      quantity: Math.max(0.1, Math.round((f.quantity * avgFactor) * 10) / 10)
-    })));
-  };
+    const totalError = Math.abs(carbError) + Math.abs(proteinError) + Math.abs(fatError);
+    
+    if (totalError < 0.01 || totalError >= bestError) break; // Converged or not improving
+    
+    bestError = totalError;
+    
+    // Adjust quantities based on error
+    const learningRate = 0.1;
+    optimizedFoods = optimizedFoods.map(f => {
+      let adjustment = 1;
+      let adjustmentCount = 0;
+      
+      if (goals.carbs > 0 && f.carbs > 0) {
+        adjustment += -carbError * learningRate * (f.carbs / currentCarbs);
+        adjustmentCount++;
+      }
+      if (goals.protein > 0 && f.protein > 0) {
+        adjustment += -proteinError * learningRate * (f.protein / currentProtein);
+        adjustmentCount++;
+      }
+      if (goals.fats > 0 && f.fats > 0) {
+        adjustment += -fatError * learningRate * (f.fats / currentFats);
+        adjustmentCount++;
+      }
+      
+      if (adjustmentCount > 0) {
+        adjustment = adjustment / (adjustmentCount + 1);
+      }
+      
+      return {
+        ...f,
+        quantity: Math.max(0.01, f.quantity * adjustment)
+      };
+    });
+    
+    iterations++;
+  }
+  
+  // Round to 2 decimal places for cleaner display
+  setSelectedFoods(optimizedFoods.map(f => ({
+    ...f,
+    quantity: Math.round(f.quantity * 100) / 100
+  })));
+};
 
   const registerInMyDay = () => {
     if (selectedFoods.length === 0) return;
