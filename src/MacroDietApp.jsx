@@ -219,45 +219,38 @@ const calculateOptimalPortions = () => {
   
   const goals = mealTypeGoals[selectedMealType];
   
-  // Calcular gramos actuales de cada macro
+  // Calcular gramos actuales totales
   const currentCarbs = selectedFoods.reduce((sum, f) => sum + (f.carbs * f.quantity), 0);
   const currentProtein = selectedFoods.reduce((sum, f) => sum + (f.protein * f.quantity), 0);
   const currentFats = selectedFoods.reduce((sum, f) => sum + (f.fats * f.quantity), 0);
   
-  // Calcular gramos objetivo
+  // Calcular gramos objetivo totales
   const targetCarbs = goals.carbs * conversions.carbs;
   const targetProtein = goals.protein * conversions.protein;
   const targetFats = goals.fats * conversions.fats;
   
-  // Regla de tres para cada macro
-  let scaleFactor = 1;
-  let factorCount = 0;
+  console.log('Actuales:', { currentCarbs, currentProtein, currentFats });
+  console.log('Objetivos:', { targetCarbs, targetProtein, targetFats });
   
-  if (goals.carbs > 0 && currentCarbs > 0) {
-    scaleFactor += targetCarbs / currentCarbs;
-    factorCount++;
-  }
-  if (goals.protein > 0 && currentProtein > 0) {
-    scaleFactor += targetProtein / currentProtein;
-    factorCount++;
-  }
-  if (goals.fats > 0 && currentFats > 0) {
-    scaleFactor += targetFats / currentFats;
-    factorCount++;
+  // Calcular factor de escala simple
+  let factor = 1;
+  
+  if (currentCarbs > 0) {
+    factor = targetCarbs / currentCarbs;
+  } else if (currentProtein > 0) {
+    factor = targetProtein / currentProtein;
+  } else if (currentFats > 0) {
+    factor = targetFats / currentFats;
   }
   
-  // Promedio
-  if (factorCount > 0) {
-    scaleFactor = scaleFactor / factorCount;
-  }
+  console.log('Factor:', factor);
   
-  // Aplicar factor
+  // Aplicar el factor a todos
   setSelectedFoods(selectedFoods.map(f => ({
     ...f,
-    quantity: Math.round((f.quantity * scaleFactor) * 100) / 100
+    quantity: Math.round((f.quantity * factor) * 100) / 100
   })));
 };
-
   const registerInMyDay = () => {
     if (selectedFoods.length === 0) return;
     
