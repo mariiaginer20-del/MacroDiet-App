@@ -514,7 +514,7 @@ const MacroDietApp = () => {
                   gap: '0.5rem',
                   color: '#1f2937'
                 }}>
-                  <span>Ã°Å¸â€œÂ</span> Equivalente en gramos
+                  Equivalente en gramos
                 </h3>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', textAlign: 'center' }}>
                   <div>
@@ -1144,7 +1144,7 @@ const MacroDietApp = () => {
                       cursor: 'pointer'
                     }}
                   >
-                    Ã°Å¸â€œâ€¦ Registrar
+                    Registrar
                   </button>
                 </div>
                 
@@ -1163,7 +1163,7 @@ const MacroDietApp = () => {
                     cursor: 'pointer'
                   }}
                 >
-                  Ã°Å¸â€™Â¾ Guardar Comida
+                  Guardar Comida
                 </button>
               </div>
             )}
@@ -1208,7 +1208,7 @@ const MacroDietApp = () => {
                   
                   <div style={{ marginBottom: '1rem' }}>
                     <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#4b5563', display: 'block', marginBottom: '0.5rem' }}>
-                      Ã¢ÂÂ±Ã¯Â¸Â Tiempo invertido:
+                      Tiempo invertido:
                     </label>
                     <div style={{ display: 'flex', gap: '0.5rem' }}>
                       {['poco', 'medio', 'mucho'].map(time => (
@@ -1288,7 +1288,7 @@ const MacroDietApp = () => {
               marginBottom: '1rem'
             }}>
               <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>
-                Ã¢Å¡â„¢Ã¯Â¸Â Conversiones de Macros
+                Conversiones de Macros
               </h2>
               <p style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '1rem' }}>
                 Define cuántos gramos equivalen a 1 unidad de cada macro
@@ -1375,7 +1375,7 @@ const MacroDietApp = () => {
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#1f2937' }}>
-                  Ã°Å¸ÂÂ½Ã¯Â¸Â Tipos de Comidas
+                  Tipos de Comidas
                 </h2>
                 <button
                   onClick={addMealType}
@@ -1507,7 +1507,7 @@ const MacroDietApp = () => {
                               cursor: 'pointer'
                             }}
                           >
-                            Ã°Å¸â€”â€˜Ã¯Â¸Â
+                            Eliminar
                           </button>
                         </div>
                       </>
