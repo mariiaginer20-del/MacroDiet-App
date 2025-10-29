@@ -450,7 +450,7 @@ const MacroDietApp = () => {
                 textAlign: 'center',
                 color: '#1f2937'
               }}>
-                Ã°Å¸â€œÅ  Resumen del Día
+                Resumen del Día
               </h2>
               
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem', marginBottom: '1.5rem' }}>
