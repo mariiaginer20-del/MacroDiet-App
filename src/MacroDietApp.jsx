@@ -229,26 +229,29 @@ const calculateOptimalPortions = () => {
   const targetProtein = goals.protein * conversions.protein;
   const targetFats = goals.fats * conversions.fats;
   
-  console.log('Actuales:', { currentCarbs, currentProtein, currentFats });
-  console.log('Objetivos:', { targetCarbs, targetProtein, targetFats });
-  
-  // Calcular factor de escala simple
-  let factor = 1;
-  
-  if (currentCarbs > 0) {
-    factor = targetCarbs / currentCarbs;
-  } else if (currentProtein > 0) {
-    factor = targetProtein / currentProtein;
-  } else if (currentFats > 0) {
-    factor = targetFats / currentFats;
+  // Calcular factores individuales
+  const factors = [];
+  if (goals.carbs > 0 && currentCarbs > 0) {
+    factors.push({ factor: targetCarbs / currentCarbs, weight: targetCarbs });
+  }
+  if (goals.protein > 0 && currentProtein > 0) {
+    factors.push({ factor: targetProtein / currentProtein, weight: targetProtein });
+  }
+  if (goals.fats > 0 && currentFats > 0) {
+    factors.push({ factor: targetFats / currentFats, weight: targetFats });
   }
   
-  console.log('Factor:', factor);
+  // Promedio ponderado de los factores (dando más peso a objetivos más grandes)
+  let finalFactor = 1;
+  if (factors.length > 0) {
+    const totalWeight = factors.reduce((sum, f) => sum + f.weight, 0);
+    finalFactor = factors.reduce((sum, f) => sum + (f.factor * f.weight), 0) / totalWeight;
+  }
   
-  // Aplicar el factor a todos
+  // Aplicar el factor
   setSelectedFoods(selectedFoods.map(f => ({
     ...f,
-    quantity: Math.round((f.quantity * factor) * 100) / 100
+    quantity: Math.round((f.quantity * finalFactor) * 100) / 100
   })));
 };
   const registerInMyDay = () => {
