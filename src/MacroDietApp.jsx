@@ -607,7 +607,7 @@ const MacroDietApp = () => {
                       cursor: 'pointer'
                     }}
                   >
-                    Hidratos {macroFilters.carbs && 'Ã¢Å“â€œ'}
+                    Hidratos {macroFilters.carbs && '✓'}
                   </button>
                   <button
                     onClick={() => toggleMacroFilter('protein')}
@@ -622,7 +622,7 @@ const MacroDietApp = () => {
                       cursor: 'pointer'
                     }}
                   >
-                    Proteínas {macroFilters.protein && 'Ã¢Å“â€œ'}
+                    Proteínas {macroFilters.protein && '✓'}
                   </button>
                   <button
                     onClick={() => toggleMacroFilter('fats')}
@@ -637,7 +637,7 @@ const MacroDietApp = () => {
                       cursor: 'pointer'
                     }}
                   >
-                    Grasas {macroFilters.fats && 'Ã¢Å“â€œ'}
+                    Grasas {macroFilters.fats && '✓'}
                   </button>
                 </div>
               </div>
@@ -865,7 +865,7 @@ const MacroDietApp = () => {
                       cursor: 'pointer'
                     }}
                   >
-                    Hidratos {macroFilters.carbs && 'Ã¢Å“â€œ'}
+                    Hidratos {macroFilters.carbs && '✓'}
                   </button>
                   <button
                     onClick={() => toggleMacroFilter('protein')}
@@ -880,7 +880,7 @@ const MacroDietApp = () => {
                       cursor: 'pointer'
                     }}
                   >
-                    Proteí­nas {macroFilters.protein && 'Ã¢Å“â€œ'}
+                    Proteí­nas {macroFilters.protein && '✓'}
                   </button>
                   <button
                     onClick={() => toggleMacroFilter('fats')}
@@ -895,7 +895,7 @@ const MacroDietApp = () => {
                       cursor: 'pointer'
                     }}
                   >
-                    Grasas {macroFilters.fats && 'Ã¢Å“â€œ'}
+                    Grasas {macroFilters.fats && '✓'}
                   </button>
                 </div>
               </div>
@@ -1039,7 +1039,7 @@ const MacroDietApp = () => {
                         fontSize: '1.25rem'
                       }}
                     >
-                      Ã°Å¸â€”â€˜Ã¯Â¸Â
+                      🗑️
                     </button>
                   </div>
                 ))}
