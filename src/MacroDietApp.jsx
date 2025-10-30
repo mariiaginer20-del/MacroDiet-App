@@ -9,6 +9,18 @@ const MacroDietApp = () => {
     fats: false,
     protein: false
   });
+
+const [showAddFoodModal, setShowAddFoodModal] = useState(false);
+const [customFoods, setCustomFoods] = useState([]);
+const [newFood, setNewFood] = useState({
+  name: '',
+  amount: '',
+  carbsPer100: '',
+  proteinPer100: '',
+  fatsPer100: '',
+  inputType: 'per100' // 'per100' o 'perUnit'
+});
+
   const [meals, setMeals] = useState([]);
   const [expandedMeal, setExpandedMeal] = useState(null);
   const [dailyGoals] = useState({
@@ -159,20 +171,25 @@ const foodDatabase = [
     
     const savedConversions = localStorage.getItem('conversions');
     if (savedConversions) setConversions(JSON.parse(savedConversions));
+
+const savedCustomFoods = localStorage.getItem('customFoods');
+if (savedCustomFoods) setCustomFoods(JSON.parse(savedCustomFoods));
   }, []);
 
   const toggleMacroFilter = (macro) => {
     setMacroFilters(prev => ({ ...prev, [macro]: !prev[macro] }));
   };
 
-  const filteredFoods = foodDatabase.filter(food => {
-    const matchesSearch = food.name.toLowerCase().includes(searchTerm.toLowerCase());
-    if (!macroFilters.carbs && !macroFilters.fats && !macroFilters.protein) return matchesSearch;
-    const hasCarbs = macroFilters.carbs && food.carbs > 10;
-    const hasFats = macroFilters.fats && food.fats > 5;
-    const hasProtein = macroFilters.protein && food.protein > 5;
-    return matchesSearch && (hasCarbs || hasFats || hasProtein);
-  });
+const allFoods = [...foodDatabase, ...customFoods];
+
+const filteredFoods = allFoods.filter(food => {
+  const matchesSearch = food.name.toLowerCase().includes(searchTerm.toLowerCase());
+  if (!macroFilters.carbs && !macroFilters.fats && !macroFilters.protein) return matchesSearch;
+  const hasCarbs = macroFilters.carbs && food.carbs > 10;
+  const hasFats = macroFilters.fats && food.fats > 5;
+  const hasProtein = macroFilters.protein && food.protein > 5;
+  return matchesSearch && (hasCarbs || hasFats || hasProtein);
+});
 
   const addFoodToMeal = (food) => {
     const newMeal = {
@@ -342,6 +359,56 @@ const calculateOptimalPortions = () => {
       return total;
     }, { carbs: 0, fats: 0, protein: 0 });
   };
+
+const addCustomFood = () => {
+  if (!newFood.name.trim() || !newFood.amount) return;
+  
+  let finalCarbs, finalProtein, finalFats;
+  
+  if (newFood.inputType === 'per100') {
+    // Calcular macros para la cantidad especificada
+    const amount = parseFloat(newFood.amount);
+    finalCarbs = (parseFloat(newFood.carbsPer100) || 0) * amount / 100;
+    finalProtein = (parseFloat(newFood.proteinPer100) || 0) * amount / 100;
+    finalFats = (parseFloat(newFood.fatsPer100) || 0) * amount / 100;
+  } else {
+    // Macros directos por unidad
+    finalCarbs = parseFloat(newFood.carbsPer100) || 0;
+    finalProtein = parseFloat(newFood.proteinPer100) || 0;
+    finalFats = parseFloat(newFood.fatsPer100) || 0;
+  }
+  
+  const customFood = {
+    id: Date.now(),
+    name: newFood.name,
+    amount: newFood.inputType === 'per100' ? `${newFood.amount}g` : newFood.amount,
+    carbs: finalCarbs,
+    protein: finalProtein,
+    fats: finalFats,
+    label: 'Custom',
+    isCustom: true
+  };
+  
+  const updated = [...customFoods, customFood];
+  setCustomFoods(updated);
+  localStorage.setItem('customFoods', JSON.stringify(updated));
+  
+  setNewFood({
+    name: '',
+    amount: '',
+    carbsPer100: '',
+    proteinPer100: '',
+    fatsPer100: '',
+    inputType: 'per100'
+  });
+  setShowAddFoodModal(false);
+};
+
+const deleteCustomFood = (id) => {
+  const updated = customFoods.filter(f => f.id !== id);
+  setCustomFoods(updated);
+  localStorage.setItem('customFoods', JSON.stringify(updated));
+};
 
   const totals = getTotalMacros();
   const remaining = {
@@ -742,10 +809,277 @@ const calculateOptimalPortions = () => {
               borderRadius: '1rem',
               padding: '1.25rem',
               marginBottom: '1rem'
+{showAddFoodModal && (
+  <div style={{
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: 'rgba(0, 0, 0, 0.5)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1000,
+    padding: '1rem'
+  }}>
+    <div style={{
+      background: 'white',
+      borderRadius: '1rem',
+      padding: '1.5rem',
+      maxWidth: '500px',
+      width: '100%',
+      maxHeight: '90vh',
+      overflowY: 'auto'
+    }}>
+      <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>
+        Agregar Alimento Personalizado
+      </h3>
+      
+      <input
+        type="text"
+        placeholder="Nombre del alimento"
+        value={newFood.name}
+        onChange={(e) => setNewFood({...newFood, name: e.target.value})}
+        style={{
+          width: '100%',
+          padding: '0.75rem',
+          border: '1px solid #d1d5db',
+          borderRadius: '0.5rem',
+          marginBottom: '1rem',
+          fontSize: '1rem'
+        }}
+      />
+      
+      <div style={{ marginBottom: '1rem' }}>
+        <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#4b5563', display: 'block', marginBottom: '0.5rem' }}>
+          Tipo de entrada:
+        </label>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <button
+            onClick={() => setNewFood({...newFood, inputType: 'per100'})}
+            style={{
+              flex: 1,
+              padding: '0.75rem',
+              borderRadius: '0.5rem',
+              fontSize: '0.875rem',
+              fontWeight: '600',
+              border: newFood.inputType === 'per100' ? '2px solid #10b981' : '1px solid #d1d5db',
+              background: newFood.inputType === 'per100' ? 'rgba(16, 185, 129, 0.1)' : 'white',
+              color: newFood.inputType === 'per100' ? '#059669' : '#6b7280',
+              cursor: 'pointer'
+            }}
+          >
+            Por 100g
+          </button>
+          <button
+            onClick={() => setNewFood({...newFood, inputType: 'perUnit'})}
+            style={{
+              flex: 1,
+              padding: '0.75rem',
+              borderRadius: '0.5rem',
+              fontSize: '0.875rem',
+              fontWeight: '600',
+              border: newFood.inputType === 'perUnit' ? '2px solid #10b981' : '1px solid #d1d5db',
+              background: newFood.inputType === 'perUnit' ? 'rgba(16, 185, 129, 0.1)' : 'white',
+              color: newFood.inputType === 'perUnit' ? '#059669' : '#6b7280',
+              cursor: 'pointer'
+            }}
+          >
+            Por unidad
+          </button>
+        </div>
+      </div>
+      
+      <input
+        type="text"
+        placeholder={newFood.inputType === 'per100' ? "Cantidad en gramos (ej: 130)" : "Descripción (ej: 1ud, 200ml)"}
+        value={newFood.amount}
+        onChange={(e) => setNewFood({...newFood, amount: e.target.value})}
+        style={{
+          width: '100%',
+          padding: '0.75rem',
+          border: '1px solid #d1d5db',
+          borderRadius: '0.5rem',
+          marginBottom: '1rem',
+          fontSize: '1rem'
+        }}
+      />
+      
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', marginBottom: '1rem' }}>
+        <div>
+          <label style={{ fontSize: '0.75rem', color: '#16a34a', fontWeight: '600', display: 'block', marginBottom: '0.25rem' }}>
+            Hidratos (g)
+          </label>
+          <input
+            type="number"
+            placeholder="0"
+            value={newFood.carbsPer100}
+            onChange={(e) => setNewFood({...newFood, carbsPer100: e.target.value})}
+            style={{
+              width: '100%',
+              padding: '0.75rem',
+              border: '2px solid #16a34a',
+              borderRadius: '0.5rem',
+              fontSize: '1rem'
+            }}
+            step="0.1"
+          />
+        </div>
+        <div>
+          <label style={{ fontSize: '0.75rem', color: '#2563eb', fontWeight: '600', display: 'block', marginBottom: '0.25rem' }}>
+            Proteína (g)
+          </label>
+          <input
+            type="number"
+            placeholder="0"
+            value={newFood.proteinPer100}
+            onChange={(e) => setNewFood({...newFood, proteinPer100: e.target.value})}
+            style={{
+              width: '100%',
+              padding: '0.75rem',
+              border: '2px solid #2563eb',
+              borderRadius: '0.5rem',
+              fontSize: '1rem'
+            }}
+            step="0.1"
+          />
+        </div>
+        <div>
+          <label style={{ fontSize: '0.75rem', color: '#d97706', fontWeight: '600', display: 'block', marginBottom: '0.25rem' }}>
+            Grasa (g)
+          </label>
+          <input
+            type="number"
+            placeholder="0"
+            value={newFood.fatsPer100}
+            onChange={(e) => setNewFood({...newFood, fatsPer100: e.target.value})}
+            style={{
+              width: '100%',
+              padding: '0.75rem',
+              border: '2px solid #d97706',
+              borderRadius: '0.5rem',
+              fontSize: '1rem'
+            }}
+            step="0.1"
+          />
+        </div>
+      </div>
+      
+      <p style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '1rem', fontStyle: 'italic' }}>
+        {newFood.inputType === 'per100' 
+          ? "Introduce los gramos de cada macro por cada 100g del alimento"
+          : "Introduce los gramos totales de cada macro para la unidad completa"}
+      </p>
+      
+      <div style={{ display: 'flex', gap: '0.5rem' }}>
+        <button
+          onClick={() => {
+            setShowAddFoodModal(false);
+            setNewFood({
+              name: '',
+              amount: '',
+              carbsPer100: '',
+              proteinPer100: '',
+              fatsPer100: '',
+              inputType: 'per100'
+            });
+          }}
+          style={{
+            flex: 1,
+            padding: '0.75rem',
+            background: '#f3f4f6',
+            color: '#374151',
+            borderRadius: '0.5rem',
+            fontWeight: '600',
+            border: 'none',
+            cursor: 'pointer'
+          }}
+        >
+          Cancelar
+        </button>
+        <button
+          onClick={addCustomFood}
+          style={{
+            flex: 1,
+            padding: '0.75rem',
+            background: 'linear-gradient(135deg, #10b981, #059669)',
+            color: 'white',
+            borderRadius: '0.5rem',
+            fontWeight: '600',
+            border: 'none',
+            cursor: 'pointer'
+          }}
+        >
+          Agregar
+        </button>
+      </div>
+      
+      {customFoods.length > 0 && (
+        <>
+          <hr style={{ margin: '1.5rem 0', border: 'none', borderTop: '1px solid #e5e7eb' }} />
+          <h4 style={{ fontSize: '1rem', fontWeight: 'bold', marginBottom: '0.75rem', color: '#1f2937' }}>
+            Alimentos personalizados:
+          </h4>
+          <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+            {customFoods.map(food => (
+              <div key={food.id} style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '0.5rem',
+                background: '#f9fafb',
+                borderRadius: '0.375rem',
+                marginBottom: '0.5rem'
+              }}>
+                <div>
+                  <div style={{ fontWeight: '600', fontSize: '0.875rem' }}>{food.name}</div>
+                  <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>{food.amount}</div>
+                </div>
+                <button
+                  onClick={() => deleteCustomFood(food.id)}
+                  style={{
+                    color: '#ef4444',
+                    background: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontSize: '1.125rem'
+                  }}
+                >
+                  🗑️
+                </button>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  </div>
+)}
             }}>
               <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>
                 Buscar Alimentos
               </h2>
+<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+  <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#1f2937' }}>
+    Buscar Alimentos
+  </h2>
+  <button
+    onClick={() => setShowAddFoodModal(true)}
+    style={{
+      padding: '0.5rem 1rem',
+      background: 'linear-gradient(135deg, #10b981, #059669)',
+      color: 'white',
+      borderRadius: '0.5rem',
+      fontSize: '0.875rem',
+      fontWeight: '600',
+      border: 'none',
+      cursor: 'pointer'
+    }}
+  >
+    + Nuevo
+  </button>
+</div>
               
               <input
                 type="text"
