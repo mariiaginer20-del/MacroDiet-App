@@ -60,7 +60,7 @@ const MacroDietApp = () => {
     { id: 7, name: 'Cereales sin azúcar', amount: '25g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
     { id: 8, name: 'Fruta (pieza)', amount: '1ud', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
     { id: 9, name: 'Zumo de naranja', amount: '230ml', carbs: 24, fats: 0, protein: 0., label: 'H:1' },
-    { id: 10, name: 'Dátiles/Fruta desecada', amount: '35g', carbs: 24, fats: , protein: 0, label: 'H:1' },
+    { id: 11, name: 'Dátiles/Fruta desecada', amount: '35g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
     { id: 11, name: 'Mermelada con azúcar', amount: '50g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
     { id: 12, name: 'Miel', amount: '25g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
     { id: 13, name: 'Gnocchi de patata', amount: '60g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
