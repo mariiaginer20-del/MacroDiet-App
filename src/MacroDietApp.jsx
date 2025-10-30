@@ -215,48 +215,40 @@ const MacroDietApp = () => {
   };
 
 const calculateOptimalPortions = () => {
-    if (selectedFoods.length === 0) return;
-    
-    const goals = mealTypeGoals[selectedMealType];
-    
-    // Calcular cuántos gramos actuales tenemos de cada macro
-    const currentCarbs = selectedFoods.reduce((sum, f) => sum + (f.carbs * f.quantity), 0);
-    const currentProtein = selectedFoods.reduce((sum, f) => sum + (f.protein * f.quantity), 0);
-    const currentFats = selectedFoods.reduce((sum, f) => sum + (f.fats * f.quantity), 0);
-    
-    // Calcular cuántos gramos necesitamos de cada macro
-    const targetCarbs = goals.carbs * conversions.carbs;
-    const targetProtein = goals.protein * conversions.protein;
-    const targetFats = goals.fats * conversions.fats;
-    
-    // Regla de tres: Si tengo X gramos y necesito Y gramos, multiplico cantidad por (Y/X)
-    let scaleFactor = 1;
-    let factorCount = 0;
-    
-    if (goals.carbs > 0 && currentCarbs > 0) {
-      scaleFactor += targetCarbs / currentCarbs;
-      factorCount++;
-    }
-    if (goals.protein > 0 && currentProtein > 0) {
-      scaleFactor += targetProtein / currentProtein;
-      factorCount++;
-    }
-    if (goals.fats > 0 && currentFats > 0) {
-      scaleFactor += targetFats / currentFats;
-      factorCount++;
-    }
-    
-    // Promedio de los factores
-    if (factorCount > 0) {
-      scaleFactor = scaleFactor / factorCount;
-    }
-    
-    // Aplicar el factor a todas las cantidades (regla de tres)
-    setSelectedFoods(selectedFoods.map(f => ({
-      ...f,
-      quantity: Math.round((f.quantity * scaleFactor) * 100) / 100
-    })));
-  };
+  if (selectedFoods.length === 0) return;
+  
+  const goals = mealTypeGoals[selectedMealType];
+  
+  // Resetear todas las cantidades a 1 primero
+  const resetFoods = selectedFoods.map(f => ({ ...f, quantity: 1 }));
+  
+  // Calcular gramos con cantidad = 1
+  const baseCarbs = resetFoods.reduce((sum, f) => sum + f.carbs, 0);
+  const baseProtein = resetFoods.reduce((sum, f) => sum + f.protein, 0);
+  const baseFats = resetFoods.reduce((sum, f) => sum + f.fats, 0);
+  
+  // Calcular gramos objetivo
+  const targetCarbs = goals.carbs * conversions.carbs;
+  const targetProtein = goals.protein * conversions.protein;
+  const targetFats = goals.fats * conversions.fats;
+  
+  // Calcular el factor necesario
+  let factor = 1;
+  
+  if (goals.carbs > 0 && baseCarbs > 0) {
+    factor = targetCarbs / baseCarbs;
+  } else if (goals.protein > 0 && baseProtein > 0) {
+    factor = targetProtein / baseProtein;
+  } else if (goals.fats > 0 && baseFats > 0) {
+    factor = targetFats / baseFats;
+  }
+  
+  // Aplicar el factor partiendo de cantidad = 1
+  setSelectedFoods(resetFoods.map(f => ({
+    ...f,
+    quantity: Math.round(factor * 100) / 100
+  })));
+};
   const registerInMyDay = () => {
     if (selectedFoods.length === 0) return;
     
