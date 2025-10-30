@@ -809,6 +809,9 @@ const deleteCustomFood = (id) => {
               borderRadius: '1rem',
               padding: '1.25rem',
               marginBottom: '1rem'
+              }}>
+                </div>
+)} 
 {showAddFoodModal && (
   <div style={{
     position: 'fixed',
