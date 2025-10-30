@@ -232,21 +232,21 @@ const calculateOptimalPortions = () => {
   const targetProtein = goals.protein * conversions.protein;
   const targetFats = goals.fats * conversions.fats;
   
-  // Calcular el factor necesario
+  // Calcular el factor necesario (priorizar el macro con mayor objetivo)
   let factor = 1;
   
   if (goals.carbs > 0 && baseCarbs > 0) {
     factor = targetCarbs / baseCarbs;
-  } else if (goals.protein > 0 && baseProtein > 0) {
-    factor = targetProtein / baseProtein;
   } else if (goals.fats > 0 && baseFats > 0) {
     factor = targetFats / baseFats;
+  } else if (goals.protein > 0 && baseProtein > 0) {
+    factor = targetProtein / baseProtein;
   }
   
-  // Aplicar el factor partiendo de cantidad = 1
+  // NO redondear el factor, redondear solo el resultado final
   setSelectedFoods(resetFoods.map(f => ({
     ...f,
-    quantity: Math.round(factor * 100) / 100
+    quantity: Math.round(factor * 1000) / 1000  // 3 decimales para más precisión
   })));
 };
   const registerInMyDay = () => {
