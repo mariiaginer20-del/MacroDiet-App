@@ -51,7 +51,7 @@ const MacroDietApp = () => {
   }, {});
 
   const foodDatabase = [
-    { id: 1, name: 'Patata', amount: '130g', carbs: 24, fats: 0 protein: 0, label: 'H:1' },
+    { id: 2, name: 'Patata', amount: '130g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
     { id: 2, name: 'Arroz/Pasta/Quinoa', amount: '30g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
     { id: 3, name: 'Boniato', amount: '120g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
     { id: 4, name: 'Korn Flakes', amount: '30g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
