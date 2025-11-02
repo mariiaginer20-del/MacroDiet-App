@@ -369,7 +369,13 @@ const calculateOptimalPortions = () => {
     fats: Math.max(0, dailyGoals.fats - totals.fats),
   };
 
-  const MacroTag = ({ carbs, fats, protein, conversions }) => (
+const MacroTag = ({ carbs, fats, protein, conversions }) => {
+  // Calcular las unidades con redondeo inteligente
+  const carbUnits = carbs > 0 ? Math.round((carbs / conversions.carbs) * 100) / 100 : 0;
+  const proteinUnits = protein > 0 ? Math.round((protein / conversions.protein) * 100) / 100 : 0;
+  const fatUnits = fats > 0 ? Math.round((fats / conversions.fats) * 100) / 100 : 0;
+  
+  return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
       <div style={{ display: 'flex', gap: '0.375rem', flexWrap: 'wrap' }}>
         {carbs > 0 && (
@@ -382,7 +388,7 @@ const calculateOptimalPortions = () => {
             color: 'rgb(22, 163, 74)',
             border: '1px solid rgba(34, 197, 94, 0.3)'
           }}>
-            H:{parseFloat((carbs / conversions.carbs).toFixed(2))}
+            H:{carbUnits}
           </span>
         )}
         {protein > 0 && (
@@ -395,7 +401,7 @@ const calculateOptimalPortions = () => {
             color: 'rgb(37, 99, 235)',
             border: '1px solid rgba(59, 130, 246, 0.3)'
           }}>
-            P:{parseFloat((protein / conversions.protein).toFixed(2))}
+            P:{proteinUnits}
           </span>
         )}
         {fats > 0 && (
@@ -408,7 +414,7 @@ const calculateOptimalPortions = () => {
             color: 'rgb(217, 119, 6)',
             border: '1px solid rgba(245, 158, 11, 0.3)'
           }}>
-            G:{parseFloat((fats / conversions.fats).toFixed(2))}
+            G:{fatUnits}
           </span>
         )}
       </div>
@@ -428,7 +434,7 @@ const calculateOptimalPortions = () => {
       </div>
     </div>
   );
-
+};
   const ProgressBar = ({ current, goal, color }) => {
     const percentage = Math.min((current / goal) * 100, 100);
     const colorMap = {
