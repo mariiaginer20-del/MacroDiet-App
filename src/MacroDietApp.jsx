@@ -382,7 +382,7 @@ const calculateOptimalPortions = () => {
             color: 'rgb(22, 163, 74)',
             border: '1px solid rgba(34, 197, 94, 0.3)'
           }}>
-            H:{(carbs / conversions.carbs).toFixed(1)}
+            H:{parseFloat((carbs / conversions.carbs).toFixed(2))}
           </span>
         )}
         {protein > 0 && (
@@ -395,7 +395,7 @@ const calculateOptimalPortions = () => {
             color: 'rgb(37, 99, 235)',
             border: '1px solid rgba(59, 130, 246, 0.3)'
           }}>
-            P:{(protein / conversions.protein).toFixed(1)}
+            P:{parseFloat((protein / conversions.protein).toFixed(2))}
           </span>
         )}
         {fats > 0 && (
@@ -408,7 +408,7 @@ const calculateOptimalPortions = () => {
             color: 'rgb(217, 119, 6)',
             border: '1px solid rgba(245, 158, 11, 0.3)'
           }}>
-            G:{(fats / conversions.fats).toFixed(1)}
+            G:{parseFloat((fats / conversions.fats).toFixed(2))}
           </span>
         )}
       </div>
