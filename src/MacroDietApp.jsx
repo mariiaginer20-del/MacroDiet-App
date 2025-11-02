@@ -60,7 +60,7 @@ const foodDatabase = [
   { id: 7, name: 'Cereales sin azÃºcar', amount: '25g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 8, name: 'Fruta (pieza)', amount: '1ud', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 9, name: 'Zumo de naranja', amount: '230ml', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
-  { id: 10, name: 'DÃ¡tiles/Fruta desecada', amount: '35g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
+  { id: 10, name: 'Dátiles/Fruta desecada', amount: '35g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 11, name: 'Mermelada con azÃºcar', amount: '50g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 12, name: 'Miel', amount: '25g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 13, name: 'Gnocchi de patata', amount: '60g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
@@ -68,47 +68,47 @@ const foodDatabase = [
   { id: 15, name: 'Pan de molde Bimbo', amount: '2 rebanadas', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 16, name: 'Pan de molde integral', amount: '1.5 rebanadas', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 17, name: 'Tortilla de trigo', amount: '1ud', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
-  { id: 18, name: 'Tortitas arroz/maÃ­z', amount: '25g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
-  { id: 19, name: 'MaÃ­z dulce (lata)', amount: '125g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
+  { id: 18, name: 'Tortitas arroz/maí­z', amount: '25g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
+  { id: 19, name: 'Maí­z dulce (lata)', amount: '125g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 20, name: 'Palomitas Popitas Zero', amount: '30g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 21, name: 'Papilla de cereales', amount: '2g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
-  { id: 22, name: 'AzÃºcar de mesa', amount: '25g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
+  { id: 22, name: 'Azúcar de mesa', amount: '25g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 23, name: 'Pescado blanco', amount: '120g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
   { id: 24, name: 'Molusco', amount: '120g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
   { id: 25, name: 'Marisco', amount: '65g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
-  { id: 26, name: 'AtÃºn lata al natural', amount: '100g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
+  { id: 26, name: 'Atún lata al natural', amount: '100g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
   { id: 27, name: 'Claras de huevo', amount: '200g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
-  { id: 28, name: 'ProteÃ­na de suero', amount: '30g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
+  { id: 28, name: 'Proteí­na de suero', amount: '30g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
   { id: 29, name: 'Pechuga pollo/pavo', amount: '100g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
   { id: 30, name: 'Carne roja magra', amount: '90g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
   { id: 31, name: 'Embutido sin grasa', amount: '50g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
   { id: 32, name: 'Queso Eatlean', amount: '60g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
-  { id: 33, name: 'Yogur+proteÃ­nas natural', amount: '200g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
+  { id: 33, name: 'Yogur+proteí­nas natural', amount: '200g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
   { id: 34, name: 'Soja texturizada', amount: '30g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
   { id: 35, name: 'Heura (bocados/tiras)', amount: '75g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
-  { id: 36, name: 'SeitÃ¡n', amount: '100g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
+  { id: 36, name: 'Seitán', amount: '100g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
   { id: 37, name: 'Levadura nutricional', amount: '35g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
-  { id: 38, name: 'Aislado proteÃ­na vegetal', amount: '30g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
-  { id: 39, name: 'AOVE (cuchara sopera)', amount: '12g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
-  { id: 40, name: 'Frutos secos', amount: '15g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
-  { id: 41, name: 'Cacahuete/Crema', amount: '15g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
-  { id: 42, name: 'Pipas calabaza/girasol', amount: '20g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
-  { id: 43, name: 'Semillas lino/chÃ­a', amount: '20g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
-  { id: 44, name: 'Aceitunas sin hueso', amount: '60g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
-  { id: 45, name: 'Coco', amount: '30g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
-  { id: 46, name: 'Aguacate', amount: '60g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
-  { id: 47, name: 'Chocolate >85%', amount: '20g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
-  { id: 48, name: 'Gazpacho sin pan', amount: '300ml', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
-  { id: 49, name: 'Bebida almendras zero', amount: '600ml', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
-  { id: 50, name: 'Mayonesa', amount: '20g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
-  { id: 51, name: 'Yogur griego', amount: '80g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
-  { id: 52, name: 'Queso curado/semicurado', amount: '25g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
-  { id: 53, name: 'Tahini', amount: '15g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
+  { id: 38, name: 'Aislado proteína vegetal', amount: '30g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
+  { id: 39, name: 'AOVE (cuchara sopera)', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
+  { id: 40, name: 'Frutos secos', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
+  { id: 41, name: 'Cacahuete/Crema', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
+  { id: 42, name: 'Pipas calabaza/girasol', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
+  { id: 43, name: 'Semillas lino/chÃƒÂ­a', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
+  { id: 44, name: 'Aceitunas sin hueso', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
+  { id: 45, name: 'Coco', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
+  { id: 46, name: 'Aguacate', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
+  { id: 47, name: 'Chocolate >85%', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
+  { id: 48, name: 'Gazpacho sin pan', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
+  { id: 49, name: 'Bebida almendras zero', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
+  { id: 50, name: 'Mayonesa', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
+  { id: 51, name: 'Yogur griego', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
+  { id: 52, name: 'Queso curado/semicurado', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
+  { id: 53, name: 'Tahini', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
   { id: 54, name: 'Salsa de soja', amount: '140g', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
   { id: 55, name: 'Leche desnatada', amount: '290ml', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
-  { id: 56, name: 'Leche+proteÃ­nas desnatada', amount: '230ml', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
-  { id: 57, name: 'Yogur+proteÃ­nas fresa', amount: '125g', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
-  { id: 58, name: 'Yogur+proteÃ­nas arÃ¡ndanos', amount: '200g', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
+  { id: 56, name: 'Leche+proteí­nas desnatada', amount: '230ml', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
+  { id: 57, name: 'Yogur+proteínas fresa', amount: '125g', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
+  { id: 58, name: 'Yogur+proteínas aríndanos', amount: '200g', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
   { id: 59, name: 'Yogur griego desnatado', amount: '170g', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
   { id: 60, name: 'Yogur desnatado', amount: '280g', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
   { id: 61, name: 'Legumbres cocidas', amount: '120g', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
@@ -121,25 +121,25 @@ const foodDatabase = [
   { id: 68, name: 'Huevo', amount: '1ud (60-70g)', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 69, name: 'Queso fresco Burgos', amount: '55g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 70, name: 'Mozzarella fresca', amount: '45g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
-  { id: 71, name: 'JamÃ³n serrano/lomo', amount: '40g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
+  { id: 71, name: 'Jamón serrano/lomo', amount: '40g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 72, name: 'Carne roja', amount: '35g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 73, name: 'Hamburguesa de pollo', amount: '70g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 74, name: 'Hamburguesa ternera', amount: '60g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 75, name: 'Carne picada vacuno', amount: '55g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 76, name: 'Carne picada cerdo', amount: '55g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
-  { id: 77, name: 'SalmÃ³n/AtÃºn fresco', amount: '55g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
-  { id: 78, name: 'AtÃºn en aceite', amount: '40g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
-  { id: 79, name: 'Ventresca de atÃºn', amount: '50g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
+  { id: 77, name: 'Salmón/Atún fresco', amount: '55g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
+  { id: 78, name: 'Atún en aceite', amount: '40g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
+  { id: 79, name: 'Ventresca de atún', amount: '50g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 80, name: 'Anchoas en aceite', amount: '50g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 81, name: 'Bonito/Sardina fresco', amount: '80g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 82, name: 'Trucha/Pez espada', amount: '70g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 83, name: 'Tofu', amount: '100g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 84, name: 'Tempeh de soja', amount: '80g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 85, name: 'Edamame', amount: '80g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
-  { id: 86, name: 'Bebida soja sin azÃºcar', amount: '330ml', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
+  { id: 86, name: 'Bebida soja sin azúcar', amount: '330ml', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 87, name: 'Yogur Alpro Skyr', amount: '150g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 88, name: 'Leche entera', amount: '165ml', carbs: 6, fats: 5, protein: 4.4, label: '0.25H+0.2P+0.5G' },
-  { id: 89, name: 'KÃ©fir', amount: '150ml', carbs: 6, fats: 5, protein: 4.4, label: '0.25H+0.2P+0.5G' },
+  { id: 89, name: 'Kéfir', amount: '150ml', carbs: 6, fats: 5, protein: 4.4, label: '0.25H+0.2P+0.5G' },
   { id: 90, name: 'Yogur natural', amount: '165g', carbs: 6, fats: 5, protein: 4.4, label: '0.25H+0.2P+0.5G' },
   { id: 91, name: 'Bebida soja calcio', amount: '230ml', carbs: 6, fats: 5, protein: 4.4, label: '0.25H+0.2P+0.5G' },
   { id: 92, name: 'Leche semidesnatada', amount: '220ml', carbs: 12, fats: 2.5, protein: 5.5, label: '0.5H+0.25P+0.25G' },
@@ -165,14 +165,22 @@ const foodDatabase = [
     setMacroFilters(prev => ({ ...prev, [macro]: !prev[macro] }));
   };
 
-  const filteredFoods = foodDatabase.filter(food => {
-    const matchesSearch = food.name.toLowerCase().includes(searchTerm.toLowerCase());
-    if (!macroFilters.carbs && !macroFilters.fats && !macroFilters.protein) return matchesSearch;
-    const hasCarbs = macroFilters.carbs && food.carbs > 10;
-    const hasFats = macroFilters.fats && food.fats > 5;
-    const hasProtein = macroFilters.protein && food.protein > 5;
-    return matchesSearch && (hasCarbs || hasFats || hasProtein);
-  });
+const filteredFoods = foodDatabase.filter(food => {
+  const matchesSearch = food.name.toLowerCase().includes(searchTerm.toLowerCase());
+  if (!macroFilters.carbs && !macroFilters.fats && !macroFilters.protein) return matchesSearch;
+  
+  // Si hay filtros activos, el alimento debe tener TODAS las macros seleccionadas
+  const hasCarbs = food.carbs > 10;
+  const hasFats = food.fats > 5;
+  const hasProtein = food.protein > 5;
+  
+  const meetsFilters = 
+    (!macroFilters.carbs || hasCarbs) &&
+    (!macroFilters.fats || hasFats) &&
+    (!macroFilters.protein || hasProtein);
+  
+  return matchesSearch && meetsFilters;
+});
 
   const addFoodToMeal = (food) => {
     const newMeal = {
@@ -426,7 +434,7 @@ const calculateOptimalPortions = () => {
   };
 
   const tabs = [
-    { id: 'home', label: 'Mi DÃ­a', icon: Home },
+    { id: 'home', label: 'Mi Día', icon: Home },
     { id: 'search', label: 'Alimentos', icon: Search },
     { id: 'calendar', label: 'Comidas', icon: Calendar },
     { id: 'recipes', label: 'Recetas', icon: BookOpen },
@@ -465,7 +473,7 @@ const calculateOptimalPortions = () => {
                 textAlign: 'center',
                 color: '#1f2937'
               }}>
-                Resumen del DÃ­a
+                Resumen del Día
               </h2>
               
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem', marginBottom: '1.5rem' }}>
@@ -484,7 +492,7 @@ const calculateOptimalPortions = () => {
                   <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#2563eb' }}>
                     {totals.protein.toFixed(1)} <span style={{ fontSize: '1.25rem', color: '#6b7280' }}>/ {dailyGoals.protein}</span>
                   </div>
-                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Unidades ProteÃ­na</div>
+                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Unidades Proteína</div>
                   <ProgressBar current={totals.protein} goal={dailyGoals.protein} color="bg-blue-500" />
                   <div style={{ fontSize: '0.875rem', color: '#1f2937', fontWeight: '600', marginTop: '0.5rem' }}>
                     Quedan {remaining.protein.toFixed(1)}
@@ -506,7 +514,7 @@ const calculateOptimalPortions = () => {
                   <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#9333ea' }}>
                     0 <span style={{ fontSize: '1.25rem', color: '#6b7280' }}>/ {dailyGoals.calories}</span>
                   </div>
-                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>CalorÃ­as</div>
+                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Calorías</div>
                   <ProgressBar current={0} goal={dailyGoals.calories} color="bg-amber-500" />
                   <div style={{ fontSize: '0.875rem', color: '#1f2937', fontWeight: '600', marginTop: '0.5rem' }}>
                     Quedan {dailyGoals.calories}
@@ -546,7 +554,7 @@ const calculateOptimalPortions = () => {
                       {Math.round(totals.protein * conversions.protein)}g <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>/ {dailyGoals.protein * conversions.protein}g</span>
                     </div>
                     <div style={{ fontSize: '0.75rem', color: '#4b5563', marginTop: '0.25rem', marginBottom: '0.5rem' }}>
-                      ProteÃ­na consumida
+                      Proteí­na consumida
                     </div>
                     <div style={{ fontSize: '0.875rem', fontWeight: 'bold', color: '#1f2937' }}>Quedan {Math.round(remaining.protein * conversions.protein)}g</div>
                   </div>
@@ -637,7 +645,7 @@ const calculateOptimalPortions = () => {
                       cursor: 'pointer'
                     }}
                   >
-                    ProteÃ­nas {macroFilters.protein && 'âœ“'}
+                    Proteí­nas {macroFilters.protein && 'âœ“'}
                   </button>
                   <button
                     onClick={() => toggleMacroFilter('fats')}
@@ -948,7 +956,7 @@ const calculateOptimalPortions = () => {
                       cursor: 'pointer'
                     }}
                   >
-                    ProteÃ­Â­nas {macroFilters.protein && 'âœ“'}
+                    Proteí­nas {macroFilters.protein && 'âœ“'}
                   </button>
                   <button
                     onClick={() => toggleMacroFilter('fats')}
@@ -1145,7 +1153,7 @@ const calculateOptimalPortions = () => {
                         color: 'rgb(37, 99, 235)',
                         marginBottom: '0.25rem'
                       }}>
-                        ProteÃ­nas: {((selectedFoods.reduce((sum, f) => sum + (f.protein * f.quantity), 0)) / conversions.protein).toFixed(1)} / {mealTypeGoals[selectedMealType]?.protein || 0}
+                        Proteínas: {((selectedFoods.reduce((sum, f) => sum + (f.protein * f.quantity), 0)) / conversions.protein).toFixed(1)} / {mealTypeGoals[selectedMealType]?.protein || 0}
                       </div>
                       <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>
                         {Math.round(selectedFoods.reduce((sum, f) => sum + (f.protein * f.quantity), 0))}g / {Math.round((mealTypeGoals[selectedMealType]?.protein || 0) * conversions.protein)}g
@@ -1373,7 +1381,7 @@ const calculateOptimalPortions = () => {
                 
                 <div>
                   <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#2563eb', display: 'block', marginBottom: '0.5rem' }}>
-                    1 Unidad de ProteÃ­na =
+                    1 Unidad de Proteí­na =
                   </label>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <input
@@ -1493,7 +1501,7 @@ const calculateOptimalPortions = () => {
                           </div>
                           <div>
                             <label style={{ fontSize: '0.625rem', color: '#2563eb', fontWeight: '600', display: 'block', marginBottom: '0.25rem' }}>
-                              ProteÃ­na
+                              Proteí­na
                             </label>
                             <input
                               type="number"
