@@ -9,18 +9,6 @@ const MacroDietApp = () => {
     fats: false,
     protein: false
   });
-
-const [showAddFoodModal, setShowAddFoodModal] = useState(false);
-const [customFoods, setCustomFoods] = useState([]);
-const [newFood, setNewFood] = useState({
-  name: '',
-  amount: '',
-  carbsPer100: '',
-  proteinPer100: '',
-  fatsPer100: '',
-  inputType: 'per100' // 'per100' o 'perUnit'
-});
-
   const [meals, setMeals] = useState([]);
   const [expandedMeal, setExpandedMeal] = useState(null);
   const [dailyGoals] = useState({
@@ -69,43 +57,43 @@ const foodDatabase = [
   { id: 4, name: 'Korn Flakes', amount: '30g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 5, name: 'Copos/Harina Avena', amount: '30g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 6, name: 'Harina Trigo/Espelta', amount: '30g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
-  { id: 7, name: 'Cereales sin azúcar', amount: '25g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
+  { id: 7, name: 'Cereales sin azÃºcar', amount: '25g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 8, name: 'Fruta (pieza)', amount: '1ud', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 9, name: 'Zumo de naranja', amount: '230ml', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
-  { id: 10, name: 'Dátiles/Fruta desecada', amount: '35g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
-  { id: 11, name: 'Mermelada con azúcar', amount: '50g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
+  { id: 10, name: 'DÃ¡tiles/Fruta desecada', amount: '35g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
+  { id: 11, name: 'Mermelada con azÃºcar', amount: '50g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 12, name: 'Miel', amount: '25g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 13, name: 'Gnocchi de patata', amount: '60g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 14, name: 'Pan', amount: '40g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 15, name: 'Pan de molde Bimbo', amount: '2 rebanadas', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 16, name: 'Pan de molde integral', amount: '1.5 rebanadas', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 17, name: 'Tortilla de trigo', amount: '1ud', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
-  { id: 18, name: 'Tortitas arroz/maíz', amount: '25g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
-  { id: 19, name: 'Maíz dulce (lata)', amount: '125g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
+  { id: 18, name: 'Tortitas arroz/maÃ­z', amount: '25g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
+  { id: 19, name: 'MaÃ­z dulce (lata)', amount: '125g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 20, name: 'Palomitas Popitas Zero', amount: '30g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 21, name: 'Papilla de cereales', amount: '2g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
-  { id: 22, name: 'Azúcar de mesa', amount: '25g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
+  { id: 22, name: 'AzÃºcar de mesa', amount: '25g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 23, name: 'Pescado blanco', amount: '120g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
   { id: 24, name: 'Molusco', amount: '120g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
   { id: 25, name: 'Marisco', amount: '65g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
-  { id: 26, name: 'Atún lata al natural', amount: '100g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
+  { id: 26, name: 'AtÃºn lata al natural', amount: '100g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
   { id: 27, name: 'Claras de huevo', amount: '200g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
-  { id: 28, name: 'Proteína de suero', amount: '30g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
+  { id: 28, name: 'ProteÃ­na de suero', amount: '30g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
   { id: 29, name: 'Pechuga pollo/pavo', amount: '100g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
   { id: 30, name: 'Carne roja magra', amount: '90g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
   { id: 31, name: 'Embutido sin grasa', amount: '50g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
   { id: 32, name: 'Queso Eatlean', amount: '60g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
-  { id: 33, name: 'Yogur+proteínas natural', amount: '200g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
+  { id: 33, name: 'Yogur+proteÃ­nas natural', amount: '200g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
   { id: 34, name: 'Soja texturizada', amount: '30g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
   { id: 35, name: 'Heura (bocados/tiras)', amount: '75g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
-  { id: 36, name: 'Seitán', amount: '100g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
+  { id: 36, name: 'SeitÃ¡n', amount: '100g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
   { id: 37, name: 'Levadura nutricional', amount: '35g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
-  { id: 38, name: 'Aislado proteína vegetal', amount: '30g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
+  { id: 38, name: 'Aislado proteÃ­na vegetal', amount: '30g', carbs: 0, fats: 0, protein: 22, label: 'P:1' },
   { id: 39, name: 'AOVE (cuchara sopera)', amount: '12g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
   { id: 40, name: 'Frutos secos', amount: '15g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
   { id: 41, name: 'Cacahuete/Crema', amount: '15g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
   { id: 42, name: 'Pipas calabaza/girasol', amount: '20g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
-  { id: 43, name: 'Semillas lino/chía', amount: '20g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
+  { id: 43, name: 'Semillas lino/chÃ­a', amount: '20g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
   { id: 44, name: 'Aceitunas sin hueso', amount: '60g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
   { id: 45, name: 'Coco', amount: '30g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
   { id: 46, name: 'Aguacate', amount: '60g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
@@ -118,9 +106,9 @@ const foodDatabase = [
   { id: 53, name: 'Tahini', amount: '15g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
   { id: 54, name: 'Salsa de soja', amount: '140g', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
   { id: 55, name: 'Leche desnatada', amount: '290ml', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
-  { id: 56, name: 'Leche+proteínas desnatada', amount: '230ml', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
-  { id: 57, name: 'Yogur+proteínas fresa', amount: '125g', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
-  { id: 58, name: 'Yogur+proteínas arándanos', amount: '200g', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
+  { id: 56, name: 'Leche+proteÃ­nas desnatada', amount: '230ml', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
+  { id: 57, name: 'Yogur+proteÃ­nas fresa', amount: '125g', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
+  { id: 58, name: 'Yogur+proteÃ­nas arÃ¡ndanos', amount: '200g', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
   { id: 59, name: 'Yogur griego desnatado', amount: '170g', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
   { id: 60, name: 'Yogur desnatado', amount: '280g', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
   { id: 61, name: 'Legumbres cocidas', amount: '120g', carbs: 12, fats: 0, protein: 11, label: '0.5P+0.5H' },
@@ -133,25 +121,25 @@ const foodDatabase = [
   { id: 68, name: 'Huevo', amount: '1ud (60-70g)', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 69, name: 'Queso fresco Burgos', amount: '55g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 70, name: 'Mozzarella fresca', amount: '45g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
-  { id: 71, name: 'Jamón serrano/lomo', amount: '40g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
+  { id: 71, name: 'JamÃ³n serrano/lomo', amount: '40g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 72, name: 'Carne roja', amount: '35g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 73, name: 'Hamburguesa de pollo', amount: '70g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 74, name: 'Hamburguesa ternera', amount: '60g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 75, name: 'Carne picada vacuno', amount: '55g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 76, name: 'Carne picada cerdo', amount: '55g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
-  { id: 77, name: 'Salmón/Atún fresco', amount: '55g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
-  { id: 78, name: 'Atún en aceite', amount: '40g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
-  { id: 79, name: 'Ventresca de atún', amount: '50g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
+  { id: 77, name: 'SalmÃ³n/AtÃºn fresco', amount: '55g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
+  { id: 78, name: 'AtÃºn en aceite', amount: '40g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
+  { id: 79, name: 'Ventresca de atÃºn', amount: '50g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 80, name: 'Anchoas en aceite', amount: '50g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 81, name: 'Bonito/Sardina fresco', amount: '80g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 82, name: 'Trucha/Pez espada', amount: '70g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 83, name: 'Tofu', amount: '100g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 84, name: 'Tempeh de soja', amount: '80g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 85, name: 'Edamame', amount: '80g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
-  { id: 86, name: 'Bebida soja sin azúcar', amount: '330ml', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
+  { id: 86, name: 'Bebida soja sin azÃºcar', amount: '330ml', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 87, name: 'Yogur Alpro Skyr', amount: '150g', carbs: 0, fats: 5, protein: 11, label: '0.5P+0.5G' },
   { id: 88, name: 'Leche entera', amount: '165ml', carbs: 6, fats: 5, protein: 4.4, label: '0.25H+0.2P+0.5G' },
-  { id: 89, name: 'Kéfir', amount: '150ml', carbs: 6, fats: 5, protein: 4.4, label: '0.25H+0.2P+0.5G' },
+  { id: 89, name: 'KÃ©fir', amount: '150ml', carbs: 6, fats: 5, protein: 4.4, label: '0.25H+0.2P+0.5G' },
   { id: 90, name: 'Yogur natural', amount: '165g', carbs: 6, fats: 5, protein: 4.4, label: '0.25H+0.2P+0.5G' },
   { id: 91, name: 'Bebida soja calcio', amount: '230ml', carbs: 6, fats: 5, protein: 4.4, label: '0.25H+0.2P+0.5G' },
   { id: 92, name: 'Leche semidesnatada', amount: '220ml', carbs: 12, fats: 2.5, protein: 5.5, label: '0.5H+0.25P+0.25G' },
@@ -171,30 +159,25 @@ const foodDatabase = [
     
     const savedConversions = localStorage.getItem('conversions');
     if (savedConversions) setConversions(JSON.parse(savedConversions));
-
-const savedCustomFoods = localStorage.getItem('customFoods');
-if (savedCustomFoods) setCustomFoods(JSON.parse(savedCustomFoods));
   }, []);
 
   const toggleMacroFilter = (macro) => {
     setMacroFilters(prev => ({ ...prev, [macro]: !prev[macro] }));
   };
 
-const allFoods = [...foodDatabase, ...customFoods];
-
-const filteredFoods = allFoods.filter(food => {
-  const matchesSearch = food.name.toLowerCase().includes(searchTerm.toLowerCase());
-  if (!macroFilters.carbs && !macroFilters.fats && !macroFilters.protein) return matchesSearch;
-  const hasCarbs = macroFilters.carbs && food.carbs > 10;
-  const hasFats = macroFilters.fats && food.fats > 5;
-  const hasProtein = macroFilters.protein && food.protein > 5;
-  return matchesSearch && (hasCarbs || hasFats || hasProtein);
-});
+  const filteredFoods = foodDatabase.filter(food => {
+    const matchesSearch = food.name.toLowerCase().includes(searchTerm.toLowerCase());
+    if (!macroFilters.carbs && !macroFilters.fats && !macroFilters.protein) return matchesSearch;
+    const hasCarbs = macroFilters.carbs && food.carbs > 10;
+    const hasFats = macroFilters.fats && food.fats > 5;
+    const hasProtein = macroFilters.protein && food.protein > 5;
+    return matchesSearch && (hasCarbs || hasFats || hasProtein);
+  });
 
   const addFoodToMeal = (food) => {
     const newMeal = {
       id: Date.now(),
-      name: 'Comida rápida',
+      name: 'Comida rÃ¡pida',
       time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
       foods: [{ ...food, quantity: 1 }]
     };
@@ -263,7 +246,7 @@ const calculateOptimalPortions = () => {
   // NO redondear el factor, redondear solo el resultado final
   setSelectedFoods(resetFoods.map(f => ({
     ...f,
-    quantity: Math.round(factor * 1000) / 1000  // 3 decimales para más precisión
+    quantity: Math.round(factor * 1000) / 1000  // 3 decimales para mÃ¡s precisiÃ³n
   })));
 };
   const registerInMyDay = () => {
@@ -360,56 +343,6 @@ const calculateOptimalPortions = () => {
     }, { carbs: 0, fats: 0, protein: 0 });
   };
 
-const addCustomFood = () => {
-  if (!newFood.name.trim() || !newFood.amount) return;
-  
-  let finalCarbs, finalProtein, finalFats;
-  
-  if (newFood.inputType === 'per100') {
-    // Calcular macros para la cantidad especificada
-    const amount = parseFloat(newFood.amount);
-    finalCarbs = (parseFloat(newFood.carbsPer100) || 0) * amount / 100;
-    finalProtein = (parseFloat(newFood.proteinPer100) || 0) * amount / 100;
-    finalFats = (parseFloat(newFood.fatsPer100) || 0) * amount / 100;
-  } else {
-    // Macros directos por unidad
-    finalCarbs = parseFloat(newFood.carbsPer100) || 0;
-    finalProtein = parseFloat(newFood.proteinPer100) || 0;
-    finalFats = parseFloat(newFood.fatsPer100) || 0;
-  }
-  
-  const customFood = {
-    id: Date.now(),
-    name: newFood.name,
-    amount: newFood.inputType === 'per100' ? `${newFood.amount}g` : newFood.amount,
-    carbs: finalCarbs,
-    protein: finalProtein,
-    fats: finalFats,
-    label: 'Custom',
-    isCustom: true
-  };
-  
-  const updated = [...customFoods, customFood];
-  setCustomFoods(updated);
-  localStorage.setItem('customFoods', JSON.stringify(updated));
-  
-  setNewFood({
-    name: '',
-    amount: '',
-    carbsPer100: '',
-    proteinPer100: '',
-    fatsPer100: '',
-    inputType: 'per100'
-  });
-  setShowAddFoodModal(false);
-};
-
-const deleteCustomFood = (id) => {
-  const updated = customFoods.filter(f => f.id !== id);
-  setCustomFoods(updated);
-  localStorage.setItem('customFoods', JSON.stringify(updated));
-};
-
   const totals = getTotalMacros();
   const remaining = {
     carbs: Math.max(0, dailyGoals.carbs - totals.carbs),
@@ -493,7 +426,7 @@ const deleteCustomFood = (id) => {
   };
 
   const tabs = [
-    { id: 'home', label: 'Mi Día', icon: Home },
+    { id: 'home', label: 'Mi DÃ­a', icon: Home },
     { id: 'search', label: 'Alimentos', icon: Search },
     { id: 'calendar', label: 'Comidas', icon: Calendar },
     { id: 'recipes', label: 'Recetas', icon: BookOpen },
@@ -532,7 +465,7 @@ const deleteCustomFood = (id) => {
                 textAlign: 'center',
                 color: '#1f2937'
               }}>
-                Resumen del Día
+                Resumen del DÃ­a
               </h2>
               
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem', marginBottom: '1.5rem' }}>
@@ -551,7 +484,7 @@ const deleteCustomFood = (id) => {
                   <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#2563eb' }}>
                     {totals.protein.toFixed(1)} <span style={{ fontSize: '1.25rem', color: '#6b7280' }}>/ {dailyGoals.protein}</span>
                   </div>
-                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Unidades Proteína</div>
+                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Unidades ProteÃ­na</div>
                   <ProgressBar current={totals.protein} goal={dailyGoals.protein} color="bg-blue-500" />
                   <div style={{ fontSize: '0.875rem', color: '#1f2937', fontWeight: '600', marginTop: '0.5rem' }}>
                     Quedan {remaining.protein.toFixed(1)}
@@ -573,7 +506,7 @@ const deleteCustomFood = (id) => {
                   <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#9333ea' }}>
                     0 <span style={{ fontSize: '1.25rem', color: '#6b7280' }}>/ {dailyGoals.calories}</span>
                   </div>
-                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Calorías</div>
+                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>CalorÃ­as</div>
                   <ProgressBar current={0} goal={dailyGoals.calories} color="bg-amber-500" />
                   <div style={{ fontSize: '0.875rem', color: '#1f2937', fontWeight: '600', marginTop: '0.5rem' }}>
                     Quedan {dailyGoals.calories}
@@ -613,7 +546,7 @@ const deleteCustomFood = (id) => {
                       {Math.round(totals.protein * conversions.protein)}g <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>/ {dailyGoals.protein * conversions.protein}g</span>
                     </div>
                     <div style={{ fontSize: '0.75rem', color: '#4b5563', marginTop: '0.25rem', marginBottom: '0.5rem' }}>
-                      Proteína consumida
+                      ProteÃ­na consumida
                     </div>
                     <div style={{ fontSize: '0.875rem', fontWeight: 'bold', color: '#1f2937' }}>Quedan {Math.round(remaining.protein * conversions.protein)}g</div>
                   </div>
@@ -644,7 +577,121 @@ const deleteCustomFood = (id) => {
                   No hay comidas registradas
                 </p>
               ) : (
-                  meals.map(meal => {
+              <div style={{
+              background: 'white',
+              border: '1px solid #e5e7eb',
+              borderRadius: '1rem',
+              padding: '1.25rem',
+              marginBottom: '1rem'
+            }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>
+                Buscar Alimentos
+              </h2>
+              
+              <input
+                type="text"
+                placeholder="Buscar alimento..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '0.875rem 1rem',
+                  background: 'white',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '0.5rem',
+                  fontSize: '1rem',
+                  marginBottom: '1rem'
+                }}
+              />
+
+              <div style={{ marginBottom: '1rem' }}>
+                <div style={{ fontSize: '0.75rem', color: '#4b5563', fontWeight: '600', marginBottom: '0.5rem' }}>
+                  Filtrar por:
+                </div>
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  <button
+                    onClick={() => toggleMacroFilter('carbs')}
+                    style={{
+                      padding: '0.375rem 0.75rem',
+                      borderRadius: '9999px',
+                      fontSize: '0.75rem',
+                      fontWeight: '600',
+                      background: macroFilters.carbs ? 'rgba(34, 197, 94, 0.25)' : 'rgba(34, 197, 94, 0.1)',
+                      color: macroFilters.carbs ? 'rgb(21, 128, 61)' : 'rgb(22, 163, 74)',
+                      border: macroFilters.carbs ? '2px solid rgb(34, 197, 94)' : '1px solid rgba(34, 197, 94, 0.3)',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Hidratos {macroFilters.carbs && 'âœ“'}
+                  </button>
+                  <button
+                    onClick={() => toggleMacroFilter('protein')}
+                    style={{
+                      padding: '0.375rem 0.75rem',
+                      borderRadius: '9999px',
+                      fontSize: '0.75rem',
+                      fontWeight: '600',
+                      background: macroFilters.protein ? 'rgba(59, 130, 246, 0.25)' : 'rgba(59, 130, 246, 0.1)',
+                      color: macroFilters.protein ? 'rgb(29, 78, 216)' : 'rgb(37, 99, 235)',
+                      border: macroFilters.protein ? '2px solid rgb(59, 130, 246)' : '1px solid rgba(59, 130, 246, 0.3)',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    ProteÃ­nas {macroFilters.protein && 'âœ“'}
+                  </button>
+                  <button
+                    onClick={() => toggleMacroFilter('fats')}
+                    style={{
+                      padding: '0.375rem 0.75rem',
+                      borderRadius: '9999px',
+                      fontSize: '0.75rem',
+                      fontWeight: '600',
+                      background: macroFilters.fats ? 'rgba(245, 158, 11, 0.25)' : 'rgba(245, 158, 11, 0.1)',
+                      color: macroFilters.fats ? 'rgb(180, 83, 9)' : 'rgb(217, 119, 6)',
+                      border: macroFilters.fats ? '2px solid rgb(245, 158, 11)' : '1px solid rgba(245, 158, 11, 0.3)',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Grasas {macroFilters.fats && 'âœ“'}
+                  </button>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                {filteredFoods.map(food => (
+                  <div key={food.id} style={{
+                    background: 'white',
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '0.75rem',
+                    padding: '0.875rem'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '0.75rem' }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.25rem' }}>{food.name}</div>
+                        <div style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '0.5rem' }}>{food.amount}</div>
+                        <MacroTag carbs={food.carbs} fats={food.fats} protein={food.protein} conversions={conversions} />
+                      </div>
+                      <button
+                        onClick={() => addFoodToMeal(food)}
+                        style={{
+                          padding: '0.5rem 0.75rem',
+                          fontSize: '0.75rem',
+                          background: 'linear-gradient(135deg, #a855f7, #9333ea)',
+                          color: 'white',
+                          borderRadius: '0.5rem',
+                          fontWeight: '600',
+                          border: 'none',
+                          cursor: 'pointer',
+                          flexShrink: 0
+                        }}
+                      >
+                        + AÃ±adir
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+                  {meals.map(meal => {
                     const mealTotals = meal.foods.reduce((sum, f) => ({
                       carbs: sum.carbs + (f.carbs * (f.quantity || 1)),
                       protein: sum.protein + (f.protein * (f.quantity || 1)),
@@ -695,278 +742,10 @@ const deleteCustomFood = (id) => {
               borderRadius: '1rem',
               padding: '1.25rem',
               marginBottom: '1rem'
-              }}>
-{showAddFoodModal && (
-  <div style={{
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: 'rgba(0, 0, 0, 0.5)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 1000,
-    padding: '1rem'
-  }}>
-    <div style={{
-      background: 'white',
-      borderRadius: '1rem',
-      padding: '1.5rem',
-      maxWidth: '500px',
-      width: '100%',
-      maxHeight: '90vh',
-      overflowY: 'auto'
-    }}>
-      <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>
-        Agregar Alimento Personalizado
-      </h3>
-      
-      <input
-        type="text"
-        placeholder="Nombre del alimento"
-        value={newFood.name}
-        onChange={(e) => setNewFood({...newFood, name: e.target.value})}
-        style={{
-          width: '100%',
-          padding: '0.75rem',
-          border: '1px solid #d1d5db',
-          borderRadius: '0.5rem',
-          marginBottom: '1rem',
-          fontSize: '1rem'
-        }}
-      />
-      
-      <div style={{ marginBottom: '1rem' }}>
-        <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#4b5563', display: 'block', marginBottom: '0.5rem' }}>
-          Tipo de entrada:
-        </label>
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <button
-            onClick={() => setNewFood({...newFood, inputType: 'per100'})}
-            style={{
-              flex: 1,
-              padding: '0.75rem',
-              borderRadius: '0.5rem',
-              fontSize: '0.875rem',
-              fontWeight: '600',
-              border: newFood.inputType === 'per100' ? '2px solid #10b981' : '1px solid #d1d5db',
-              background: newFood.inputType === 'per100' ? 'rgba(16, 185, 129, 0.1)' : 'white',
-              color: newFood.inputType === 'per100' ? '#059669' : '#6b7280',
-              cursor: 'pointer'
-            }}
-          >
-            Por 100g
-          </button>
-          <button
-            onClick={() => setNewFood({...newFood, inputType: 'perUnit'})}
-            style={{
-              flex: 1,
-              padding: '0.75rem',
-              borderRadius: '0.5rem',
-              fontSize: '0.875rem',
-              fontWeight: '600',
-              border: newFood.inputType === 'perUnit' ? '2px solid #10b981' : '1px solid #d1d5db',
-              background: newFood.inputType === 'perUnit' ? 'rgba(16, 185, 129, 0.1)' : 'white',
-              color: newFood.inputType === 'perUnit' ? '#059669' : '#6b7280',
-              cursor: 'pointer'
-            }}
-          >
-            Por unidad
-          </button>
-        </div>
-      </div>
-      
-      <input
-        type="text"
-        placeholder={newFood.inputType === 'per100' ? "Cantidad en gramos (ej: 130)" : "Descripción (ej: 1ud, 200ml)"}
-        value={newFood.amount}
-        onChange={(e) => setNewFood({...newFood, amount: e.target.value})}
-        style={{
-          width: '100%',
-          padding: '0.75rem',
-          border: '1px solid #d1d5db',
-          borderRadius: '0.5rem',
-          marginBottom: '1rem',
-          fontSize: '1rem'
-        }}
-      />
-      
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', marginBottom: '1rem' }}>
-        <div>
-          <label style={{ fontSize: '0.75rem', color: '#16a34a', fontWeight: '600', display: 'block', marginBottom: '0.25rem' }}>
-            Hidratos (g)
-          </label>
-          <input
-            type="number"
-            placeholder="0"
-            value={newFood.carbsPer100}
-            onChange={(e) => setNewFood({...newFood, carbsPer100: e.target.value})}
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              border: '2px solid #16a34a',
-              borderRadius: '0.5rem',
-              fontSize: '1rem'
-            }}
-            step="0.1"
-          />
-        </div>
-        <div>
-          <label style={{ fontSize: '0.75rem', color: '#2563eb', fontWeight: '600', display: 'block', marginBottom: '0.25rem' }}>
-            Proteína (g)
-          </label>
-          <input
-            type="number"
-            placeholder="0"
-            value={newFood.proteinPer100}
-            onChange={(e) => setNewFood({...newFood, proteinPer100: e.target.value})}
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              border: '2px solid #2563eb',
-              borderRadius: '0.5rem',
-              fontSize: '1rem'
-            }}
-            step="0.1"
-          />
-        </div>
-        <div>
-          <label style={{ fontSize: '0.75rem', color: '#d97706', fontWeight: '600', display: 'block', marginBottom: '0.25rem' }}>
-            Grasa (g)
-          </label>
-          <input
-            type="number"
-            placeholder="0"
-            value={newFood.fatsPer100}
-            onChange={(e) => setNewFood({...newFood, fatsPer100: e.target.value})}
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              border: '2px solid #d97706',
-              borderRadius: '0.5rem',
-              fontSize: '1rem'
-            }}
-            step="0.1"
-          />
-        </div>
-      </div>
-      
-      <p style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '1rem', fontStyle: 'italic' }}>
-        {newFood.inputType === 'per100' 
-          ? "Introduce los gramos de cada macro por cada 100g del alimento"
-          : "Introduce los gramos totales de cada macro para la unidad completa"}
-      </p>
-      
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
-        <button
-          onClick={() => {
-            setShowAddFoodModal(false);
-            setNewFood({
-              name: '',
-              amount: '',
-              carbsPer100: '',
-              proteinPer100: '',
-              fatsPer100: '',
-              inputType: 'per100'
-            });
-          }}
-          style={{
-            flex: 1,
-            padding: '0.75rem',
-            background: '#f3f4f6',
-            color: '#374151',
-            borderRadius: '0.5rem',
-            fontWeight: '600',
-            border: 'none',
-            cursor: 'pointer'
-          }}
-        >
-          Cancelar
-        </button>
-        <button
-          onClick={addCustomFood}
-          style={{
-            flex: 1,
-            padding: '0.75rem',
-            background: 'linear-gradient(135deg, #10b981, #059669)',
-            color: 'white',
-            borderRadius: '0.5rem',
-            fontWeight: '600',
-            border: 'none',
-            cursor: 'pointer'
-          }}
-        >
-          Agregar
-        </button>
-      </div>
-      
-      {customFoods.length > 0 && (
-        <>
-          <hr style={{ margin: '1.5rem 0', border: 'none', borderTop: '1px solid #e5e7eb' }} />
-          <h4 style={{ fontSize: '1rem', fontWeight: 'bold', marginBottom: '0.75rem', color: '#1f2937' }}>
-            Alimentos personalizados:
-          </h4>
-          <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
-            {customFoods.map(food => (
-              <div key={food.id} style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: '0.5rem',
-                background: '#f9fafb',
-                borderRadius: '0.375rem',
-                marginBottom: '0.5rem'
-              }}>
-                <div>
-                  <div style={{ fontWeight: '600', fontSize: '0.875rem' }}>{food.name}</div>
-                  <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>{food.amount}</div>
-                </div>
-                <button
-                  onClick={() => deleteCustomFood(food.id)}
-                  style={{
-                    color: '#ef4444',
-                    background: 'transparent',
-                    border: 'none',
-                    cursor: 'pointer',
-                    fontSize: '1.125rem'
-                  }}
-                >
-                  🗑️
-                </button>
-              </div>
-            ))}
-          </div>
-        </>
-      )}
-    </div>
-  </div>
-)}
             }}>
               <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>
                 Buscar Alimentos
               </h2>
-<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-  <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#1f2937' }}>
-    Buscar Alimentos
-  </h2>
-  <button
-    onClick={() => setShowAddFoodModal(true)}
-    style={{
-      padding: '0.5rem 1rem',
-      background: 'linear-gradient(135deg, #10b981, #059669)',
-      color: 'white',
-      borderRadius: '0.5rem',
-      fontSize: '0.875rem',
-      fontWeight: '600',
-      border: 'none',
-      cursor: 'pointer'
-    }}
-  >
-    + Nuevo
-  </button>
-</div>
               
               <input
                 type="text"
@@ -1014,7 +793,7 @@ const deleteCustomFood = (id) => {
                           flexShrink: 0
                         }}
                       >
-                        + Añadir
+                        + AÃ±adir
                       </button>
                     </div>
                   </div>
@@ -1103,7 +882,7 @@ const deleteCustomFood = (id) => {
                       cursor: 'pointer'
                     }}
                   >
-                    Hidratos {macroFilters.carbs && '✓'}
+                    Hidratos {macroFilters.carbs && 'âœ“'}
                   </button>
                   <button
                     onClick={() => toggleMacroFilter('protein')}
@@ -1118,7 +897,7 @@ const deleteCustomFood = (id) => {
                       cursor: 'pointer'
                     }}
                   >
-                    Proteí­nas {macroFilters.protein && '✓'}
+                    ProteÃ­Â­nas {macroFilters.protein && 'âœ“'}
                   </button>
                   <button
                     onClick={() => toggleMacroFilter('fats')}
@@ -1133,7 +912,7 @@ const deleteCustomFood = (id) => {
                       cursor: 'pointer'
                     }}
                   >
-                    Grasas {macroFilters.fats && '✓'}
+                    Grasas {macroFilters.fats && 'âœ“'}
                   </button>
                 </div>
               </div>
@@ -1277,7 +1056,7 @@ const deleteCustomFood = (id) => {
                         fontSize: '1.25rem'
                       }}
                     >
-                      🗑️
+                      ðŸ—‘ï¸
                     </button>
                   </div>
                 ))}
@@ -1315,7 +1094,7 @@ const deleteCustomFood = (id) => {
                         color: 'rgb(37, 99, 235)',
                         marginBottom: '0.25rem'
                       }}>
-                        Proteínas: {((selectedFoods.reduce((sum, f) => sum + (f.protein * f.quantity), 0)) / conversions.protein).toFixed(1)} / {mealTypeGoals[selectedMealType]?.protein || 0}
+                        ProteÃ­nas: {((selectedFoods.reduce((sum, f) => sum + (f.protein * f.quantity), 0)) / conversions.protein).toFixed(1)} / {mealTypeGoals[selectedMealType]?.protein || 0}
                       </div>
                       <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>
                         {Math.round(selectedFoods.reduce((sum, f) => sum + (f.protein * f.quantity), 0))}g / {Math.round((mealTypeGoals[selectedMealType]?.protein || 0) * conversions.protein)}g
@@ -1497,7 +1276,7 @@ const deleteCustomFood = (id) => {
 
         {activeTab === 'recipes' && (
           <div style={{ paddingBottom: '6rem', textAlign: 'center', padding: '3rem 1rem' }}>
-            <p style={{ color: '#6b7280' }}>Sección de recetas (próximamente)</p>
+            <p style={{ color: '#6b7280' }}>SecciÃ³n de recetas (prÃ³ximamente)</p>
           </div>
         )}
 
@@ -1514,7 +1293,7 @@ const deleteCustomFood = (id) => {
                 Conversiones de Macros
               </h2>
               <p style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '1rem' }}>
-                Define cuántos gramos equivalen a 1 unidad de cada macro
+                Define cuÃ¡ntos gramos equivalen a 1 unidad de cada macro
               </p>
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -1543,7 +1322,7 @@ const deleteCustomFood = (id) => {
                 
                 <div>
                   <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#2563eb', display: 'block', marginBottom: '0.5rem' }}>
-                    1 Unidad de Proteína =
+                    1 Unidad de ProteÃ­na =
                   </label>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <input
@@ -1613,7 +1392,7 @@ const deleteCustomFood = (id) => {
                     cursor: 'pointer'
                   }}
                 >
-                  + Añadir
+                  + AÃ±adir
                 </button>
               </div>
               
@@ -1663,7 +1442,7 @@ const deleteCustomFood = (id) => {
                           </div>
                           <div>
                             <label style={{ fontSize: '0.625rem', color: '#2563eb', fontWeight: '600', display: 'block', marginBottom: '0.25rem' }}>
-                              Proteína
+                              ProteÃ­na
                             </label>
                             <input
                               type="number"
