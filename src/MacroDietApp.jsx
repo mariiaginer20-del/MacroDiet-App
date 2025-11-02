@@ -169,19 +169,19 @@ const filteredFoods = foodDatabase.filter(food => {
   const matchesSearch = food.name.toLowerCase().includes(searchTerm.toLowerCase());
   if (!macroFilters.carbs && !macroFilters.fats && !macroFilters.protein) return matchesSearch;
   
-  // Verificar qué macros tiene el alimento
-  const hasCarbs = food.carbs >= 10;
-  const hasFats = food.fats >= 5;
-  const hasProtein = food.protein >= 5;
+  // Verificar qué macros tiene el alimento (más flexible)
+  const hasCarbs = food.carbs > 0;
+  const hasFats = food.fats > 0;
+  const hasProtein = food.protein > 0;
   
   // Contar cuántos filtros están activos
   const activeFilters = [macroFilters.carbs, macroFilters.protein, macroFilters.fats].filter(Boolean).length;
   
-  // Si solo hay 1 filtro activo, mostrar alimentos con ESA macro
+  // Si solo hay 1 filtro activo, mostrar alimentos con ESA macro principalmente
   if (activeFilters === 1) {
-    if (macroFilters.carbs) return matchesSearch && hasCarbs;
-    if (macroFilters.protein) return matchesSearch && hasProtein;
-    if (macroFilters.fats) return matchesSearch && hasFats;
+    if (macroFilters.carbs) return matchesSearch && food.carbs >= 10;
+    if (macroFilters.protein) return matchesSearch && food.protein >= 10;
+    if (macroFilters.fats) return matchesSearch && food.fats >= 5;
   }
   
   // Si hay 2+ filtros activos, el alimento debe tener TODAS las macros seleccionadas
