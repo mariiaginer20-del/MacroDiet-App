@@ -644,121 +644,7 @@ const deleteCustomFood = (id) => {
                   No hay comidas registradas
                 </p>
               ) : (
-              <div style={{
-              background: 'white',
-              border: '1px solid #e5e7eb',
-              borderRadius: '1rem',
-              padding: '1.25rem',
-              marginBottom: '1rem'
-            }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>
-                Buscar Alimentos
-              </h2>
-              
-              <input
-                type="text"
-                placeholder="Buscar alimento..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '0.875rem 1rem',
-                  background: 'white',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '0.5rem',
-                  fontSize: '1rem',
-                  marginBottom: '1rem'
-                }}
-              />
-
-              <div style={{ marginBottom: '1rem' }}>
-                <div style={{ fontSize: '0.75rem', color: '#4b5563', fontWeight: '600', marginBottom: '0.5rem' }}>
-                  Filtrar por:
-                </div>
-                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                  <button
-                    onClick={() => toggleMacroFilter('carbs')}
-                    style={{
-                      padding: '0.375rem 0.75rem',
-                      borderRadius: '9999px',
-                      fontSize: '0.75rem',
-                      fontWeight: '600',
-                      background: macroFilters.carbs ? 'rgba(34, 197, 94, 0.25)' : 'rgba(34, 197, 94, 0.1)',
-                      color: macroFilters.carbs ? 'rgb(21, 128, 61)' : 'rgb(22, 163, 74)',
-                      border: macroFilters.carbs ? '2px solid rgb(34, 197, 94)' : '1px solid rgba(34, 197, 94, 0.3)',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    Hidratos {macroFilters.carbs && '✓'}
-                  </button>
-                  <button
-                    onClick={() => toggleMacroFilter('protein')}
-                    style={{
-                      padding: '0.375rem 0.75rem',
-                      borderRadius: '9999px',
-                      fontSize: '0.75rem',
-                      fontWeight: '600',
-                      background: macroFilters.protein ? 'rgba(59, 130, 246, 0.25)' : 'rgba(59, 130, 246, 0.1)',
-                      color: macroFilters.protein ? 'rgb(29, 78, 216)' : 'rgb(37, 99, 235)',
-                      border: macroFilters.protein ? '2px solid rgb(59, 130, 246)' : '1px solid rgba(59, 130, 246, 0.3)',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    Proteínas {macroFilters.protein && '✓'}
-                  </button>
-                  <button
-                    onClick={() => toggleMacroFilter('fats')}
-                    style={{
-                      padding: '0.375rem 0.75rem',
-                      borderRadius: '9999px',
-                      fontSize: '0.75rem',
-                      fontWeight: '600',
-                      background: macroFilters.fats ? 'rgba(245, 158, 11, 0.25)' : 'rgba(245, 158, 11, 0.1)',
-                      color: macroFilters.fats ? 'rgb(180, 83, 9)' : 'rgb(217, 119, 6)',
-                      border: macroFilters.fats ? '2px solid rgb(245, 158, 11)' : '1px solid rgba(245, 158, 11, 0.3)',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    Grasas {macroFilters.fats && '✓'}
-                  </button>
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                {filteredFoods.map(food => (
-                  <div key={food.id} style={{
-                    background: 'white',
-                    border: '1px solid #e5e7eb',
-                    borderRadius: '0.75rem',
-                    padding: '0.875rem'
-                  }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '0.75rem' }}>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.25rem' }}>{food.name}</div>
-                        <div style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '0.5rem' }}>{food.amount}</div>
-                        <MacroTag carbs={food.carbs} fats={food.fats} protein={food.protein} conversions={conversions} />
-                      </div>
-                      <button
-                        onClick={() => addFoodToMeal(food)}
-                        style={{
-                          padding: '0.5rem 0.75rem',
-                          fontSize: '0.75rem',
-                          background: 'linear-gradient(135deg, #a855f7, #9333ea)',
-                          color: 'white',
-                          borderRadius: '0.5rem',
-                          fontWeight: '600',
-                          border: 'none',
-                          cursor: 'pointer',
-                          flexShrink: 0
-                        }}
-                      >
-                        + Añadir
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-                  {meals.map(meal => {
+                  meals.map(meal => {
                     const mealTotals = meal.foods.reduce((sum, f) => ({
                       carbs: sum.carbs + (f.carbs * (f.quantity || 1)),
                       protein: sum.protein + (f.protein * (f.quantity || 1)),
@@ -810,8 +696,6 @@ const deleteCustomFood = (id) => {
               padding: '1.25rem',
               marginBottom: '1rem'
               }}>
-                </div>
-)} 
 {showAddFoodModal && (
   <div style={{
     position: 'fixed',
