@@ -93,7 +93,7 @@ const foodDatabase = [
   { id: 40, name: 'Frutos secos', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
   { id: 41, name: 'Cacahuete/Crema', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
   { id: 42, name: 'Pipas calabaza/girasol', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
-  { id: 43, name: 'Semillas lino/chÃƒÂ­a', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
+  { id: 43, name: 'Semillas lino/chía', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
   { id: 44, name: 'Aceitunas sin hueso', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
   { id: 45, name: 'Coco', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
   { id: 46, name: 'Aguacate', amount: '10g', carbs: 0, fats: 10, protein: 0, label: 'G:1' },
@@ -169,11 +169,22 @@ const filteredFoods = foodDatabase.filter(food => {
   const matchesSearch = food.name.toLowerCase().includes(searchTerm.toLowerCase());
   if (!macroFilters.carbs && !macroFilters.fats && !macroFilters.protein) return matchesSearch;
   
-  // Si hay filtros activos, el alimento debe tener TODAS las macros seleccionadas
-  const hasCarbs = food.carbs > 10;
-  const hasFats = food.fats > 5;
-  const hasProtein = food.protein > 5;
+  // Verificar qué macros tiene el alimento
+  const hasCarbs = food.carbs >= 10;
+  const hasFats = food.fats >= 5;
+  const hasProtein = food.protein >= 5;
   
+  // Contar cuántos filtros están activos
+  const activeFilters = [macroFilters.carbs, macroFilters.protein, macroFilters.fats].filter(Boolean).length;
+  
+  // Si solo hay 1 filtro activo, mostrar alimentos con ESA macro
+  if (activeFilters === 1) {
+    if (macroFilters.carbs) return matchesSearch && hasCarbs;
+    if (macroFilters.protein) return matchesSearch && hasProtein;
+    if (macroFilters.fats) return matchesSearch && hasFats;
+  }
+  
+  // Si hay 2+ filtros activos, el alimento debe tener TODAS las macros seleccionadas
   const meetsFilters = 
     (!macroFilters.carbs || hasCarbs) &&
     (!macroFilters.fats || hasFats) &&
