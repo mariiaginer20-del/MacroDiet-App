@@ -934,7 +934,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                       cursor: 'pointer'
                     }}
                   >
-                    Hidratos {macroFilters.carbs && 'âœ“'}
+                    Hidratos {macroFilters.carbs && '✓'}
                   </button>
                   <button
                     onClick={() => toggleMacroFilter('protein')}
@@ -949,7 +949,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                       cursor: 'pointer'
                     }}
                   >
-                    Proteí­nas {macroFilters.protein && 'âœ“'}
+                    Proteínas {macroFilters.protein && '✓'}
                   </button>
                   <button
                     onClick={() => toggleMacroFilter('fats')}
@@ -964,7 +964,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                       cursor: 'pointer'
                     }}
                   >
-                    Grasas {macroFilters.fats && 'âœ“'}
+                    Grasas {macroFilters.fats && '✓'}
                   </button>
                 </div>
               </div>
