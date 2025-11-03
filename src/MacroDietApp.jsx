@@ -178,6 +178,42 @@ const foodDatabase = [
     setMacroFilters(prev => ({ ...prev, [macro]: !prev[macro] }));
   };
 
+const addCustomFood = () => {
+    if (!newFood.name || !newFood.amount) return;
+    
+    const foodToAdd = {
+      id: Date.now(),
+      name: newFood.name,
+      amount: newFood.amount,
+      carbs: parseFloat(newFood.carbs) || 0,
+      protein: parseFloat(newFood.protein) || 0,
+      fats: parseFloat(newFood.fats) || 0,
+      label: generateLabel(parseFloat(newFood.carbs) || 0, parseFloat(newFood.protein) || 0, parseFloat(newFood.fats) || 0),
+      isCustom: true
+    };
+    
+    const updatedCustomFoods = [...customFoods, foodToAdd];
+    setCustomFoods(updatedCustomFoods);
+    localStorage.setItem('customFoods', JSON.stringify(updatedCustomFoods));
+    
+    setNewFood({ name: '', amount: '', carbs: 0, protein: 0, fats: 0 });
+    setShowAddFoodModal(false);
+  };
+
+  const generateLabel = (carbs, protein, fats) => {
+    const parts = [];
+    if (carbs > 0) parts.push(`H:${(carbs / conversions.carbs).toFixed(1)}`);
+    if (protein > 0) parts.push(`P:${(protein / conversions.protein).toFixed(1)}`);
+    if (fats > 0) parts.push(`G:${(fats / conversions.fats).toFixed(1)}`);
+    return parts.join('+');
+  };
+
+  const deleteCustomFood = (foodId) => {
+    const updatedCustomFoods = customFoods.filter(f => f.id !== foodId);
+    setCustomFoods(updatedCustomFoods);
+    localStorage.setItem('customFoods', JSON.stringify(updatedCustomFoods));
+  };
+
 const filteredFoods = foodDatabase.filter(food => {
   const matchesSearch = food.name.toLowerCase().includes(searchTerm.toLowerCase());
   if (!macroFilters.carbs && !macroFilters.fats && !macroFilters.protein) return matchesSearch;
