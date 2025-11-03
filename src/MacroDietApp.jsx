@@ -57,11 +57,11 @@ const foodDatabase = [
   { id: 4, name: 'Korn Flakes', amount: '30g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 5, name: 'Copos/Harina Avena', amount: '30g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 6, name: 'Harina Trigo/Espelta', amount: '30g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
-  { id: 7, name: 'Cereales sin azÃºcar', amount: '25g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
+  { id: 7, name: 'Cereales sin azúcar', amount: '25g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 8, name: 'Fruta (pieza)', amount: '1ud', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 9, name: 'Zumo de naranja', amount: '230ml', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 10, name: 'Dátiles/Fruta desecada', amount: '35g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
-  { id: 11, name: 'Mermelada con azÃºcar', amount: '50g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
+  { id: 11, name: 'Mermelada con azúcar', amount: '50g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 12, name: 'Miel', amount: '25g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 13, name: 'Gnocchi de patata', amount: '60g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
   { id: 14, name: 'Pan', amount: '40g', carbs: 24, fats: 0, protein: 0, label: 'H:1' },
@@ -169,12 +169,12 @@ const filteredFoods = foodDatabase.filter(food => {
   const matchesSearch = food.name.toLowerCase().includes(searchTerm.toLowerCase());
   if (!macroFilters.carbs && !macroFilters.fats && !macroFilters.protein) return matchesSearch;
   
-  // Verificar quÃ© macros tiene el alimento (mÃ¡s flexible)
+  // Verificar qué macros tiene el alimento (más flexible)
   const hasCarbs = food.carbs > 0;
   const hasFats = food.fats > 0;
   const hasProtein = food.protein > 0;
   
-  // Contar cuÃ¡ntos filtros estÃ¡n activos
+  // Contar cuántos filtros están activos
   const activeFilters = [macroFilters.carbs, macroFilters.protein, macroFilters.fats].filter(Boolean).length;
   
   // Si solo hay 1 filtro activo, mostrar alimentos con ESA macro principalmente
@@ -196,7 +196,7 @@ const filteredFoods = foodDatabase.filter(food => {
   const addFoodToMeal = (food) => {
     const newMeal = {
       id: Date.now(),
-      name: 'Comida rÃƒÂ¡pida',
+      name: 'Comida rápida',
       time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
       foods: [{ ...food, quantity: 1 }]
     };
@@ -265,7 +265,7 @@ const calculateOptimalPortions = () => {
   // NO redondear el factor, redondear solo el resultado final
   setSelectedFoods(resetFoods.map(f => ({
     ...f,
-    quantity: Math.round(factor * 1000) / 1000  // 3 decimales para mÃƒÂ¡s precisiÃƒÂ³n
+    quantity: Math.round(factor * 1000) / 1000  // 3 decimales para más precisión
   })));
 };
   const registerInMyDay = () => {
@@ -451,7 +451,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
   };
 
   const tabs = [
-    { id: 'home', label: 'Mi DÃ­a', icon: Home },
+    { id: 'home', label: 'Mi Día', icon: Home },
     { id: 'search', label: 'Alimentos', icon: Search },
     { id: 'calendar', label: 'Comidas', icon: Calendar },
     { id: 'recipes', label: 'Recetas', icon: BookOpen },
@@ -490,7 +490,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                 textAlign: 'center',
                 color: '#1f2937'
               }}>
-                Resumen del DÃ­a
+                Resumen del Dí­a
               </h2>
               
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem', marginBottom: '1.5rem' }}>
@@ -509,7 +509,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                   <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#2563eb' }}>
                     {totals.protein.toFixed(1)} <span style={{ fontSize: '1.25rem', color: '#6b7280' }}>/ {dailyGoals.protein}</span>
                   </div>
-                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Unidades ProteÃ­na</div>
+                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Unidades Proteína</div>
                   <ProgressBar current={totals.protein} goal={dailyGoals.protein} color="bg-blue-500" />
                   <div style={{ fontSize: '0.875rem', color: '#1f2937', fontWeight: '600', marginTop: '0.5rem' }}>
                     Quedan {remaining.protein.toFixed(1)}
@@ -531,7 +531,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                   <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#9333ea' }}>
                     0 <span style={{ fontSize: '1.25rem', color: '#6b7280' }}>/ {dailyGoals.calories}</span>
                   </div>
-                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>CalorÃ­as</div>
+                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Calorí­as</div>
                   <ProgressBar current={0} goal={dailyGoals.calories} color="bg-amber-500" />
                   <div style={{ fontSize: '0.875rem', color: '#1f2937', fontWeight: '600', marginTop: '0.5rem' }}>
                     Quedan {dailyGoals.calories}
@@ -571,7 +571,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                       {Math.round(totals.protein * conversions.protein)}g <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>/ {dailyGoals.protein * conversions.protein}g</span>
                     </div>
                     <div style={{ fontSize: '0.75rem', color: '#4b5563', marginTop: '0.25rem', marginBottom: '0.5rem' }}>
-                      ProteÃ­Â­na consumida
+                      Proteína consumida
                     </div>
                     <div style={{ fontSize: '0.875rem', fontWeight: 'bold', color: '#1f2937' }}>Quedan {Math.round(remaining.protein * conversions.protein)}g</div>
                   </div>
@@ -647,7 +647,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                       cursor: 'pointer'
                     }}
                   >
-                    Hidratos {macroFilters.carbs && 'Ã¢Å“â€œ'}
+                    Hidratos {macroFilters.carbs && '✓'}
                   </button>
                   <button
                     onClick={() => toggleMacroFilter('protein')}
@@ -662,7 +662,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                       cursor: 'pointer'
                     }}
                   >
-                    ProteÃ­Â­nas {macroFilters.protein && 'Ã¢Å“â€œ'}
+                    Proteínas {macroFilters.protein && '✓'}
                   </button>
                   <button
                     onClick={() => toggleMacroFilter('fats')}
@@ -677,7 +677,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                       cursor: 'pointer'
                     }}
                   >
-                    Grasas {macroFilters.fats && 'Ã¢Å“â€œ'}
+                    Grasas {macroFilters.fats && '✓'}
                   </button>
                 </div>
               </div>
@@ -710,7 +710,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                           flexShrink: 0
                         }}
                       >
-                        + AÃƒÂ±adir
+                        + Añadir
                       </button>
                     </div>
                   </div>
@@ -806,7 +806,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
               cursor: 'pointer'
             }}
           >
-            Hidratos {macroFilters.carbs && 'âœ“'}
+            Hidratos {macroFilters.carbs && '✓'}
           </button>
           <button
             onClick={() => toggleMacroFilter('protein')}
@@ -821,7 +821,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
               cursor: 'pointer'
             }}
           >
-            ProteÃ­nas {macroFilters.protein && 'âœ“'}
+            Proteínas {macroFilters.protein && '✓'}
           </button>
           <button
             onClick={() => toggleMacroFilter('fats')}
@@ -836,7 +836,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
               cursor: 'pointer'
             }}
           >
-            Grasas {macroFilters.fats && 'âœ“'}
+            Grasas {macroFilters.fats && '✓'}
           </button>
         </div>
       </div>
@@ -869,7 +869,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                   flexShrink: 0
                 }}
               >
-                + AÃ±adir
+                + Añadir
               </button>
             </div>
           </div>
@@ -958,7 +958,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                       cursor: 'pointer'
                     }}
                   >
-                    Hidratos {macroFilters.carbs && 'Ã¢Å“â€œ'}
+                    Hidratos {macroFilters.carbs && '✓'}
                   </button>
                   <button
                     onClick={() => toggleMacroFilter('protein')}
@@ -973,7 +973,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                       cursor: 'pointer'
                     }}
                   >
-                    ProteÃ­Â­nas {macroFilters.protein && 'Ã¢Å“â€œ'}
+                    Proteí­nas {macroFilters.protein && '✓'}
                   </button>
                   <button
                     onClick={() => toggleMacroFilter('fats')}
@@ -988,7 +988,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                       cursor: 'pointer'
                     }}
                   >
-                    Grasas {macroFilters.fats && 'Ã¢Å“â€œ'}
+                    Grasas {macroFilters.fats && '✓'}
                   </button>
                 </div>
               </div>
@@ -1170,7 +1170,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                         color: 'rgb(37, 99, 235)',
                         marginBottom: '0.25rem'
                       }}>
-                        ProteÃ­nas: {((selectedFoods.reduce((sum, f) => sum + (f.protein * f.quantity), 0)) / conversions.protein).toFixed(1)} / {mealTypeGoals[selectedMealType]?.protein || 0}
+                        Proteínas: {((selectedFoods.reduce((sum, f) => sum + (f.protein * f.quantity), 0)) / conversions.protein).toFixed(1)} / {mealTypeGoals[selectedMealType]?.protein || 0}
                       </div>
                       <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>
                         {Math.round(selectedFoods.reduce((sum, f) => sum + (f.protein * f.quantity), 0))}g / {Math.round((mealTypeGoals[selectedMealType]?.protein || 0) * conversions.protein)}g
@@ -1352,7 +1352,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
 
         {activeTab === 'recipes' && (
           <div style={{ paddingBottom: '6rem', textAlign: 'center', padding: '3rem 1rem' }}>
-            <p style={{ color: '#6b7280' }}>SecciÃƒÂ³n de recetas (prÃƒÂ³ximamente)</p>
+            <p style={{ color: '#6b7280' }}>Sección de recetas (próximamente)</p>
           </div>
         )}
 
@@ -1369,7 +1369,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                 Conversiones de Macros
               </h2>
               <p style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '1rem' }}>
-                Define cuÃƒÂ¡ntos gramos equivalen a 1 unidad de cada macro
+                Define cuántos gramos equivalen a 1 unidad de cada macro
               </p>
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -1398,7 +1398,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                 
                 <div>
                   <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#2563eb', display: 'block', marginBottom: '0.5rem' }}>
-                    1 Unidad de ProteÃ­Â­na =
+                    1 Unidad de Proteína =
                   </label>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <input
@@ -1468,7 +1468,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                     cursor: 'pointer'
                   }}
                 >
-                  + AÃƒÂ±adir
+                  + Añadir
                 </button>
               </div>
               
@@ -1518,7 +1518,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                           </div>
                           <div>
                             <label style={{ fontSize: '0.625rem', color: '#2563eb', fontWeight: '600', display: 'block', marginBottom: '0.25rem' }}>
-                              ProteÃ­Â­na
+                              Proteína
                             </label>
                             <input
                               type="number"
