@@ -836,6 +836,28 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
           marginBottom: '1rem'
         }}
       />
+<button
+                onClick={() => setShowAddFoodModal(true)}
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  marginBottom: '1rem',
+                  background: 'linear-gradient(135deg, #10b981, #059669)',
+                  color: 'white',
+                  borderRadius: '0.5rem',
+                  fontWeight: '600',
+                  fontSize: '0.875rem',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.5rem'
+                }}
+              >
+                <Plus size={18} />
+                Añadir Alimento Personalizado
+              </button>
 
       <div style={{ marginBottom: '1rem' }}>
         <div style={{ fontSize: '0.75rem', color: '#4b5563', fontWeight: '600', marginBottom: '0.5rem' }}>
