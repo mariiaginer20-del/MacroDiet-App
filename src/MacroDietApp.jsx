@@ -731,15 +731,10 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
     fontWeight: '600',
     fontSize: '0.875rem',
     border: 'none',
-    cursor: 'pointer',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '0.5rem'
+    cursor: 'pointer'
   }}
 >
-  <Plus size={18} />
-  Crear Alimento Personalizado
+  + Crear Alimento Personalizado
 </button>
 
 <div style={{ marginBottom: '1rem' }}>
