@@ -687,7 +687,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
               <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>
                 Comidas de Hoy
               </h3>
-{meals.length === 0 ? (
+              {meals.length === 0 ? (
                 <p style={{ color: '#6b7280', textAlign: 'center', padding: '2rem 0' }}>
                   No hay comidas registradas
                 </p>
