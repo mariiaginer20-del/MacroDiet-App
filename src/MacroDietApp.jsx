@@ -1697,6 +1697,189 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
         )}
       </div>
 
+{showAddFoodModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000
+        }}>
+          <div style={{
+            background: 'white',
+            borderRadius: '1rem',
+            padding: '1.5rem',
+            maxWidth: '400px',
+            width: '90%',
+            maxHeight: '90vh',
+            overflowY: 'auto'
+          }}>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>
+              Añadir Alimento Personalizado
+            </h3>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div>
+                <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#4b5563', display: 'block', marginBottom: '0.5rem' }}>
+                  Nombre del alimento *
+                </label>
+                <input
+                  type="text"
+                  placeholder="Ej: Yogur casero"
+                  value={newFood.name}
+                  onChange={(e) => setNewFood({...newFood, name: e.target.value})}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    border: '1px solid #d1d5db',
+                    borderRadius: '0.5rem',
+                    fontSize: '1rem'
+                  }}
+                />
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#4b5563', display: 'block', marginBottom: '0.5rem' }}>
+                  Cantidad de referencia *
+                </label>
+                <input
+                  type="text"
+                  placeholder="Ej: 100g, 1 unidad, 200ml"
+                  value={newFood.amount}
+                  onChange={(e) => setNewFood({...newFood, amount: e.target.value})}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    border: '1px solid #d1d5db',
+                    borderRadius: '0.5rem',
+                    fontSize: '1rem'
+                  }}
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem' }}>
+                <div>
+                  <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#16a34a', display: 'block', marginBottom: '0.5rem' }}>
+                    Hidratos (g)
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="0"
+                    value={newFood.carbs}
+                    onChange={(e) => setNewFood({...newFood, carbs: e.target.value})}
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      border: '2px solid #16a34a',
+                      borderRadius: '0.5rem',
+                      fontSize: '1rem'
+                    }}
+                    min="0"
+                    step="0.1"
+                  />
+                </div>
+
+                <div>
+                  <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#2563eb', display: 'block', marginBottom: '0.5rem' }}>
+                    Proteína (g)
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="0"
+                    value={newFood.protein}
+                    onChange={(e) => setNewFood({...newFood, protein: e.target.value})}
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      border: '2px solid #2563eb',
+                      borderRadius: '0.5rem',
+                      fontSize: '1rem'
+                    }}
+                    min="0"
+                    step="0.1"
+                  />
+                </div>
+
+                <div>
+                  <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#d97706', display: 'block', marginBottom: '0.5rem' }}>
+                    Grasas (g)
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="0"
+                    value={newFood.fats}
+                    onChange={(e) => setNewFood({...newFood, fats: e.target.value})}
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      border: '2px solid #d97706',
+                      borderRadius: '0.5rem',
+                      fontSize: '1rem'
+                    }}
+                    min="0"
+                    step="0.1"
+                  />
+                </div>
+              </div>
+
+              <div style={{
+                background: '#f0fdf4',
+                border: '1px solid #bbf7d0',
+                borderRadius: '0.5rem',
+                padding: '0.75rem',
+                fontSize: '0.75rem',
+                color: '#166534'
+              }}>
+                <strong>Nota:</strong> Introduce los valores nutricionales para la cantidad de referencia que especificaste arriba.
+              </div>
+
+              <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+                <button
+                  onClick={() => {
+                    setShowAddFoodModal(false);
+                    setNewFood({ name: '', amount: '', carbs: 0, protein: 0, fats: 0 });
+                  }}
+                  style={{
+                    flex: 1,
+                    padding: '0.75rem',
+                    background: '#f3f4f6',
+                    color: '#374151',
+                    borderRadius: '0.5rem',
+                    fontWeight: '600',
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={addCustomFood}
+                  disabled={!newFood.name || !newFood.amount}
+                  style={{
+                    flex: 1,
+                    padding: '0.75rem',
+                    background: (!newFood.name || !newFood.amount) ? '#d1d5db' : 'linear-gradient(135deg, #10b981, #059669)',
+                    color: 'white',
+                    borderRadius: '0.5rem',
+                    fontWeight: '600',
+                    border: 'none',
+                    cursor: (!newFood.name || !newFood.amount) ? 'not-allowed' : 'pointer',
+                    opacity: (!newFood.name || !newFood.amount) ? 0.5 : 1
+                  }}
+                >
+                  Añadir
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <nav style={{
         position: 'fixed',
         bottom: 0,
