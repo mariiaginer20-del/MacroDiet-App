@@ -688,11 +688,11 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                 Comidas de Hoy
               </h3>
 {meals.length === 0 ? (
-  <p style={{ color: '#6b7280', textAlign: 'center', padding: '2rem 0' }}>
-    No hay comidas registradas
-  </p>
-) : (
-  meals.map(meal => {
+                <p style={{ color: '#6b7280', textAlign: 'center', padding: '2rem 0' }}>
+                  No hay comidas registradas
+                </p>
+              ) : (
+                meals.map(meal => {
                     const mealTotals = meal.foods.reduce((sum, f) => ({
                       carbs: sum.carbs + (f.carbs * (f.quantity || 1)),
                       protein: sum.protein + (f.protein * (f.quantity || 1)),
