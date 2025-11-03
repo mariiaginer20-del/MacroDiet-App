@@ -25,24 +25,10 @@ const MacroDietApp = () => {
   const [timeInvested, setTimeInvested] = useState('medio');
   const [savedMeals, setSavedMeals] = useState([]);
   const [recipeSearchTerm, setRecipeSearchTerm] = useState('');
-const [recipeFilters, setRecipeFilters] = useState({
-  time: { poco: false, medio: false, mucho: false },
-  macros: { carbs: false, protein: false, fats: false }
-});
-
-const [showCreateFoodModal, setShowCreateFoodModal] = useState(false);
-const [newFood, setNewFood] = useState({
-  name: '',
-  amount: '',
-  carbs: 0,
-  protein: 0,
-  fats: 0,
-  isPerUnit: false
-});
-const [customFoods, setCustomFoods] = useState([]);
-const [editingFood, setEditingFood] = useState(null);
-const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-const [foodToDelete, setFoodToDelete] = useState(null);
+  const [recipeFilters, setRecipeFilters] = useState({
+    time: { poco: false, medio: false, mucho: false },
+    macros: { carbs: false, protein: false, fats: false }
+  });
   
   const [mealTypes, setMealTypes] = useState([
     { id: 1, name: 'Desayuno', carbs: 2.5, protein: 0, fats: 2 },
@@ -161,37 +147,34 @@ const foodDatabase = [
   { id: 94, name: 'Cacao puro desgrasado', amount: '25g', carbs: 6, fats: 2.75, protein: 11, label: '0.25H+0.5P+0.25G' },
 ];
 
-useEffect(() => {
-  const savedMealsData = localStorage.getItem('meals');
-  if (savedMealsData) setMeals(JSON.parse(savedMealsData));
-  
-  const savedRecipes = localStorage.getItem('savedMeals');
-  if (savedRecipes) setSavedMeals(JSON.parse(savedRecipes));
-  
-  const savedMealTypes = localStorage.getItem('mealTypes');
-  if (savedMealTypes) setMealTypes(JSON.parse(savedMealTypes));
-  
-  const savedConversions = localStorage.getItem('conversions');
-  if (savedConversions) setConversions(JSON.parse(savedConversions));
-  
-  const savedCustomFoods = localStorage.getItem('customFoods');
-  if (savedCustomFoods) setCustomFoods(JSON.parse(savedCustomFoods));
-}, []);
+  useEffect(() => {
+    const savedMealsData = localStorage.getItem('meals');
+    if (savedMealsData) setMeals(JSON.parse(savedMealsData));
+    
+    const savedRecipes = localStorage.getItem('savedMeals');
+    if (savedRecipes) setSavedMeals(JSON.parse(savedRecipes));
+    
+    const savedMealTypes = localStorage.getItem('mealTypes');
+    if (savedMealTypes) setMealTypes(JSON.parse(savedMealTypes));
+    
+    const savedConversions = localStorage.getItem('conversions');
+    if (savedConversions) setConversions(JSON.parse(savedConversions));
+  }, []);
 
   const toggleMacroFilter = (macro) => {
     setMacroFilters(prev => ({ ...prev, [macro]: !prev[macro] }));
   };
 
-const filteredFoods = [...foodDatabase, ...customFoods].filter(food => {
+const filteredFoods = foodDatabase.filter(food => {
   const matchesSearch = food.name.toLowerCase().includes(searchTerm.toLowerCase());
   if (!macroFilters.carbs && !macroFilters.fats && !macroFilters.protein) return matchesSearch;
   
-  // Verificar qué macros tiene el alimento (más flexible)
+  // Verificar quÃ© macros tiene el alimento (mÃ¡s flexible)
   const hasCarbs = food.carbs > 0;
   const hasFats = food.fats > 0;
   const hasProtein = food.protein > 0;
   
-  // Contar cuántos filtros están activos
+  // Contar cuÃ¡ntos filtros estÃ¡n activos
   const activeFilters = [macroFilters.carbs, macroFilters.protein, macroFilters.fats].filter(Boolean).length;
   
   // Si solo hay 1 filtro activo, mostrar alimentos con ESA macro principalmente
@@ -213,7 +196,7 @@ const filteredFoods = [...foodDatabase, ...customFoods].filter(food => {
   const addFoodToMeal = (food) => {
     const newMeal = {
       id: Date.now(),
-      name: 'Comida rÃ¡pida',
+      name: 'Comida rÃƒÂ¡pida',
       time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
       foods: [{ ...food, quantity: 1 }]
     };
@@ -282,7 +265,7 @@ const calculateOptimalPortions = () => {
   // NO redondear el factor, redondear solo el resultado final
   setSelectedFoods(resetFoods.map(f => ({
     ...f,
-    quantity: Math.round(factor * 1000) / 1000  // 3 decimales para mÃ¡s precisiÃ³n
+    quantity: Math.round(factor * 1000) / 1000  // 3 decimales para mÃƒÂ¡s precisiÃƒÂ³n
   })));
 };
   const registerInMyDay = () => {
@@ -366,79 +349,6 @@ const calculateOptimalPortions = () => {
     setSelectedMealType(recipe.type);
     setActiveTab('calendar');
   };
-
-const createCustomFood = () => {
-  if (!newFood.name.trim() || !newFood.amount.trim()) return;
-  
-  const customFood = {
-    id: Date.now(),
-    name: newFood.name,
-    amount: newFood.amount,
-    carbs: parseFloat(newFood.carbs) || 0,
-    protein: parseFloat(newFood.protein) || 0,
-    fats: parseFloat(newFood.fats) || 0,
-    label: generateLabel(parseFloat(newFood.carbs) || 0, parseFloat(newFood.protein) || 0, parseFloat(newFood.fats) || 0),
-    isCustom: true
-  };
-  
-  const updatedCustomFoods = [...customFoods, customFood];
-  setCustomFoods(updatedCustomFoods);
-  localStorage.setItem('customFoods', JSON.stringify(updatedCustomFoods));
-  
-  setNewFood({ name: '', amount: '', carbs: 0, protein: 0, fats: 0, isPerUnit: false });
-  setShowCreateFoodModal(false);
-};
-
-const generateLabel = (carbs, protein, fats) => {
-  const units = [];
-  if (carbs > 0) units.push(`${(carbs / conversions.carbs).toFixed(1)}H`);
-  if (protein > 0) units.push(`${(protein / conversions.protein).toFixed(1)}P`);
-  if (fats > 0) units.push(`${(fats / conversions.fats).toFixed(1)}G`);
-  return units.join('+');
-};
-
-const deleteCustomFood = (id) => {
-  const updated = customFoods.filter(f => f.id !== id);
-  setCustomFoods(updated);
-  localStorage.setItem('customFoods', JSON.stringify(updated));
-};
-
-const confirmDeleteFood = () => {
-  if (foodToDelete) {
-    deleteCustomFood(foodToDelete);
-    setShowDeleteConfirm(false);
-    setFoodToDelete(null);
-  }
-};
-
-const startEditingFood = (food) => {
-  setEditingFood(food.id);
-  setNewFood({
-    name: food.name,
-    amount: food.amount,
-    carbs: food.carbs,
-    protein: food.protein,
-    fats: food.fats
-  });
-};
-
-const saveEditedFood = (foodId) => {
-  const updated = customFoods.map(f => 
-    f.id === foodId ? {
-      ...f,
-      name: newFood.name,
-      amount: newFood.amount,
-      carbs: parseFloat(newFood.carbs) || 0,
-      protein: parseFloat(newFood.protein) || 0,
-      fats: parseFloat(newFood.fats) || 0,
-      label: generateLabel(parseFloat(newFood.carbs) || 0, parseFloat(newFood.protein) || 0, parseFloat(newFood.fats) || 0)
-    } : f
-  );
-  setCustomFoods(updated);
-  localStorage.setItem('customFoods', JSON.stringify(updated));
-  setEditingFood(null);
-  setNewFood({ name: '', amount: '', carbs: 0, protein: 0, fats: 0, isPerUnit: false });
-};
 
   const getTotalMacros = () => {
     return meals.reduce((total, meal) => {
@@ -541,7 +451,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
   };
 
   const tabs = [
-    { id: 'home', label: 'Mi Día', icon: Home },
+    { id: 'home', label: 'Mi DÃ­a', icon: Home },
     { id: 'search', label: 'Alimentos', icon: Search },
     { id: 'calendar', label: 'Comidas', icon: Calendar },
     { id: 'recipes', label: 'Recetas', icon: BookOpen },
@@ -580,7 +490,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                 textAlign: 'center',
                 color: '#1f2937'
               }}>
-                Resumen del Día
+                Resumen del DÃ­a
               </h2>
               
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem', marginBottom: '1.5rem' }}>
@@ -599,7 +509,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                   <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#2563eb' }}>
                     {totals.protein.toFixed(1)} <span style={{ fontSize: '1.25rem', color: '#6b7280' }}>/ {dailyGoals.protein}</span>
                   </div>
-                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Unidades Proteína</div>
+                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Unidades ProteÃ­na</div>
                   <ProgressBar current={totals.protein} goal={dailyGoals.protein} color="bg-blue-500" />
                   <div style={{ fontSize: '0.875rem', color: '#1f2937', fontWeight: '600', marginTop: '0.5rem' }}>
                     Quedan {remaining.protein.toFixed(1)}
@@ -621,7 +531,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                   <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#9333ea' }}>
                     0 <span style={{ fontSize: '1.25rem', color: '#6b7280' }}>/ {dailyGoals.calories}</span>
                   </div>
-                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Calorías</div>
+                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>CalorÃ­as</div>
                   <ProgressBar current={0} goal={dailyGoals.calories} color="bg-amber-500" />
                   <div style={{ fontSize: '0.875rem', color: '#1f2937', fontWeight: '600', marginTop: '0.5rem' }}>
                     Quedan {dailyGoals.calories}
@@ -661,7 +571,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                       {Math.round(totals.protein * conversions.protein)}g <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>/ {dailyGoals.protein * conversions.protein}g</span>
                     </div>
                     <div style={{ fontSize: '0.75rem', color: '#4b5563', marginTop: '0.25rem', marginBottom: '0.5rem' }}>
-                      Proteí­na consumida
+                      ProteÃ­Â­na consumida
                     </div>
                     <div style={{ fontSize: '0.875rem', fontWeight: 'bold', color: '#1f2937' }}>Quedan {Math.round(remaining.protein * conversions.protein)}g</div>
                   </div>
@@ -692,7 +602,121 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                   No hay comidas registradas
                 </p>
               ) : (
-                meals.map(meal => {
+              <div style={{
+              background: 'white',
+              border: '1px solid #e5e7eb',
+              borderRadius: '1rem',
+              padding: '1.25rem',
+              marginBottom: '1rem'
+            }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>
+                Buscar Alimentos
+              </h2>
+              
+              <input
+                type="text"
+                placeholder="Buscar alimento..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '0.875rem 1rem',
+                  background: 'white',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '0.5rem',
+                  fontSize: '1rem',
+                  marginBottom: '1rem'
+                }}
+              />
+
+              <div style={{ marginBottom: '1rem' }}>
+                <div style={{ fontSize: '0.75rem', color: '#4b5563', fontWeight: '600', marginBottom: '0.5rem' }}>
+                  Filtrar por:
+                </div>
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  <button
+                    onClick={() => toggleMacroFilter('carbs')}
+                    style={{
+                      padding: '0.375rem 0.75rem',
+                      borderRadius: '9999px',
+                      fontSize: '0.75rem',
+                      fontWeight: '600',
+                      background: macroFilters.carbs ? 'rgba(34, 197, 94, 0.25)' : 'rgba(34, 197, 94, 0.1)',
+                      color: macroFilters.carbs ? 'rgb(21, 128, 61)' : 'rgb(22, 163, 74)',
+                      border: macroFilters.carbs ? '2px solid rgb(34, 197, 94)' : '1px solid rgba(34, 197, 94, 0.3)',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Hidratos {macroFilters.carbs && 'Ã¢Å“â€œ'}
+                  </button>
+                  <button
+                    onClick={() => toggleMacroFilter('protein')}
+                    style={{
+                      padding: '0.375rem 0.75rem',
+                      borderRadius: '9999px',
+                      fontSize: '0.75rem',
+                      fontWeight: '600',
+                      background: macroFilters.protein ? 'rgba(59, 130, 246, 0.25)' : 'rgba(59, 130, 246, 0.1)',
+                      color: macroFilters.protein ? 'rgb(29, 78, 216)' : 'rgb(37, 99, 235)',
+                      border: macroFilters.protein ? '2px solid rgb(59, 130, 246)' : '1px solid rgba(59, 130, 246, 0.3)',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    ProteÃ­Â­nas {macroFilters.protein && 'Ã¢Å“â€œ'}
+                  </button>
+                  <button
+                    onClick={() => toggleMacroFilter('fats')}
+                    style={{
+                      padding: '0.375rem 0.75rem',
+                      borderRadius: '9999px',
+                      fontSize: '0.75rem',
+                      fontWeight: '600',
+                      background: macroFilters.fats ? 'rgba(245, 158, 11, 0.25)' : 'rgba(245, 158, 11, 0.1)',
+                      color: macroFilters.fats ? 'rgb(180, 83, 9)' : 'rgb(217, 119, 6)',
+                      border: macroFilters.fats ? '2px solid rgb(245, 158, 11)' : '1px solid rgba(245, 158, 11, 0.3)',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Grasas {macroFilters.fats && 'Ã¢Å“â€œ'}
+                  </button>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                {filteredFoods.map(food => (
+                  <div key={food.id} style={{
+                    background: 'white',
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '0.75rem',
+                    padding: '0.875rem'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '0.75rem' }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.25rem' }}>{food.name}</div>
+                        <div style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '0.5rem' }}>{food.amount}</div>
+                        <MacroTag carbs={food.carbs} fats={food.fats} protein={food.protein} conversions={conversions} />
+                      </div>
+                      <button
+                        onClick={() => addFoodToMeal(food)}
+                        style={{
+                          padding: '0.5rem 0.75rem',
+                          fontSize: '0.75rem',
+                          background: 'linear-gradient(135deg, #a855f7, #9333ea)',
+                          color: 'white',
+                          borderRadius: '0.5rem',
+                          fontWeight: '600',
+                          border: 'none',
+                          cursor: 'pointer',
+                          flexShrink: 0
+                        }}
+                      >
+                        + AÃƒÂ±adir
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+                  {meals.map(meal => {
                     const mealTotals = meal.foods.reduce((sum, f) => ({
                       carbs: sum.carbs + (f.carbs * (f.quantity || 1)),
                       protein: sum.protein + (f.protein * (f.quantity || 1)),
@@ -782,7 +806,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
               cursor: 'pointer'
             }}
           >
-            Hidratos {macroFilters.carbs && '✓'}
+            Hidratos {macroFilters.carbs && 'âœ“'}
           </button>
           <button
             onClick={() => toggleMacroFilter('protein')}
@@ -797,7 +821,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
               cursor: 'pointer'
             }}
           >
-            Proteínas {macroFilters.protein && '✓'}
+            ProteÃ­nas {macroFilters.protein && 'âœ“'}
           </button>
           <button
             onClick={() => toggleMacroFilter('fats')}
@@ -812,7 +836,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
               cursor: 'pointer'
             }}
           >
-            Grasas {macroFilters.fats && '✓'}
+            Grasas {macroFilters.fats && 'âœ“'}
           </button>
         </div>
       </div>
@@ -845,7 +869,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                   flexShrink: 0
                 }}
               >
-                + Añadir
+                + AÃ±adir
               </button>
             </div>
           </div>
@@ -934,7 +958,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                       cursor: 'pointer'
                     }}
                   >
-                    Hidratos {macroFilters.carbs && '✓'}
+                    Hidratos {macroFilters.carbs && 'Ã¢Å“â€œ'}
                   </button>
                   <button
                     onClick={() => toggleMacroFilter('protein')}
@@ -949,7 +973,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                       cursor: 'pointer'
                     }}
                   >
-                    Proteínas {macroFilters.protein && '✓'}
+                    ProteÃ­Â­nas {macroFilters.protein && 'Ã¢Å“â€œ'}
                   </button>
                   <button
                     onClick={() => toggleMacroFilter('fats')}
@@ -964,7 +988,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                       cursor: 'pointer'
                     }}
                   >
-                    Grasas {macroFilters.fats && '✓'}
+                    Grasas {macroFilters.fats && 'Ã¢Å“â€œ'}
                   </button>
                 </div>
               </div>
@@ -1108,7 +1132,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                         fontSize: '1.25rem'
                       }}
                     >
-                      ðŸ—‘ï¸
+                      Ã°Å¸â€”â€˜Ã¯Â¸Â
                     </button>
                   </div>
                 ))}
@@ -1146,7 +1170,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                         color: 'rgb(37, 99, 235)',
                         marginBottom: '0.25rem'
                       }}>
-                        Proteínas: {((selectedFoods.reduce((sum, f) => sum + (f.protein * f.quantity), 0)) / conversions.protein).toFixed(1)} / {mealTypeGoals[selectedMealType]?.protein || 0}
+                        ProteÃ­nas: {((selectedFoods.reduce((sum, f) => sum + (f.protein * f.quantity), 0)) / conversions.protein).toFixed(1)} / {mealTypeGoals[selectedMealType]?.protein || 0}
                       </div>
                       <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>
                         {Math.round(selectedFoods.reduce((sum, f) => sum + (f.protein * f.quantity), 0))}g / {Math.round((mealTypeGoals[selectedMealType]?.protein || 0) * conversions.protein)}g
@@ -1328,7 +1352,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
 
         {activeTab === 'recipes' && (
           <div style={{ paddingBottom: '6rem', textAlign: 'center', padding: '3rem 1rem' }}>
-            <p style={{ color: '#6b7280' }}>SecciÃ³n de recetas (prÃ³ximamente)</p>
+            <p style={{ color: '#6b7280' }}>SecciÃƒÂ³n de recetas (prÃƒÂ³ximamente)</p>
           </div>
         )}
 
@@ -1345,7 +1369,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                 Conversiones de Macros
               </h2>
               <p style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '1rem' }}>
-                Define cuÃ¡ntos gramos equivalen a 1 unidad de cada macro
+                Define cuÃƒÂ¡ntos gramos equivalen a 1 unidad de cada macro
               </p>
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -1374,7 +1398,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                 
                 <div>
                   <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#2563eb', display: 'block', marginBottom: '0.5rem' }}>
-                    1 Unidad de Proteí­na =
+                    1 Unidad de ProteÃ­Â­na =
                   </label>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <input
@@ -1444,7 +1468,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                     cursor: 'pointer'
                   }}
                 >
-                  + AÃ±adir
+                  + AÃƒÂ±adir
                 </button>
               </div>
               
@@ -1494,7 +1518,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                           </div>
                           <div>
                             <label style={{ fontSize: '0.625rem', color: '#2563eb', fontWeight: '600', display: 'block', marginBottom: '0.25rem' }}>
-                              Proteí­na
+                              ProteÃ­Â­na
                             </label>
                             <input
                               type="number"
@@ -1601,240 +1625,6 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
           </div>
         )}
       </div>
-
-{showCreateFoodModal && (
-  <div style={{
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: 'rgba(0, 0, 0, 0.5)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 1000,
-    padding: '1rem'
-  }}>
-    <div style={{
-      background: 'white',
-      borderRadius: '1rem',
-      padding: '1.5rem',
-      maxWidth: '400px',
-      width: '100%',
-      maxHeight: '90vh',
-      overflowY: 'auto'
-    }}>
-      <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>
-        Crear Alimento Personalizado
-      </h3>
-      
-      <div style={{ marginBottom: '1rem' }}>
-        <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#4b5563', display: 'block', marginBottom: '0.5rem' }}>
-          Nombre del alimento
-        </label>
-        <input
-          type="text"
-          placeholder="Ej: Batido proteico casero"
-          value={newFood.name}
-          onChange={(e) => setNewFood({...newFood, name: e.target.value})}
-          style={{
-            width: '100%',
-            padding: '0.75rem',
-            border: '1px solid #d1d5db',
-            borderRadius: '0.5rem',
-            fontSize: '1rem'
-          }}
-        />
-      </div>
-      
-      <div style={{ marginBottom: '1rem' }}>
-        <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#4b5563', display: 'block', marginBottom: '0.5rem' }}>
-          Cantidad de referencia
-        </label>
-        <input
-          type="text"
-          placeholder="Ej: 100g o 1 unidad"
-          value={newFood.amount}
-          onChange={(e) => setNewFood({...newFood, amount: e.target.value})}
-          style={{
-            width: '100%',
-            padding: '0.75rem',
-            border: '1px solid #d1d5db',
-            borderRadius: '0.5rem',
-            fontSize: '1rem'
-          }}
-        />
-      </div>
-      
-      <div style={{ marginBottom: '1rem' }}>
-        <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#16a34a', display: 'block', marginBottom: '0.5rem' }}>
-          Hidratos de carbono (gramos)
-        </label>
-        <input
-          type="number"
-          placeholder="0"
-          value={newFood.carbs}
-          onChange={(e) => setNewFood({...newFood, carbs: e.target.value})}
-          style={{
-            width: '100%',
-            padding: '0.75rem',
-            border: '2px solid #16a34a',
-            borderRadius: '0.5rem',
-            fontSize: '1rem'
-          }}
-          min="0"
-          step="0.1"
-        />
-      </div>
-      
-      <div style={{ marginBottom: '1rem' }}>
-        <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#2563eb', display: 'block', marginBottom: '0.5rem' }}>
-          Proteínas (gramos)
-        </label>
-        <input
-          type="number"
-          placeholder="0"
-          value={newFood.protein}
-          onChange={(e) => setNewFood({...newFood, protein: e.target.value})}
-          style={{
-            width: '100%',
-            padding: '0.75rem',
-            border: '2px solid #2563eb',
-            borderRadius: '0.5rem',
-            fontSize: '1rem'
-          }}
-          min="0"
-          step="0.1"
-        />
-      </div>
-      
-      <div style={{ marginBottom: '1.5rem' }}>
-        <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#d97706', display: 'block', marginBottom: '0.5rem' }}>
-          Grasas (gramos)
-        </label>
-        <input
-          type="number"
-          placeholder="0"
-          value={newFood.fats}
-          onChange={(e) => setNewFood({...newFood, fats: e.target.value})}
-          style={{
-            width: '100%',
-            padding: '0.75rem',
-            border: '2px solid #d97706',
-            borderRadius: '0.5rem',
-            fontSize: '1rem'
-          }}
-          min="0"
-          step="0.1"
-        />
-      </div>
-      
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
-        <button
-          onClick={() => {
-            setShowCreateFoodModal(false);
-            setNewFood({ name: '', amount: '', carbs: 0, protein: 0, fats: 0, isPerUnit: false });
-          }}
-          style={{
-            flex: 1,
-            padding: '0.75rem',
-            background: '#f3f4f6',
-            color: '#374151',
-            borderRadius: '0.5rem',
-            fontWeight: '600',
-            border: 'none',
-            cursor: 'pointer'
-          }}
-        >
-          Cancelar
-        </button>
-        <button
-          onClick={createCustomFood}
-          style={{
-            flex: 1,
-            padding: '0.75rem',
-            background: 'linear-gradient(135deg, #10b981, #059669)',
-            color: 'white',
-            borderRadius: '0.5rem',
-            fontWeight: '600',
-            border: 'none',
-            cursor: 'pointer'
-          }}
-        >
-          Crear
-        </button>
-      </div>
-    </div>
-  </div>
-)}
-
-{showDeleteConfirm && (
-  <div style={{
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: 'rgba(0, 0, 0, 0.5)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 1000,
-    padding: '1rem'
-  }}>
-    <div style={{
-      background: 'white',
-      borderRadius: '1rem',
-      padding: '1.5rem',
-      maxWidth: '400px',
-      width: '90%'
-    }}>
-      <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>
-        ⚠️ Confirmar eliminación
-      </h3>
-      <p style={{ color: '#6b7280', marginBottom: '1.5rem', lineHeight: '1.5' }}>
-        ¿Estás seguro de que quieres eliminar este alimento? Esta acción no se puede deshacer.
-      </p>
-      
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
-        <button
-          onClick={() => {
-            setShowDeleteConfirm(false);
-            setFoodToDelete(null);
-          }}
-          style={{
-            flex: 1,
-            padding: '0.75rem',
-            background: '#f3f4f6',
-            color: '#374151',
-            borderRadius: '0.5rem',
-            fontWeight: '600',
-            border: 'none',
-            cursor: 'pointer'
-          }}
-        >
-          Cancelar
-        </button>
-        <button
-          onClick={confirmDeleteFood}
-          style={{
-            flex: 1,
-            padding: '0.75rem',
-            background: 'linear-gradient(135deg, #ef4444, #dc2626)',
-            color: 'white',
-            borderRadius: '0.5rem',
-            fontWeight: '600',
-            border: 'none',
-            cursor: 'pointer'
-          }}
-        >
-          Eliminar
-        </button>
-      </div>
-    </div>
-  </div>
-)}
 
       <nav style={{
         position: 'fixed',
