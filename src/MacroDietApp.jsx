@@ -692,7 +692,6 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
     No hay comidas registradas
   </p>
 ) : (
-  ) : (
   meals.map(meal => {
     const mealTotals = meal.foods.reduce((sum, f) => ({
       carbs: sum.carbs + (f.carbs * (f.quantity || 1)),
