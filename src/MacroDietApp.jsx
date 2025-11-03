@@ -169,6 +169,9 @@ const foodDatabase = [
     
     const savedConversions = localStorage.getItem('conversions');
     if (savedConversions) setConversions(JSON.parse(savedConversions));
+
+    const savedCustomFoods = localStorage.getItem('customFoods');
+    if (savedCustomFoods) setCustomFoods(JSON.parse(savedCustomFoods));
   }, []);
 
   const toggleMacroFilter = (macro) => {
