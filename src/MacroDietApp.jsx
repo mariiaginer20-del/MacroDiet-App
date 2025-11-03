@@ -693,43 +693,6 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
   </p>
 ) : (
   meals.map(meal => {
-    const mealTotals = meal.foods.reduce((sum, f) => ({
-      carbs: sum.carbs + (f.carbs * (f.quantity || 1)),
-      protein: sum.protein + (f.protein * (f.quantity || 1)),
-      fats: sum.fats + (f.fats * (f.quantity || 1))
-    }), { carbs: 0, protein: 0, fats: 0 });
-
-    return (
-      <div key={meal.id} style={{
-        background: '#f9fafb',
-        border: '1px solid #e5e7eb',
-        borderRadius: '0.75rem',
-        padding: '0.875rem'
-      }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '0.5rem' }}>
-          <div style={{ flex: 1 }}>
-            <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.25rem' }}>{meal.name}</div>
-            <div style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '0.5rem' }}>{meal.time}</div>
-            <MacroTag carbs={mealTotals.carbs} fats={mealTotals.fats} protein={mealTotals.protein} conversions={conversions} />
-          </div>
-          <button
-            onClick={() => deleteMeal(meal.id)}
-            style={{
-              color: '#ef4444',
-              fontSize: '0.75rem',
-              padding: '0.25rem 0.5rem',
-              background: 'transparent',
-              border: 'none',
-              cursor: 'pointer'
-            }}
-          >
-            Eliminar
-          </button>
-        </div>
-      </div>
-    );
-  })
-)}
                     const mealTotals = meal.foods.reduce((sum, f) => ({
                       carbs: sum.carbs + (f.carbs * (f.quantity || 1)),
                       protein: sum.protein + (f.protein * (f.quantity || 1)),
