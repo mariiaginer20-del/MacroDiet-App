@@ -214,7 +214,7 @@ const addCustomFood = () => {
     localStorage.setItem('customFoods', JSON.stringify(updatedCustomFoods));
   };
 
-const filteredFoods = foodDatabase.filter(food => {
+const filteredFoods = [...foodDatabase, ...customFoods].filter(food => {
   const matchesSearch = food.name.toLowerCase().includes(searchTerm.toLowerCase());
   if (!macroFilters.carbs && !macroFilters.fats && !macroFilters.protein) return matchesSearch;
   
