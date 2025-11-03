@@ -29,6 +29,16 @@ const MacroDietApp = () => {
     time: { poco: false, medio: false, mucho: false },
     macros: { carbs: false, protein: false, fats: false }
   });
+
+const [showAddFoodModal, setShowAddFoodModal] = useState(false);
+  const [newFood, setNewFood] = useState({
+    name: '',
+    amount: '',
+    carbs: 0,
+    protein: 0,
+    fats: 0
+  });
+  const [customFoods, setCustomFoods] = useState([]);
   
   const [mealTypes, setMealTypes] = useState([
     { id: 1, name: 'Desayuno', carbs: 2.5, protein: 0, fats: 2 },
