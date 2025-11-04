@@ -783,7 +783,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
             borderRadius: '0.75rem',
             padding: '0.875rem'
           }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '0.75rem', marginBottom: food.isCustom ? '0.75rem' : '0' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '0.75rem' }}>
               <div style={{ flex: 1 }}>
                 <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.25rem' }}>
                   {food.name}
@@ -804,38 +804,35 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                 <div style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '0.5rem' }}>{food.amount}</div>
                 <MacroTag carbs={food.carbs} fats={food.fats} protein={food.protein} conversions={conversions} />
               </div>
-              <button
-                onClick={() => addFoodToMeal(food)}
-                style={{
-                  padding: '0.5rem 0.75rem',
-                  fontSize: '0.75rem',
-                  background: 'linear-gradient(135deg, #a855f7, #9333ea)',
-                  color: 'white',
-                  borderRadius: '0.5rem',
-                  fontWeight: '600',
-                  border: 'none',
-                  cursor: 'pointer',
-                  flexShrink: 0
-                }}
-              >
-                + Añadir
-              </button>
-            </div>
-            
-            {food.isCustom && (
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', flexShrink: 0 }}>
+                <button
+                  onClick={() => addFoodToMeal(food)}
+                  style={{
+                    padding: '0.5rem 0.75rem',
+                    fontSize: '0.75rem',
+                    background: 'linear-gradient(135deg, #a855f7, #9333ea)',
+                    color: 'white',
+                    borderRadius: '0.5rem',
+                    fontWeight: '600',
+                    border: 'none',
+                    cursor: 'pointer',
+                    minWidth: '90px'
+                  }}
+                >
+                  + Añadir
+                </button>
                 <button
                   onClick={() => openEditModal(food)}
                   style={{
-                    flex: 1,
-                    padding: '0.5rem',
+                    padding: '0.5rem 0.75rem',
                     fontSize: '0.75rem',
                     background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
                     color: 'white',
                     borderRadius: '0.5rem',
                     fontWeight: '600',
                     border: 'none',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    minWidth: '90px'
                   }}
                 >
                   ✏️ Modificar
@@ -846,25 +843,24 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                     setShowDeleteModal(true);
                   }}
                   style={{
-                    flex: 1,
-                    padding: '0.5rem',
+                    padding: '0.5rem 0.75rem',
                     fontSize: '0.75rem',
                     background: 'linear-gradient(135deg, #ef4444, #dc2626)',
                     color: 'white',
                     borderRadius: '0.5rem',
                     fontWeight: '600',
                     border: 'none',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    minWidth: '90px'
                   }}
                 >
                   🗑️ Eliminar
                 </button>
               </div>
-            )}
+            </div>
           </div>
         ))}
-      </div>
-                  {meals.map(meal => {
+      </div>                  {meals.map(meal => {
                     const mealTotals = meal.foods.reduce((sum, f) => ({
                       carbs: sum.carbs + (f.carbs * (f.quantity || 1)),
                       protein: sum.protein + (f.protein * (f.quantity || 1)),
