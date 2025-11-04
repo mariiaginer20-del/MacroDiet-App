@@ -217,6 +217,46 @@ const addCustomFood = () => {
     setCustomFoods(updatedCustomFoods);
     localStorage.setItem('customFoods', JSON.stringify(updatedCustomFoods));
   };
+const confirmDeleteFood = () => {
+    if (!foodToDelete) return;
+    const updatedCustomFoods = customFoods.filter(f => f.id !== foodToDelete.id);
+    setCustomFoods(updatedCustomFoods);
+    localStorage.setItem('customFoods', JSON.stringify(updatedCustomFoods));
+    setShowDeleteModal(false);
+    setFoodToDelete(null);
+  };
+
+  const openEditModal = (food) => {
+    setEditingFood({
+      ...food,
+      originalId: food.id
+    });
+    setShowEditFoodModal(true);
+  };
+
+  const saveEditedFood = () => {
+    if (!editingFood.name || !editingFood.amount) return;
+    
+    const updatedFood = {
+      id: editingFood.originalId,
+      name: editingFood.name,
+      amount: editingFood.amount,
+      carbs: parseFloat(editingFood.carbs) || 0,
+      protein: parseFloat(editingFood.protein) || 0,
+      fats: parseFloat(editingFood.fats) || 0,
+      label: generateLabel(parseFloat(editingFood.carbs) || 0, parseFloat(editingFood.protein) || 0, parseFloat(editingFood.fats) || 0),
+      isCustom: true
+    };
+    
+    const updatedCustomFoods = customFoods.map(f => 
+      f.id === editingFood.originalId ? updatedFood : f
+    );
+    setCustomFoods(updatedCustomFoods);
+    localStorage.setItem('customFoods', JSON.stringify(updatedCustomFoods));
+    
+    setEditingFood(null);
+    setShowEditFoodModal(false);
+  };
 
 const filteredFoods = [...foodDatabase, ...customFoods].filter(food => {
   const matchesSearch = food.name.toLowerCase().includes(searchTerm.toLowerCase());
