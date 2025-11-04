@@ -212,10 +212,12 @@ const addCustomFood = () => {
     return parts.join('+');
   };
 
-  const deleteCustomFood = (foodId) => {
-    const updatedCustomFoods = customFoods.filter(f => f.id !== foodId);
-    setCustomFoods(updatedCustomFoods);
-    localStorage.setItem('customFoods', JSON.stringify(updatedCustomFoods));
+const deleteCustomFood = (foodId) => {
+    if (foodId > 1000) {
+      const updatedCustomFoods = customFoods.filter(f => f.id !== foodId);
+      setCustomFoods(updatedCustomFoods);
+      localStorage.setItem('customFoods', JSON.stringify(updatedCustomFoods));
+    }
   };
 const confirmDeleteFood = () => {
     if (!foodToDelete) return;
