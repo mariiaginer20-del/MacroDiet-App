@@ -39,6 +39,10 @@ const [showAddFoodModal, setShowAddFoodModal] = useState(false);
     fats: 0
   });
   const [customFoods, setCustomFoods] = useState([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [foodToDelete, setFoodToDelete] = useState(null);
+  const [showEditFoodModal, setShowEditFoodModal] = useState(false);
+  const [editingFood, setEditingFood] = useState(null);
   
   const [mealTypes, setMealTypes] = useState([
     { id: 1, name: 'Desayuno', carbs: 2.5, protein: 0, fats: 2 },
