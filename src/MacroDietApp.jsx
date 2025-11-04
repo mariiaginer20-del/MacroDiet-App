@@ -221,9 +221,11 @@ const deleteCustomFood = (foodId) => {
   };
 const confirmDeleteFood = () => {
     if (!foodToDelete) return;
-    const updatedCustomFoods = customFoods.filter(f => f.id !== foodToDelete.id);
-    setCustomFoods(updatedCustomFoods);
-    localStorage.setItem('customFoods', JSON.stringify(updatedCustomFoods));
+    if (foodToDelete.isCustom) {
+      const updatedCustomFoods = customFoods.filter(f => f.id !== foodToDelete.id);
+      setCustomFoods(updatedCustomFoods);
+      localStorage.setItem('customFoods', JSON.stringify(updatedCustomFoods));
+    }
     setShowDeleteModal(false);
     setFoodToDelete(null);
   };
@@ -236,7 +238,7 @@ const confirmDeleteFood = () => {
     setShowEditFoodModal(true);
   };
 
-  const saveEditedFood = () => {
+const saveEditedFood = () => {
     if (!editingFood.name || !editingFood.amount) return;
     
     const updatedFood = {
@@ -250,11 +252,13 @@ const confirmDeleteFood = () => {
       isCustom: true
     };
     
-    const updatedCustomFoods = customFoods.map(f => 
-      f.id === editingFood.originalId ? updatedFood : f
-    );
-    setCustomFoods(updatedCustomFoods);
-    localStorage.setItem('customFoods', JSON.stringify(updatedCustomFoods));
+    if (editingFood.isCustom) {
+      const updatedCustomFoods = customFoods.map(f => 
+        f.id === editingFood.originalId ? updatedFood : f
+      );
+      setCustomFoods(updatedCustomFoods);
+      localStorage.setItem('customFoods', JSON.stringify(updatedCustomFoods));
+    }
     
     setEditingFood(null);
     setShowEditFoodModal(false);
