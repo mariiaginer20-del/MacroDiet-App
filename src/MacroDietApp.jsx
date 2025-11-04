@@ -715,14 +715,30 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                         borderRadius: '0.75rem',
                         padding: '0.875rem'
                       }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '0.5rem' }}>
-                          <div style={{ flex: 1 }}>
-                            <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.25rem' }}>{meal.name}</div>
-                            <div style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '0.5rem' }}>{meal.time}</div>
-                            <MacroTag carbs={mealTotals.carbs} fats={mealTotals.fats} protein={mealTotals.protein} conversions={conversions} />
-                          </div>
-                          <button
-                            onClick={() => deleteMeal(meal.id)}
+<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '0.5rem' }}>
+  <div style={{ flex: 1 }}>
+    <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.25rem' }}>{meal.name}</div>
+    <div style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '0.5rem' }}>{meal.time}</div>
+    <MacroTag carbs={mealTotals.carbs} fats={mealTotals.fats} protein={mealTotals.protein} conversions={conversions} />
+  </div>
+  <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+    <button
+      onClick={() => setExpandedMeal(expandedMeal === meal.id ? null : meal.id)}
+      style={{
+        color: '#9333ea',
+        fontSize: '0.75rem',
+        padding: '0.25rem 0.5rem',
+        background: 'transparent',
+        border: 'none',
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center'
+      }}
+    >
+      {expandedMeal === meal.id ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+    </button>
+    <button
+      onClick={() => deleteMeal(meal.id)}
                             style={{
                               color: '#ef4444',
                               fontSize: '0.75rem',
@@ -927,7 +943,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
     minWidth: '90px'
   }}
 >
-  Eliminar
+  Eliminaré
 </button>
               </div>
             </div>
