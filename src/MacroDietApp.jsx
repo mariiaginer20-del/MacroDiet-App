@@ -827,41 +827,41 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                 >
                   + Añadir
                 </button>
-                <button
-                  onClick={() => openEditModal(food)}
-                  style={{
-                    padding: '0.5rem 0.75rem',
-                    fontSize: '0.75rem',
-                    background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
-                    color: 'white',
-                    borderRadius: '0.5rem',
-                    fontWeight: '600',
-                    border: 'none',
-                    cursor: 'pointer',
-                    minWidth: '90px'
-                  }}
-                >
-                  ✏️ Modificar
-                </button>
-                <button
-                  onClick={() => {
-                    setFoodToDelete(food);
-                    setShowDeleteModal(true);
-                  }}
-                  style={{
-                    padding: '0.5rem 0.75rem',
-                    fontSize: '0.75rem',
-                    background: 'linear-gradient(135deg, #ef4444, #dc2626)',
-                    color: 'white',
-                    borderRadius: '0.5rem',
-                    fontWeight: '600',
-                    border: 'none',
-                    cursor: 'pointer',
-                    minWidth: '90px'
-                  }}
-                >
-                  🗑️ Eliminar
-                </button>
+<button
+  onClick={() => openEditModal(food)}
+  style={{
+    padding: '0.5rem 0.75rem',
+    fontSize: '0.75rem',
+    background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
+    color: 'white',
+    borderRadius: '0.5rem',
+    fontWeight: '600',
+    border: 'none',
+    cursor: 'pointer',
+    minWidth: '90px'
+  }}
+>
+  Modificar
+</button>
+<button
+  onClick={() => {
+    setFoodToDelete(food);
+    setShowDeleteModal(true);
+  }}
+  style={{
+    padding: '0.5rem 0.75rem',
+    fontSize: '0.75rem',
+    background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+    color: 'white',
+    borderRadius: '0.5rem',
+    fontWeight: '600',
+    border: 'none',
+    cursor: 'pointer',
+    minWidth: '90px'
+  }}
+>
+  Eliminar
+</button>
               </div>
             </div>
           </div>
@@ -1059,41 +1059,41 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                 >
                   + Añadir
                 </button>
-                <button
-                  onClick={() => openEditModal(food)}
-                  style={{
-                    padding: '0.5rem 0.75rem',
-                    fontSize: '0.75rem',
-                    background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
-                    color: 'white',
-                    borderRadius: '0.5rem',
-                    fontWeight: '600',
-                    border: 'none',
-                    cursor: 'pointer',
-                    minWidth: '90px'
-                  }}
-                >
-                  ✏️ Modificar
-                </button>
-                <button
-                  onClick={() => {
-                    setFoodToDelete(food);
-                    setShowDeleteModal(true);
-                  }}
-                  style={{
-                    padding: '0.5rem 0.75rem',
-                    fontSize: '0.75rem',
-                    background: 'linear-gradient(135deg, #ef4444, #dc2626)',
-                    color: 'white',
-                    borderRadius: '0.5rem',
-                    fontWeight: '600',
-                    border: 'none',
-                    cursor: 'pointer',
-                    minWidth: '90px'
-                  }}
-                >
-                  🗑️ Eliminar
-                </button>
+<button
+  onClick={() => openEditModal(food)}
+  style={{
+    padding: '0.5rem 0.75rem',
+    fontSize: '0.75rem',
+    background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
+    color: 'white',
+    borderRadius: '0.5rem',
+    fontWeight: '600',
+    border: 'none',
+    cursor: 'pointer',
+    minWidth: '90px'
+  }}
+>
+  Modificar
+</button>
+<button
+  onClick={() => {
+    setFoodToDelete(food);
+    setShowDeleteModal(true);
+  }}
+  style={{
+    padding: '0.5rem 0.75rem',
+    fontSize: '0.75rem',
+    background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+    color: 'white',
+    borderRadius: '0.5rem',
+    fontWeight: '600',
+    border: 'none',
+    cursor: 'pointer',
+    minWidth: '90px'
+  }}
+>
+  Eliminar
+</button>
               </div>
             </div>
           </div>
