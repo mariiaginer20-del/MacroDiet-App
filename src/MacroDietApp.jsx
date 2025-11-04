@@ -775,40 +775,95 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                 </div>
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                {filteredFoods.map(food => (
-                  <div key={food.id} style={{
-                    background: 'white',
-                    border: '1px solid #e5e7eb',
-                    borderRadius: '0.75rem',
-                    padding: '0.875rem'
-                  }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '0.75rem' }}>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.25rem' }}>{food.name}</div>
-                        <div style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '0.5rem' }}>{food.amount}</div>
-                        <MacroTag carbs={food.carbs} fats={food.fats} protein={food.protein} conversions={conversions} />
-                      </div>
-                      <button
-                        onClick={() => addFoodToMeal(food)}
-                        style={{
-                          padding: '0.5rem 0.75rem',
-                          fontSize: '0.75rem',
-                          background: 'linear-gradient(135deg, #a855f7, #9333ea)',
-                          color: 'white',
-                          borderRadius: '0.5rem',
-                          fontWeight: '600',
-                          border: 'none',
-                          cursor: 'pointer',
-                          flexShrink: 0
-                        }}
-                      >
-                        + Añadir
-                      </button>
-                    </div>
-                  </div>
-                ))}
+<div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        {filteredFoods.map(food => (
+          <div key={food.id} style={{
+            background: 'white',
+            border: '1px solid #e5e7eb',
+            borderRadius: '0.75rem',
+            padding: '0.875rem'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '0.75rem', marginBottom: food.isCustom ? '0.75rem' : '0' }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.25rem' }}>
+                  {food.name}
+                  {food.isCustom && (
+                    <span style={{
+                      marginLeft: '0.5rem',
+                      padding: '0.125rem 0.375rem',
+                      borderRadius: '0.25rem',
+                      fontSize: '0.625rem',
+                      background: '#dbeafe',
+                      color: '#1e40af',
+                      fontWeight: '600'
+                    }}>
+                      Personalizado
+                    </span>
+                  )}
+                </div>
+                <div style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '0.5rem' }}>{food.amount}</div>
+                <MacroTag carbs={food.carbs} fats={food.fats} protein={food.protein} conversions={conversions} />
               </div>
+              <button
+                onClick={() => addFoodToMeal(food)}
+                style={{
+                  padding: '0.5rem 0.75rem',
+                  fontSize: '0.75rem',
+                  background: 'linear-gradient(135deg, #a855f7, #9333ea)',
+                  color: 'white',
+                  borderRadius: '0.5rem',
+                  fontWeight: '600',
+                  border: 'none',
+                  cursor: 'pointer',
+                  flexShrink: 0
+                }}
+              >
+                + Añadir
+              </button>
+            </div>
+            
+            {food.isCustom && (
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <button
+                  onClick={() => openEditModal(food)}
+                  style={{
+                    flex: 1,
+                    padding: '0.5rem',
+                    fontSize: '0.75rem',
+                    background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
+                    color: 'white',
+                    borderRadius: '0.5rem',
+                    fontWeight: '600',
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
+                  ✏️ Modificar
+                </button>
+                <button
+                  onClick={() => {
+                    setFoodToDelete(food);
+                    setShowDeleteModal(true);
+                  }}
+                  style={{
+                    flex: 1,
+                    padding: '0.5rem',
+                    fontSize: '0.75rem',
+                    background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                    color: 'white',
+                    borderRadius: '0.5rem',
+                    fontWeight: '600',
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
+                  🗑️ Eliminar
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
                   {meals.map(meal => {
                     const mealTotals = meal.foods.reduce((sum, f) => ({
                       carbs: sum.carbs + (f.carbs * (f.quantity || 1)),
