@@ -1796,6 +1796,238 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
         )}
       </div>
 
+{showDeleteModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000
+        }}>
+          <div style={{
+            background: 'white',
+            borderRadius: '1rem',
+            padding: '1.5rem',
+            maxWidth: '400px',
+            width: '90%'
+          }}>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>
+              ¿Eliminar alimento?
+            </h3>
+            <p style={{ color: '#6b7280', marginBottom: '1.5rem' }}>
+              ¿Estás seguro de que quieres eliminar <strong>{foodToDelete?.name}</strong>? Esta acción no se puede deshacer.
+            </p>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <button
+                onClick={() => {
+                  setShowDeleteModal(false);
+                  setFoodToDelete(null);
+                }}
+                style={{
+                  flex: 1,
+                  padding: '0.75rem',
+                  background: '#f3f4f6',
+                  color: '#374151',
+                  borderRadius: '0.5rem',
+                  fontWeight: '600',
+                  border: 'none',
+                  cursor: 'pointer'
+                }}
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={confirmDeleteFood}
+                style={{
+                  flex: 1,
+                  padding: '0.75rem',
+                  background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                  color: 'white',
+                  borderRadius: '0.5rem',
+                  fontWeight: '600',
+                  border: 'none',
+                  cursor: 'pointer'
+                }}
+              >
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showEditFoodModal && editingFood && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000
+        }}>
+          <div style={{
+            background: 'white',
+            borderRadius: '1rem',
+            padding: '1.5rem',
+            maxWidth: '400px',
+            width: '90%',
+            maxHeight: '90vh',
+            overflowY: 'auto'
+          }}>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>
+              Modificar Alimento
+            </h3>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div>
+                <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#4b5563', display: 'block', marginBottom: '0.5rem' }}>
+                  Nombre del alimento *
+                </label>
+                <input
+                  type="text"
+                  value={editingFood.name}
+                  onChange={(e) => setEditingFood({...editingFood, name: e.target.value})}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    border: '1px solid #d1d5db',
+                    borderRadius: '0.5rem',
+                    fontSize: '1rem'
+                  }}
+                />
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#4b5563', display: 'block', marginBottom: '0.5rem' }}>
+                  Cantidad de referencia *
+                </label>
+                <input
+                  type="text"
+                  value={editingFood.amount}
+                  onChange={(e) => setEditingFood({...editingFood, amount: e.target.value})}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    border: '1px solid #d1d5db',
+                    borderRadius: '0.5rem',
+                    fontSize: '1rem'
+                  }}
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem' }}>
+                <div>
+                  <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#16a34a', display: 'block', marginBottom: '0.5rem' }}>
+                    Hidratos (g)
+                  </label>
+                  <input
+                    type="number"
+                    value={editingFood.carbs}
+                    onChange={(e) => setEditingFood({...editingFood, carbs: e.target.value})}
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      border: '2px solid #16a34a',
+                      borderRadius: '0.5rem',
+                      fontSize: '1rem'
+                    }}
+                    min="0"
+                    step="0.1"
+                  />
+                </div>
+
+                <div>
+                  <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#2563eb', display: 'block', marginBottom: '0.5rem' }}>
+                    Proteína (g)
+                  </label>
+                  <input
+                    type="number"
+                    value={editingFood.protein}
+                    onChange={(e) => setEditingFood({...editingFood, protein: e.target.value})}
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      border: '2px solid #2563eb',
+                      borderRadius: '0.5rem',
+                      fontSize: '1rem'
+                    }}
+                    min="0"
+                    step="0.1"
+                  />
+                </div>
+
+                <div>
+                  <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#d97706', display: 'block', marginBottom: '0.5rem' }}>
+                    Grasas (g)
+                  </label>
+                  <input
+                    type="number"
+                    value={editingFood.fats}
+                    onChange={(e) => setEditingFood({...editingFood, fats: e.target.value})}
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      border: '2px solid #d97706',
+                      borderRadius: '0.5rem',
+                      fontSize: '1rem'
+                    }}
+                    min="0"
+                    step="0.1"
+                  />
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+                <button
+                  onClick={() => {
+                    setShowEditFoodModal(false);
+                    setEditingFood(null);
+                  }}
+                  style={{
+                    flex: 1,
+                    padding: '0.75rem',
+                    background: '#f3f4f6',
+                    color: '#374151',
+                    borderRadius: '0.5rem',
+                    fontWeight: '600',
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={saveEditedFood}
+                  disabled={!editingFood.name || !editingFood.amount}
+                  style={{
+                    flex: 1,
+                    padding: '0.75rem',
+                    background: (!editingFood.name || !editingFood.amount) ? '#d1d5db' : 'linear-gradient(135deg, #3b82f6, #2563eb)',
+                    color: 'white',
+                    borderRadius: '0.5rem',
+                    fontWeight: '600',
+                    border: 'none',
+                    cursor: (!editingFood.name || !editingFood.amount) ? 'not-allowed' : 'pointer',
+                    opacity: (!editingFood.name || !editingFood.amount) ? 0.5 : 1
+                  }}
+                >
+                  Guardar Cambios
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
 {showAddFoodModal && (
         <div style={{
           position: 'fixed',
