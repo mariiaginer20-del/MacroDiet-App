@@ -1409,11 +1409,251 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
           </div>
         )}
 
-        {activeTab === 'recipes' && (
-          <div style={{ paddingBottom: '6rem', textAlign: 'center', padding: '3rem 1rem' }}>
-            <p style={{ color: '#6b7280' }}>Sección de recetas (próximamente)</p>
-          </div>
-        )}
+{activeTab === 'recipes' && (
+  <div style={{ paddingBottom: '6rem' }}>
+    <div style={{
+      background: 'white',
+      border: '1px solid #e5e7eb',
+      borderRadius: '1rem',
+      padding: '1.25rem',
+      marginBottom: '1rem'
+    }}>
+      <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>
+        Mis Recetas Guardadas
+      </h2>
+      
+      <input
+        type="text"
+        placeholder="Buscar recetas..."
+        value={recipeSearchTerm}
+        onChange={(e) => setRecipeSearchTerm(e.target.value)}
+        style={{
+          width: '100%',
+          padding: '0.875rem 1rem',
+          background: 'white',
+          border: '1px solid #d1d5db',
+          borderRadius: '0.5rem',
+          fontSize: '1rem',
+          marginBottom: '1rem'
+        }}
+      />
+
+      <div style={{ marginBottom: '1rem' }}>
+        <div style={{ fontSize: '0.75rem', color: '#4b5563', fontWeight: '600', marginBottom: '0.5rem' }}>
+          Filtrar por tiempo:
+        </div>
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
+          {['poco', 'medio', 'mucho'].map(time => (
+            <button
+              key={time}
+              onClick={() => setRecipeFilters(prev => ({
+                ...prev,
+                time: { ...prev.time, [time]: !prev.time[time] }
+              }))}
+              style={{
+                padding: '0.375rem 0.75rem',
+                borderRadius: '9999px',
+                fontSize: '0.75rem',
+                fontWeight: '600',
+                background: recipeFilters.time[time] ? 'rgba(168, 85, 247, 0.25)' : 'rgba(168, 85, 247, 0.1)',
+                color: recipeFilters.time[time] ? 'rgb(107, 33, 168)' : 'rgb(147, 51, 234)',
+                border: recipeFilters.time[time] ? '2px solid rgb(168, 85, 247)' : '1px solid rgba(168, 85, 247, 0.3)',
+                cursor: 'pointer',
+                textTransform: 'capitalize'
+              }}
+            >
+              {time} {recipeFilters.time[time] && '✓'}
+            </button>
+          ))}
+        </div>
+
+        <div style={{ fontSize: '0.75rem', color: '#4b5563', fontWeight: '600', marginBottom: '0.5rem' }}>
+          Filtrar por macros:
+        </div>
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+          <button
+            onClick={() => setRecipeFilters(prev => ({
+              ...prev,
+              macros: { ...prev.macros, carbs: !prev.macros.carbs }
+            }))}
+            style={{
+              padding: '0.375rem 0.75rem',
+              borderRadius: '9999px',
+              fontSize: '0.75rem',
+              fontWeight: '600',
+              background: recipeFilters.macros.carbs ? 'rgba(34, 197, 94, 0.25)' : 'rgba(34, 197, 94, 0.1)',
+              color: recipeFilters.macros.carbs ? 'rgb(21, 128, 61)' : 'rgb(22, 163, 74)',
+              border: recipeFilters.macros.carbs ? '2px solid rgb(34, 197, 94)' : '1px solid rgba(34, 197, 94, 0.3)',
+              cursor: 'pointer'
+            }}
+          >
+            Alto en Hidratos {recipeFilters.macros.carbs && '✓'}
+          </button>
+          <button
+            onClick={() => setRecipeFilters(prev => ({
+              ...prev,
+              macros: { ...prev.macros, protein: !prev.macros.protein }
+            }))}
+            style={{
+              padding: '0.375rem 0.75rem',
+              borderRadius: '9999px',
+              fontSize: '0.75rem',
+              fontWeight: '600',
+              background: recipeFilters.macros.protein ? 'rgba(59, 130, 246, 0.25)' : 'rgba(59, 130, 246, 0.1)',
+              color: recipeFilters.macros.protein ? 'rgb(29, 78, 216)' : 'rgb(37, 99, 235)',
+              border: recipeFilters.macros.protein ? '2px solid rgb(59, 130, 246)' : '1px solid rgba(59, 130, 246, 0.3)',
+              cursor: 'pointer'
+            }}
+          >
+            Alto en Proteína {recipeFilters.macros.protein && '✓'}
+          </button>
+          <button
+            onClick={() => setRecipeFilters(prev => ({
+              ...prev,
+              macros: { ...prev.macros, fats: !prev.macros.fats }
+            }))}
+            style={{
+              padding: '0.375rem 0.75rem',
+              borderRadius: '9999px',
+              fontSize: '0.75rem',
+              fontWeight: '600',
+              background: recipeFilters.macros.fats ? 'rgba(245, 158, 11, 0.25)' : 'rgba(245, 158, 11, 0.1)',
+              color: recipeFilters.macros.fats ? 'rgb(180, 83, 9)' : 'rgb(217, 119, 6)',
+              border: recipeFilters.macros.fats ? '2px solid rgb(245, 158, 11)' : '1px solid rgba(245, 158, 11, 0.3)',
+              cursor: 'pointer'
+            }}
+          >
+            Alto en Grasas {recipeFilters.macros.fats && '✓'}
+          </button>
+        </div>
+      </div>
+
+      {savedMeals.filter(recipe => {
+        const matchesSearch = recipe.name.toLowerCase().includes(recipeSearchTerm.toLowerCase());
+        const matchesTime = !recipeFilters.time.poco && !recipeFilters.time.medio && !recipeFilters.time.mucho
+          || recipeFilters.time[recipe.timeInvested];
+        
+        const recipeTotals = recipe.foods.reduce((sum, f) => ({
+          carbs: sum.carbs + (f.carbs * (f.quantity || 1)),
+          protein: sum.protein + (f.protein * (f.quantity || 1)),
+          fats: sum.fats + (f.fats * (f.quantity || 1))
+        }), { carbs: 0, protein: 0, fats: 0 });
+        
+        const hasHighCarbs = recipeTotals.carbs > 50;
+        const hasHighProtein = recipeTotals.protein > 30;
+        const hasHighFats = recipeTotals.fats > 20;
+        
+        const matchesMacros = !recipeFilters.macros.carbs && !recipeFilters.macros.protein && !recipeFilters.macros.fats
+          || (recipeFilters.macros.carbs && hasHighCarbs)
+          || (recipeFilters.macros.protein && hasHighProtein)
+          || (recipeFilters.macros.fats && hasHighFats);
+        
+        return matchesSearch && matchesTime && matchesMacros;
+      }).length === 0 ? (
+        <p style={{ color: '#6b7280', textAlign: 'center', padding: '2rem 0' }}>
+          No hay recetas guardadas
+        </p>
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+          {savedMeals.filter(recipe => {
+            const matchesSearch = recipe.name.toLowerCase().includes(recipeSearchTerm.toLowerCase());
+            const matchesTime = !recipeFilters.time.poco && !recipeFilters.time.medio && !recipeFilters.time.mucho
+              || recipeFilters.time[recipe.timeInvested];
+            
+            const recipeTotals = recipe.foods.reduce((sum, f) => ({
+              carbs: sum.carbs + (f.carbs * (f.quantity || 1)),
+              protein: sum.protein + (f.protein * (f.quantity || 1)),
+              fats: sum.fats + (f.fats * (f.quantity || 1))
+            }), { carbs: 0, protein: 0, fats: 0 });
+            
+            const hasHighCarbs = recipeTotals.carbs > 50;
+            const hasHighProtein = recipeTotals.protein > 30;
+            const hasHighFats = recipeTotals.fats > 20;
+            
+            const matchesMacros = !recipeFilters.macros.carbs && !recipeFilters.macros.protein && !recipeFilters.macros.fats
+              || (recipeFilters.macros.carbs && hasHighCarbs)
+              || (recipeFilters.macros.protein && hasHighProtein)
+              || (recipeFilters.macros.fats && hasHighFats);
+            
+            return matchesSearch && matchesTime && matchesMacros;
+          }).map(recipe => {
+            const recipeTotals = recipe.foods.reduce((sum, f) => ({
+              carbs: sum.carbs + (f.carbs * (f.quantity || 1)),
+              protein: sum.protein + (f.protein * (f.quantity || 1)),
+              fats: sum.fats + (f.fats * (f.quantity || 1))
+            }), { carbs: 0, protein: 0, fats: 0 });
+
+            return (
+              <div key={recipe.id} style={{
+                background: 'white',
+                border: '1px solid #e5e7eb',
+                borderRadius: '0.75rem',
+                padding: '1rem'
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '0.75rem' }}>
+                  <div style={{ flex: 1 }}>
+                    <h3 style={{ fontWeight: '700', fontSize: '1rem', color: '#1f2937', marginBottom: '0.25rem' }}>
+                      {recipe.name}
+                    </h3>
+                    <div style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '0.5rem' }}>
+                      {recipe.type} • Tiempo: {recipe.timeInvested}
+                    </div>
+                    <MacroTag carbs={recipeTotals.carbs} fats={recipeTotals.fats} protein={recipeTotals.protein} conversions={conversions} />
+                  </div>
+                </div>
+
+                <div style={{ fontSize: '0.75rem', color: '#4b5563', marginBottom: '0.75rem' }}>
+                  <strong>Ingredientes:</strong>
+                  <ul style={{ marginTop: '0.25rem', marginLeft: '1.25rem' }}>
+                    {recipe.foods.map(food => (
+                      <li key={food.id}>
+                        {food.name} - {food.quantity}x {food.amount}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <button
+                    onClick={() => loadRecipe(recipe)}
+                    style={{
+                      flex: 1,
+                      padding: '0.625rem',
+                      background: 'linear-gradient(135deg, #a855f7, #9333ea)',
+                      color: 'white',
+                      borderRadius: '0.5rem',
+                      fontSize: '0.875rem',
+                      fontWeight: '600',
+                      border: 'none',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Usar Receta
+                  </button>
+                  <button
+                    onClick={() => deleteRecipe(recipe.id)}
+                    style={{
+                      padding: '0.625rem 1rem',
+                      background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                      color: 'white',
+                      borderRadius: '0.5rem',
+                      fontSize: '0.875rem',
+                      fontWeight: '600',
+                      border: 'none',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  </div>
+)}
 
         {activeTab === 'settings' && (
           <div style={{ paddingBottom: '6rem' }}>
