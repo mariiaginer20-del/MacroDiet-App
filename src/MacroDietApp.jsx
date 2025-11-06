@@ -1577,14 +1577,22 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
     fats: sum.fats + (f.fats * (f.quantity || 1))
   }), { carbs: 0, protein: 0, fats: 0 });
   
-  const hasHighCarbs = recipeTotals.carbs > 50;
-  const hasHighProtein = recipeTotals.protein > 30;
-  const hasHighFats = recipeTotals.fats > 20;
-  
-  const matchesMacros = !recipeFilters.macros.carbs && !recipeFilters.macros.protein && !recipeFilters.macros.fats
-    || (recipeFilters.macros.carbs && hasHighCarbs)
-    || (recipeFilters.macros.protein && hasHighProtein)
-    || (recipeFilters.macros.fats && hasHighFats);
+// Calcular cuál es el macro dominante en la receta
+const totalMacros = recipeTotals.carbs + recipeTotals.protein + recipeTotals.fats;
+const carbsPercentage = (recipeTotals.carbs / totalMacros) * 100;
+const proteinPercentage = (recipeTotals.protein / totalMacros) * 100;
+const fatsPercentage = (recipeTotals.fats / totalMacros) * 100;
+
+// Una receta es "alta en X" si ese macro representa más del 50% del total
+// Y los otros dos macros representan menos del 30% cada uno
+const isHighCarbs = carbsPercentage > 50 && proteinPercentage < 30 && fatsPercentage < 30;
+const isHighProtein = proteinPercentage > 50 && carbsPercentage < 30 && fatsPercentage < 30;
+const isHighFats = fatsPercentage > 50 && carbsPercentage < 30 && proteinPercentage < 30;
+
+const matchesMacros = !recipeFilters.macros.carbs && !recipeFilters.macros.protein && !recipeFilters.macros.fats
+  || (recipeFilters.macros.carbs && isHighCarbs)
+  || (recipeFilters.macros.protein && isHighProtein)
+  || (recipeFilters.macros.fats && isHighFats);
   
   return matchesSearch && matchesMealType && matchesTime && matchesMacros;
 }).length === 0 ? (
