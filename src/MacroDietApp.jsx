@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Home, Search, Calendar, Settings, ChevronDown, ChevronUp, Plus, BookOpen } from 'lucide-react';
+import { Home, Search, Calendar, Settings, ChevronDown, ChevronUp, Plus, BookOpen, Trash2 } from 'lucide-react';
 
 const MacroDietApp = () => {
   const [activeTab, setActiveTab] = useState('home');
