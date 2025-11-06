@@ -1158,12 +1158,12 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                       <div style={{ fontWeight: '600', fontSize: '0.875rem', color: '#1f2937' }}>
                         {food.name}
                       </div>
-                      <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>
-                        {food.quantity > 1 
-                          ? `${Math.round(parseFloat(food.amount) * food.quantity)}${food.amount.replace(/[0-9.]/g, '')}`
-                          : food.amount
-                        }
-                      </div>
+<div style={{ fontSize: '0.75rem', color: '#6b7280' }}>
+  {food.quantity !== 1 
+    ? `${(parseFloat(food.amount) * food.quantity).toFixed(1)}${food.amount.replace(/[0-9.]/g, '')}`
+    : food.amount
+  }
+</div>
                     </div>
                     <input
                       type="number"
