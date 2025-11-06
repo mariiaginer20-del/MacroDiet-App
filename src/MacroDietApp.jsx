@@ -25,10 +25,11 @@ const MacroDietApp = () => {
   const [timeInvested, setTimeInvested] = useState('medio');
   const [savedMeals, setSavedMeals] = useState([]);
   const [recipeSearchTerm, setRecipeSearchTerm] = useState('');
-  const [recipeFilters, setRecipeFilters] = useState({
-    time: { poco: false, medio: false, mucho: false },
-    macros: { carbs: false, protein: false, fats: false }
-  });
+const [recipeFilters, setRecipeFilters] = useState({
+  mealTypes: [],
+  time: { poco: false, medio: false, mucho: false },
+  macros: { carbs: false, protein: false, fats: false }
+});
 
 const [showAddFoodModal, setShowAddFoodModal] = useState(false);
   const [newFood, setNewFood] = useState({
