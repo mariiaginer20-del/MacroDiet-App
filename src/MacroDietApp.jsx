@@ -1191,7 +1191,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                         fontSize: '1.25rem'
                       }}
                     >
-                      ÃƒÂ°Ã…Â¸Ã¢â‚¬â€Ã¢â‚¬ËœÃƒÂ¯Ã‚Â¸Ã‚Â
+                      <Trash2 size={18} />
                     </button>
                   </div>
                 ))}
