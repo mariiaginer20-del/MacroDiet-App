@@ -1438,10 +1438,43 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
         }}
       />
 
-      <div style={{ marginBottom: '1rem' }}>
-        <div style={{ fontSize: '0.75rem', color: '#4b5563', fontWeight: '600', marginBottom: '0.5rem' }}>
-          Filtrar por tiempo:
-        </div>
+<div style={{ marginBottom: '1rem' }}>
+  <div style={{ fontSize: '0.75rem', color: '#4b5563', fontWeight: '600', marginBottom: '0.5rem' }}>
+    Filtrar por tipo de comida:
+  </div>
+  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
+    {mealTypes.map(mealType => (
+      <button
+        key={mealType.id}
+        onClick={() => {
+          const currentTypes = recipeFilters.mealTypes || [];
+          const isSelected = currentTypes.includes(mealType.name);
+          setRecipeFilters(prev => ({
+            ...prev,
+            mealTypes: isSelected 
+              ? currentTypes.filter(t => t !== mealType.name)
+              : [...currentTypes, mealType.name]
+          }));
+        }}
+        style={{
+          padding: '0.375rem 0.75rem',
+          borderRadius: '9999px',
+          fontSize: '0.75rem',
+          fontWeight: '600',
+          background: (recipeFilters.mealTypes || []).includes(mealType.name) ? 'rgba(168, 85, 247, 0.25)' : 'rgba(168, 85, 247, 0.1)',
+          color: (recipeFilters.mealTypes || []).includes(mealType.name) ? 'rgb(107, 33, 168)' : 'rgb(147, 51, 234)',
+          border: (recipeFilters.mealTypes || []).includes(mealType.name) ? '2px solid rgb(168, 85, 247)' : '1px solid rgba(168, 85, 247, 0.3)',
+          cursor: 'pointer'
+        }}
+      >
+        {mealType.name} {(recipeFilters.mealTypes || []).includes(mealType.name) && '✓'}
+      </button>
+    ))}
+  </div>
+
+  <div style={{ fontSize: '0.75rem', color: '#4b5563', fontWeight: '600', marginBottom: '0.5rem' }}>
+    Filtrar por tiempo:
+  </div>
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
           {['poco', 'medio', 'mucho'].map(time => (
             <button
@@ -1602,16 +1635,22 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                   </div>
                 </div>
 
-                <div style={{ fontSize: '0.75rem', color: '#4b5563', marginBottom: '0.75rem' }}>
-                  <strong>Ingredientes:</strong>
-                  <ul style={{ marginTop: '0.25rem', marginLeft: '1.25rem' }}>
-                    {recipe.foods.map(food => (
-                      <li key={food.id}>
-                        {food.name} - {food.quantity}x {food.amount}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+<div style={{ fontSize: '0.75rem', color: '#4b5563', marginBottom: '0.75rem' }}>
+  <strong>Ingredientes:</strong>
+  <ul style={{ marginTop: '0.25rem', marginLeft: '1.25rem' }}>
+    {recipe.foods.map(food => {
+      const baseAmount = parseFloat(food.amount.match(/[\d.]+/)?.[0] || 1);
+      const unit = food.amount.replace(/[\d.]+/g, '').trim();
+      const totalAmount = Math.round(baseAmount * food.quantity);
+      
+      return (
+        <li key={food.id}>
+          {food.name} - {totalAmount}{unit}
+        </li>
+      );
+    })}
+  </ul>
+</div>
 
                 <div style={{ display: 'flex', gap: '0.5rem' }}>
                   <button
