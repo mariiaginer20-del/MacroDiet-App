@@ -1586,11 +1586,12 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
     || (recipeFilters.macros.fats && hasHighFats);
   
   return matchesSearch && matchesMealType && matchesTime && matchesMacros;
-})
+}).length === 0 ? (
         <p style={{ color: '#6b7280', textAlign: 'center', padding: '2rem 0' }}>
           No hay recetas guardadas
         </p>
       ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
 {savedMeals.filter(recipe => {
   const matchesSearch = recipe.name.toLowerCase().includes(recipeSearchTerm.toLowerCase());
   
@@ -1616,7 +1617,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
     || (recipeFilters.macros.fats && hasHighFats);
   
   return matchesSearch && matchesMealType && matchesTime && matchesMacros;
-})
+}).map(recipe => {
             const recipeTotals = recipe.foods.reduce((sum, f) => ({
               carbs: sum.carbs + (f.carbs * (f.quantity || 1)),
               protein: sum.protein + (f.protein * (f.quantity || 1)),
