@@ -1561,55 +1561,62 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
         </div>
       </div>
 
-      {savedMeals.filter(recipe => {
-        const matchesSearch = recipe.name.toLowerCase().includes(recipeSearchTerm.toLowerCase());
-        const matchesTime = !recipeFilters.time.poco && !recipeFilters.time.medio && !recipeFilters.time.mucho
-          || recipeFilters.time[recipe.timeInvested];
-        
-        const recipeTotals = recipe.foods.reduce((sum, f) => ({
-          carbs: sum.carbs + (f.carbs * (f.quantity || 1)),
-          protein: sum.protein + (f.protein * (f.quantity || 1)),
-          fats: sum.fats + (f.fats * (f.quantity || 1))
-        }), { carbs: 0, protein: 0, fats: 0 });
-        
-        const hasHighCarbs = recipeTotals.carbs > 50;
-        const hasHighProtein = recipeTotals.protein > 30;
-        const hasHighFats = recipeTotals.fats > 20;
-        
-        const matchesMacros = !recipeFilters.macros.carbs && !recipeFilters.macros.protein && !recipeFilters.macros.fats
-          || (recipeFilters.macros.carbs && hasHighCarbs)
-          || (recipeFilters.macros.protein && hasHighProtein)
-          || (recipeFilters.macros.fats && hasHighFats);
-        
-        return matchesSearch && matchesTime && matchesMacros;
-      }).length === 0 ? (
+{savedMeals.filter(recipe => {
+  const matchesSearch = recipe.name.toLowerCase().includes(recipeSearchTerm.toLowerCase());
+  
+  const matchesMealType = !(recipeFilters.mealTypes || []).length
+    || (recipeFilters.mealTypes || []).includes(recipe.type);
+  
+  const matchesTime = !recipeFilters.time.poco && !recipeFilters.time.medio && !recipeFilters.time.mucho
+    || recipeFilters.time[recipe.timeInvested];
+  
+  const recipeTotals = recipe.foods.reduce((sum, f) => ({
+    carbs: sum.carbs + (f.carbs * (f.quantity || 1)),
+    protein: sum.protein + (f.protein * (f.quantity || 1)),
+    fats: sum.fats + (f.fats * (f.quantity || 1))
+  }), { carbs: 0, protein: 0, fats: 0 });
+  
+  const hasHighCarbs = recipeTotals.carbs > 50;
+  const hasHighProtein = recipeTotals.protein > 30;
+  const hasHighFats = recipeTotals.fats > 20;
+  
+  const matchesMacros = !recipeFilters.macros.carbs && !recipeFilters.macros.protein && !recipeFilters.macros.fats
+    || (recipeFilters.macros.carbs && hasHighCarbs)
+    || (recipeFilters.macros.protein && hasHighProtein)
+    || (recipeFilters.macros.fats && hasHighFats);
+  
+  return matchesSearch && matchesMealType && matchesTime && matchesMacros;
+})
         <p style={{ color: '#6b7280', textAlign: 'center', padding: '2rem 0' }}>
           No hay recetas guardadas
         </p>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-          {savedMeals.filter(recipe => {
-            const matchesSearch = recipe.name.toLowerCase().includes(recipeSearchTerm.toLowerCase());
-            const matchesTime = !recipeFilters.time.poco && !recipeFilters.time.medio && !recipeFilters.time.mucho
-              || recipeFilters.time[recipe.timeInvested];
-            
-            const recipeTotals = recipe.foods.reduce((sum, f) => ({
-              carbs: sum.carbs + (f.carbs * (f.quantity || 1)),
-              protein: sum.protein + (f.protein * (f.quantity || 1)),
-              fats: sum.fats + (f.fats * (f.quantity || 1))
-            }), { carbs: 0, protein: 0, fats: 0 });
-            
-            const hasHighCarbs = recipeTotals.carbs > 50;
-            const hasHighProtein = recipeTotals.protein > 30;
-            const hasHighFats = recipeTotals.fats > 20;
-            
-            const matchesMacros = !recipeFilters.macros.carbs && !recipeFilters.macros.protein && !recipeFilters.macros.fats
-              || (recipeFilters.macros.carbs && hasHighCarbs)
-              || (recipeFilters.macros.protein && hasHighProtein)
-              || (recipeFilters.macros.fats && hasHighFats);
-            
-            return matchesSearch && matchesTime && matchesMacros;
-          }).map(recipe => {
+{savedMeals.filter(recipe => {
+  const matchesSearch = recipe.name.toLowerCase().includes(recipeSearchTerm.toLowerCase());
+  
+  const matchesMealType = !(recipeFilters.mealTypes || []).length
+    || (recipeFilters.mealTypes || []).includes(recipe.type);
+  
+  const matchesTime = !recipeFilters.time.poco && !recipeFilters.time.medio && !recipeFilters.time.mucho
+    || recipeFilters.time[recipe.timeInvested];
+  
+  const recipeTotals = recipe.foods.reduce((sum, f) => ({
+    carbs: sum.carbs + (f.carbs * (f.quantity || 1)),
+    protein: sum.protein + (f.protein * (f.quantity || 1)),
+    fats: sum.fats + (f.fats * (f.quantity || 1))
+  }), { carbs: 0, protein: 0, fats: 0 });
+  
+  const hasHighCarbs = recipeTotals.carbs > 50;
+  const hasHighProtein = recipeTotals.protein > 30;
+  const hasHighFats = recipeTotals.fats > 20;
+  
+  const matchesMacros = !recipeFilters.macros.carbs && !recipeFilters.macros.protein && !recipeFilters.macros.fats
+    || (recipeFilters.macros.carbs && hasHighCarbs)
+    || (recipeFilters.macros.protein && hasHighProtein)
+    || (recipeFilters.macros.fats && hasHighFats);
+  
+  return matchesSearch && matchesMealType && matchesTime && matchesMacros;
+})
             const recipeTotals = recipe.foods.reduce((sum, f) => ({
               carbs: sum.carbs + (f.carbs * (f.quantity || 1)),
               protein: sum.protein + (f.protein * (f.quantity || 1)),
