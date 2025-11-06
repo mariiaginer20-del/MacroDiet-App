@@ -44,6 +44,9 @@ const [showAddFoodModal, setShowAddFoodModal] = useState(false);
   const [foodToDelete, setFoodToDelete] = useState(null);
   const [showEditFoodModal, setShowEditFoodModal] = useState(false);
   const [editingFood, setEditingFood] = useState(null);
+  const [showQuickAddModal, setShowQuickAddModal] = useState(false);
+  const [quickAddFood, setQuickAddFood] = useState(null);
+  const [quickAddQuantity, setQuickAddQuantity] = useState(1);
   
   const [mealTypes, setMealTypes] = useState([
     { id: 1, name: 'Desayuno', carbs: 2.5, protein: 0, fats: 2 },
@@ -293,17 +296,29 @@ const filteredFoods = [...foodDatabase, ...customFoods].filter(food => {
   return matchesSearch && meetsFilters;
 });
 
-  const addFoodToMeal = (food) => {
-    const newMeal = {
-      id: Date.now(),
-      name: 'Comida rá¡pida',
-      time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
-      foods: [{ ...food, quantity: 1 }]
-    };
-    const updatedMeals = [...meals, newMeal];
-    setMeals(updatedMeals);
-    localStorage.setItem('meals', JSON.stringify(updatedMeals));
+const openQuickAddModal = (food) => {
+  setQuickAddFood(food);
+  setQuickAddQuantity(1);
+  setShowQuickAddModal(true);
+};
+
+const confirmQuickAdd = () => {
+  if (!quickAddFood) return;
+  
+  const newMeal = {
+    id: Date.now(),
+    name: 'Comida rápida',
+    time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
+    foods: [{ ...quickAddFood, quantity: quickAddQuantity }]
   };
+  const updatedMeals = [...meals, newMeal];
+  setMeals(updatedMeals);
+  localStorage.setItem('meals', JSON.stringify(updatedMeals));
+  
+  setShowQuickAddModal(false);
+  setQuickAddFood(null);
+  setQuickAddQuantity(1);
+};
 
   const deleteMeal = (mealId) => {
     const updatedMeals = meals.filter(m => m.id !== mealId);
@@ -879,22 +894,22 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                 <MacroTag carbs={food.carbs} fats={food.fats} protein={food.protein} conversions={conversions} />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', flexShrink: 0 }}>
-                <button
-                  onClick={() => addFoodToMeal(food)}
-                  style={{
-                    padding: '0.5rem 0.75rem',
-                    fontSize: '0.75rem',
-                    background: 'linear-gradient(135deg, #a855f7, #9333ea)',
-                    color: 'white',
-                    borderRadius: '0.5rem',
-                    fontWeight: '600',
-                    border: 'none',
-                    cursor: 'pointer',
-                    minWidth: '90px'
-                  }}
-                >
-                  + Añadir
-                </button>
+<button
+  onClick={() => openQuickAddModal(food)}
+  style={{
+    padding: '0.5rem 0.75rem',
+    fontSize: '0.75rem',
+    background: 'linear-gradient(135deg, #a855f7, #9333ea)',
+    color: 'white',
+    borderRadius: '0.5rem',
+    fontWeight: '600',
+    border: 'none',
+    cursor: 'pointer',
+    minWidth: '90px'
+  }}
+>
+  + Añadir
+</button>
 <button
   onClick={() => openEditModal(food)}
   style={{
@@ -2212,6 +2227,208 @@ const matchesMacros = !recipeFilters.macros.carbs && !recipeFilters.macros.prote
           </div>
         </div>
       )}
+
+{showQuickAddModal && quickAddFood && (
+  <div style={{
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: 'rgba(0, 0, 0, 0.5)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1000
+  }}>
+    <div style={{
+      background: 'white',
+      borderRadius: '1rem',
+      padding: '1.5rem',
+      maxWidth: '400px',
+      width: '90%'
+    }}>
+      <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>
+        ¿Cuánto quieres añadir?
+      </h3>
+      
+      <div style={{
+        background: '#f9fafb',
+        border: '1px solid #e5e7eb',
+        borderRadius: '0.75rem',
+        padding: '1rem',
+        marginBottom: '1rem'
+      }}>
+        <div style={{ fontWeight: '600', fontSize: '1rem', color: '#1f2937', marginBottom: '0.5rem' }}>
+          {quickAddFood.name}
+        </div>
+        <div style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '1rem' }}>
+          {quickAddFood.amount}
+        </div>
+        
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '1rem' }}>
+          <button
+            onClick={() => setQuickAddQuantity(Math.max(0.1, quickAddQuantity - 0.1))}
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+              color: 'white',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '1.25rem',
+              fontWeight: 'bold',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            −
+          </button>
+          
+          <input
+            type="number"
+            value={quickAddQuantity}
+            onChange={(e) => setQuickAddQuantity(Math.max(0.1, parseFloat(e.target.value) || 0.1))}
+            style={{
+              width: '80px',
+              padding: '0.75rem',
+              textAlign: 'center',
+              border: '2px solid #d1d5db',
+              borderRadius: '0.5rem',
+              fontSize: '1.25rem',
+              fontWeight: 'bold'
+            }}
+            min="0.1"
+            step="0.1"
+          />
+          
+          <button
+            onClick={() => setQuickAddQuantity(quickAddQuantity + 0.1)}
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #10b981, #059669)',
+              color: 'white',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '1.25rem',
+              fontWeight: 'bold',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            +
+          </button>
+        </div>
+        
+        <div style={{
+          background: 'linear-gradient(to bottom, #f0fdf4 0%, #f9fafb 100%)',
+          border: '1px solid #d1fae5',
+          borderRadius: '0.5rem',
+          padding: '0.75rem'
+        }}>
+          <div style={{ fontSize: '0.75rem', color: '#4b5563', fontWeight: '600', marginBottom: '0.5rem' }}>
+            Total a añadir:
+          </div>
+          
+          <div style={{ display: 'flex', gap: '0.375rem', flexWrap: 'wrap', marginBottom: '0.5rem' }}>
+            {(quickAddFood.carbs * quickAddQuantity) > 0 && (
+              <span style={{
+                padding: '0.25rem 0.5rem',
+                borderRadius: '9999px',
+                fontSize: '0.75rem',
+                fontWeight: '600',
+                background: 'rgba(34, 197, 94, 0.15)',
+                color: 'rgb(22, 163, 74)',
+                border: '1px solid rgba(34, 197, 94, 0.3)'
+              }}>
+                H:{((quickAddFood.carbs * quickAddQuantity) / conversions.carbs).toFixed(1)}
+              </span>
+            )}
+            {(quickAddFood.protein * quickAddQuantity) > 0 && (
+              <span style={{
+                padding: '0.25rem 0.5rem',
+                borderRadius: '9999px',
+                fontSize: '0.75rem',
+                fontWeight: '600',
+                background: 'rgba(59, 130, 246, 0.15)',
+                color: 'rgb(37, 99, 235)',
+                border: '1px solid rgba(59, 130, 246, 0.3)'
+              }}>
+                P:{((quickAddFood.protein * quickAddQuantity) / conversions.protein).toFixed(1)}
+              </span>
+            )}
+            {(quickAddFood.fats * quickAddQuantity) > 0 && (
+              <span style={{
+                padding: '0.25rem 0.5rem',
+                borderRadius: '9999px',
+                fontSize: '0.75rem',
+                fontWeight: '600',
+                background: 'rgba(245, 158, 11, 0.15)',
+                color: 'rgb(217, 119, 6)',
+                border: '1px solid rgba(245, 158, 11, 0.3)'
+              }}>
+                G:{((quickAddFood.fats * quickAddQuantity) / conversions.fats).toFixed(1)}
+              </span>
+            )}
+          </div>
+          
+          <div style={{ fontSize: '0.625rem', color: '#6b7280' }}>
+            {Math.round(quickAddFood.carbs * quickAddQuantity)}g H | {Math.round(quickAddFood.protein * quickAddQuantity)}g P | {Math.round(quickAddFood.fats * quickAddQuantity)}g G
+          </div>
+          
+          <div style={{ fontSize: '0.75rem', color: '#4b5563', marginTop: '0.5rem' }}>
+            Cantidad: {quickAddQuantity !== 1 
+              ? `${(parseFloat(quickAddFood.amount) * quickAddQuantity).toFixed(1)}${quickAddFood.amount.replace(/[0-9.]/g, '')}`
+              : quickAddFood.amount
+            }
+          </div>
+        </div>
+      </div>
+      
+      <div style={{ display: 'flex', gap: '0.5rem' }}>
+        <button
+          onClick={() => {
+            setShowQuickAddModal(false);
+            setQuickAddFood(null);
+            setQuickAddQuantity(1);
+          }}
+          style={{
+            flex: 1,
+            padding: '0.75rem',
+            background: '#f3f4f6',
+            color: '#374151',
+            borderRadius: '0.5rem',
+            fontWeight: '600',
+            border: 'none',
+            cursor: 'pointer'
+          }}
+        >
+          Cancelar
+        </button>
+        <button
+          onClick={confirmQuickAdd}
+          style={{
+            flex: 1,
+            padding: '0.75rem',
+            background: 'linear-gradient(135deg, #a855f7, #9333ea)',
+            color: 'white',
+            borderRadius: '0.5rem',
+            fontWeight: '600',
+            border: 'none',
+            cursor: 'pointer'
+          }}
+        >
+          Confirmar
+        </button>
+      </div>
+    </div>
+  </div>
+)}
 
 {showAddFoodModal && (
         <div style={{
