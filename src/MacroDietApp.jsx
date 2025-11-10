@@ -337,11 +337,6 @@ const confirmQuickAdd = () => {
   setMeals(updatedMeals);
   localStorage.setItem('meals', JSON.stringify(updatedMeals));
   
-  // Actualizar la fecha del último registro
-  const today = new Date().toDateString();
-  localStorage.setItem('lastResetDate', today);
-  setLastResetDate(today);
-  
   setShowQuickAddModal(false);
   setQuickAddFood(null);
   setQuickAddQuantity(1);
