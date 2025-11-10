@@ -10,6 +10,7 @@ const MacroDietApp = () => {
     protein: false
   });
   const [meals, setMeals] = useState([]);
+  const [lastResetDate, setLastResetDate] = useState(null);
   const [expandedMeal, setExpandedMeal] = useState(null);
   const [dailyGoals] = useState({
     carbs: 9,
@@ -165,22 +166,43 @@ const foodDatabase = [
   { id: 94, name: 'Cacao puro desgrasado', amount: '25g', carbs: 6, fats: 2.75, protein: 11, label: '0.25H+0.5P+0.25G' },
 ];
 
-  useEffect(() => {
-    const savedMealsData = localStorage.getItem('meals');
+useEffect(() => {
+  // Cargar datos guardados
+  const savedMealsData = localStorage.getItem('meals');
+  const savedLastResetDate = localStorage.getItem('lastResetDate');
+  const savedRecipes = localStorage.getItem('savedMeals');
+  const savedMealTypes = localStorage.getItem('mealTypes');
+  const savedConversions = localStorage.getItem('conversions');
+  const savedCustomFoods = localStorage.getItem('customFoods');
+  
+  // Obtener fecha actual (solo día, mes, año)
+  const today = new Date().toDateString();
+  
+  // Si hay una fecha guardada y es diferente a hoy, resetear comidas
+  if (savedLastResetDate && savedLastResetDate !== today) {
+    // Es un nuevo día, resetear las comidas
+    setMeals([]);
+    localStorage.setItem('meals', JSON.stringify([]));
+    localStorage.setItem('lastResetDate', today);
+    setLastResetDate(today);
+  } else {
+    // Mismo día, cargar comidas normalmente
     if (savedMealsData) setMeals(JSON.parse(savedMealsData));
-    
-    const savedRecipes = localStorage.getItem('savedMeals');
-    if (savedRecipes) setSavedMeals(JSON.parse(savedRecipes));
-    
-    const savedMealTypes = localStorage.getItem('mealTypes');
-    if (savedMealTypes) setMealTypes(JSON.parse(savedMealTypes));
-    
-    const savedConversions = localStorage.getItem('conversions');
-    if (savedConversions) setConversions(JSON.parse(savedConversions));
-
-    const savedCustomFoods = localStorage.getItem('customFoods');
-    if (savedCustomFoods) setCustomFoods(JSON.parse(savedCustomFoods));
-  }, []);
+    if (savedLastResetDate) {
+      setLastResetDate(savedLastResetDate);
+    } else {
+      // Primera vez usando la app, guardar fecha actual
+      localStorage.setItem('lastResetDate', today);
+      setLastResetDate(today);
+    }
+  }
+  
+  // Cargar el resto de datos (estos NO se resetean)
+  if (savedRecipes) setSavedMeals(JSON.parse(savedRecipes));
+  if (savedMealTypes) setMealTypes(JSON.parse(savedMealTypes));
+  if (savedConversions) setConversions(JSON.parse(savedConversions));
+  if (savedCustomFoods) setCustomFoods(JSON.parse(savedCustomFoods));
+}, []);
 
   const toggleMacroFilter = (macro) => {
     setMacroFilters(prev => ({ ...prev, [macro]: !prev[macro] }));
@@ -315,6 +337,11 @@ const confirmQuickAdd = () => {
   setMeals(updatedMeals);
   localStorage.setItem('meals', JSON.stringify(updatedMeals));
   
+  // Actualizar la fecha del último registro
+  const today = new Date().toDateString();
+  localStorage.setItem('lastResetDate', today);
+  setLastResetDate(today);
+  
   setShowQuickAddModal(false);
   setQuickAddFood(null);
   setQuickAddQuantity(1);
@@ -383,22 +410,28 @@ const calculateOptimalPortions = () => {
     quantity: Math.round(factor * 1000) / 1000  // 3 decimales para más precisión
   })));
 };
-  const registerInMyDay = () => {
-    if (selectedFoods.length === 0) return;
-    
-    const newMeal = {
-      id: Date.now(),
-      name: selectedMealType,
-      time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
-      foods: selectedFoods.map(f => ({ ...f }))
-    };
-    
-    const updatedMeals = [...meals, newMeal];
-    setMeals(updatedMeals);
-    localStorage.setItem('meals', JSON.stringify(updatedMeals));
-    setSelectedFoods([]);
-    setActiveTab('home');
+const registerInMyDay = () => {
+  if (selectedFoods.length === 0) return;
+  
+  const newMeal = {
+    id: Date.now(),
+    name: selectedMealType,
+    time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
+    foods: selectedFoods.map(f => ({ ...f }))
   };
+  
+  const updatedMeals = [...meals, newMeal];
+  setMeals(updatedMeals);
+  localStorage.setItem('meals', JSON.stringify(updatedMeals));
+  
+  // Actualizar la fecha del último registro
+  const today = new Date().toDateString();
+  localStorage.setItem('lastResetDate', today);
+  setLastResetDate(today);
+  
+  setSelectedFoods([]);
+  setActiveTab('home');
+};
 
   const saveMealRecipe = () => {
     if (selectedFoods.length === 0 || !mealName.trim()) return;
