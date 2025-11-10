@@ -163,7 +163,6 @@ const foodDatabase = [
   { id: 92, name: 'Leche semidesnatada', amount: '220ml', carbs: 12, fats: 2.75, protein: 5.5, label: '0.5H+0.25P+0.25G' },
   { id: 93, name: 'Cacahuete polvo desgraso', amount: '25g', carbs: 6, fats: 2.75, protein: 11, label: '0.25H+0.5P+0.25G' },
   { id: 94, name: 'Cacao puro desgrasado', amount: '25g', carbs: 6, fats: 2.75, protein: 11, label: '0.25H+0.5P+0.25G' },
-
 ];
 
   useEffect(() => {
@@ -381,7 +380,7 @@ const calculateOptimalPortions = () => {
   // NO redondear el factor, redondear solo el resultado final
   setSelectedFoods(resetFoods.map(f => ({
     ...f,
-    quantity: Math.round(factor * 1000) / 1000  // 3 decimales para más precisián
+    quantity: Math.round(factor * 1000) / 1000  // 3 decimales para más precisión
   })));
 };
   const registerInMyDay = () => {
@@ -606,7 +605,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                 textAlign: 'center',
                 color: '#1f2937'
               }}>
-                Resumen del Dí­a
+                Resumen del Día
               </h2>
               
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem', marginBottom: '1.5rem' }}>
@@ -625,7 +624,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                   <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#2563eb' }}>
                     {totals.protein.toFixed(1)} <span style={{ fontSize: '1.25rem', color: '#6b7280' }}>/ {dailyGoals.protein}</span>
                   </div>
-                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Unidades Proteí­na</div>
+                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Unidades Proteína</div>
                   <ProgressBar current={totals.protein} goal={dailyGoals.protein} color="bg-blue-500" />
                   <div style={{ fontSize: '0.875rem', color: '#1f2937', fontWeight: '600', marginTop: '0.5rem' }}>
                     Quedan {remaining.protein.toFixed(1)}
@@ -647,7 +646,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                   <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#9333ea' }}>
                     0 <span style={{ fontSize: '1.25rem', color: '#6b7280' }}>/ {dailyGoals.calories}</span>
                   </div>
-                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Calorí­as</div>
+                  <div style={{ fontSize: '0.875rem', color: '#4b5563', marginBottom: '0.5rem' }}>Calorías</div>
                   <ProgressBar current={0} goal={dailyGoals.calories} color="bg-amber-500" />
                   <div style={{ fontSize: '0.875rem', color: '#1f2937', fontWeight: '600', marginTop: '0.5rem' }}>
                     Quedan {dailyGoals.calories}
@@ -687,7 +686,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                       {Math.round(totals.protein * conversions.protein)}g <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>/ {dailyGoals.protein * conversions.protein}g</span>
                     </div>
                     <div style={{ fontSize: '0.75rem', color: '#4b5563', marginTop: '0.25rem', marginBottom: '0.5rem' }}>
-                      Proteí­na consumida
+                      Proteína consumida
                     </div>
                     <div style={{ fontSize: '0.875rem', fontWeight: 'bold', color: '#1f2937' }}>Quedan {Math.round(remaining.protein * conversions.protein)}g</div>
                   </div>
@@ -830,7 +829,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
               cursor: 'pointer'
             }}
           >
-            Hidratos {macroFilters.carbs && '✓'}
+            Hidratos {macroFilters.carbs && 'âœ“'}
           </button>
           <button
             onClick={() => toggleMacroFilter('protein')}
@@ -845,7 +844,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
               cursor: 'pointer'
             }}
           >
-            Proteínas {macroFilters.protein && '✓'}
+            Proteínas {macroFilters.protein && 'âœ“'}
           </button>
           <button
             onClick={() => toggleMacroFilter('fats')}
@@ -860,7 +859,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
               cursor: 'pointer'
             }}
           >
-            Grasas {macroFilters.fats && '✓'}
+            Grasas {macroFilters.fats && 'âœ“'}
           </button>
         </div>
       </div>
@@ -1034,7 +1033,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                       cursor: 'pointer'
                     }}
                   >
-                    Hidratos {macroFilters.carbs && '✓'}
+                    Hidratos {macroFilters.carbs && 'âœ“'}
                   </button>
                   <button
                     onClick={() => toggleMacroFilter('protein')}
@@ -1049,7 +1048,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                       cursor: 'pointer'
                     }}
                   >
-                    Proteí­nas {macroFilters.protein && '✓'}
+                    Proteínas {macroFilters.protein && 'âœ“'}
                   </button>
                   <button
                     onClick={() => toggleMacroFilter('fats')}
@@ -1064,7 +1063,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                       cursor: 'pointer'
                     }}
                   >
-                    Grasas {macroFilters.fats && '✓'}
+                    Grasas {macroFilters.fats && 'âœ“'}
                   </button>
                 </div>
               </div>
@@ -1662,7 +1661,7 @@ const matchesMacros = !recipeFilters.macros.carbs && !recipeFilters.macros.prote
                       {recipe.name}
                     </h3>
                     <div style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '0.5rem' }}>
-                      {recipe.type}  Tiempo: {recipe.timeInvested}
+                      {recipe.type} • Tiempo: {recipe.timeInvested}
                     </div>
                     <MacroTag carbs={recipeTotals.carbs} fats={recipeTotals.fats} protein={recipeTotals.protein} conversions={conversions} />
                   </div>
@@ -1889,7 +1888,7 @@ const matchesMacros = !recipeFilters.macros.carbs && !recipeFilters.macros.prote
                           </div>
                           <div>
                             <label style={{ fontSize: '0.625rem', color: '#2563eb', fontWeight: '600', display: 'block', marginBottom: '0.25rem' }}>
-                              Proteí­na
+                              Proteína
                             </label>
                             <input
                               type="number"
@@ -2018,7 +2017,7 @@ const matchesMacros = !recipeFilters.macros.carbs && !recipeFilters.macros.prote
             width: '90%'
           }}>
             <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>
-              ¿Eliminar alimento?
+              Â¿Eliminar alimento?
             </h3>
             <p style={{ color: '#6b7280', marginBottom: '1.5rem' }}>
               ¿Estás seguro de que quieres eliminar <strong>{foodToDelete?.name}</strong>? Esta acción no se puede deshacer.
@@ -2285,7 +2284,7 @@ const matchesMacros = !recipeFilters.macros.carbs && !recipeFilters.macros.prote
               justifyContent: 'center'
             }}
           >
-            
+            −
           </button>
           
           <input
