@@ -317,24 +317,6 @@ const openQuickAddModal = (food) => {
   setShowQuickAddModal(true);
 };
 
-const confirmQuickAdd = () => {
-  if (!quickAddFood) return;
-  
-  const newMeal = {
-    id: Date.now(),
-    name: 'Comida rápida',
-    time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
-    foods: [{ ...quickAddFood, quantity: quickAddQuantity }]
-  };
-  const updatedMeals = [...meals, newMeal];
-  setMeals(updatedMeals);
-  localStorage.setItem('meals', JSON.stringify(updatedMeals));
-  
-  setShowQuickAddModal(false);
-  setQuickAddFood(null);
-  setQuickAddQuantity(1);
-};
-
   const deleteMeal = (mealId) => {
     const updatedMeals = meals.filter(m => m.id !== mealId);
     setMeals(updatedMeals);
