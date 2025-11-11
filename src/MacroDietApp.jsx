@@ -317,6 +317,28 @@ const openQuickAddModal = (food) => {
   setShowQuickAddModal(true);
 };
 
+const confirmQuickAdd = () => {
+  if (!quickAddFood) return;
+  
+  const newMeal = {
+    id: Date.now(),
+    name: 'Comida rápida',
+    time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
+    foods: [{ ...quickAddFood, quantity: quickAddQuantity }]
+  };
+  
+  const updatedMeals = [...meals, newMeal];
+  setMeals(updatedMeals);
+  localStorage.setItem('meals', JSON.stringify(updatedMeals));
+  
+  const today = new Date().toDateString();
+  localStorage.setItem('lastResetDate', today);
+  
+  setShowQuickAddModal(false);
+  setQuickAddFood(null);
+  setQuickAddQuantity(1);
+};
+
   const deleteMeal = (mealId) => {
     const updatedMeals = meals.filter(m => m.id !== mealId);
     setMeals(updatedMeals);
@@ -380,14 +402,15 @@ const calculateOptimalPortions = () => {
     quantity: Math.round(factor * 1000) / 1000  // 3 decimales para más precisión
   })));
 };
-const confirmQuickAdd = () => {
-  if (!quickAddFood) return;
+
+const registerInMyDay = () => {
+  if (selectedFoods.length === 0) return;
   
   const newMeal = {
     id: Date.now(),
-    name: 'Comida rápida',
+    name: selectedMealType,
     time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
-    foods: [{ ...quickAddFood, quantity: quickAddQuantity }]
+    foods: selectedFoods
   };
   
   const updatedMeals = [...meals, newMeal];
@@ -397,9 +420,8 @@ const confirmQuickAdd = () => {
   const today = new Date().toDateString();
   localStorage.setItem('lastResetDate', today);
   
-  setShowQuickAddModal(false);
-  setQuickAddFood(null);
-  setQuickAddQuantity(1);
+  setSelectedFoods([]);
+  setActiveTab('home');
 };
 
   const saveMealRecipe = () => {
