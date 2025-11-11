@@ -10,6 +10,7 @@ const MacroDietApp = () => {
     protein: false
   });
   const [meals, setMeals] = useState([]);
+  const [lastResetDate, setLastResetDate] = useState(null);
   const [expandedMeal, setExpandedMeal] = useState(null);
   const [dailyGoals] = useState({
     carbs: 9,
