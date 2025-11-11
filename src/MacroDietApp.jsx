@@ -1507,7 +1507,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
           cursor: 'pointer'
         }}
       >
-        {mealType.name} {(recipeFilters.mealTypes || []).includes(mealType.name) && 'âœ“'}
+        {mealType.name} {(recipeFilters.mealTypes || []).includes(mealType.name) && '✓'}
       </button>
     ))}
   </div>
@@ -1535,7 +1535,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
                 textTransform: 'capitalize'
               }}
             >
-              {time} {recipeFilters.time[time] && 'âœ“'}
+              {time} {recipeFilters.time[time] && '✓'}
             </button>
           ))}
         </div>
@@ -1560,7 +1560,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
               cursor: 'pointer'
             }}
           >
-            Alto en Hidratos {recipeFilters.macros.carbs && 'âœ“'}
+            Alto en Hidratos {recipeFilters.macros.carbs && '✓'}
           </button>
           <button
             onClick={() => setRecipeFilters(prev => ({
@@ -1578,7 +1578,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
               cursor: 'pointer'
             }}
           >
-            Alto en Proteí­na {recipeFilters.macros.protein && 'âœ“'}
+            Alto en Proteí­na {recipeFilters.macros.protein && '✓'}
           </button>
           <button
             onClick={() => setRecipeFilters(prev => ({
@@ -1596,7 +1596,7 @@ const MacroTag = ({ carbs, fats, protein, conversions }) => {
               cursor: 'pointer'
             }}
           >
-            Alto en Grasas {recipeFilters.macros.fats && 'âœ“'}
+            Alto en Grasas {recipeFilters.macros.fats && '✓'}
           </button>
         </div>
       </div>
@@ -2312,7 +2312,7 @@ const matchesMacros = (
               justifyContent: 'center'
             }}
           >
-            âˆ’
+            
           </button>
           
           <input
