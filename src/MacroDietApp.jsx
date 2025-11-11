@@ -166,22 +166,36 @@ const foodDatabase = [
   { id: 94, name: 'Cacao puro desgrasado', amount: '25g', carbs: 6, fats: 2.75, protein: 11, label: '0.25H+0.5P+0.25G' },
 ];
 
-  useEffect(() => {
-    const savedMealsData = localStorage.getItem('meals');
+useEffect(() => {
+  const savedMealsData = localStorage.getItem('meals');
+  const savedLastResetDate = localStorage.getItem('lastResetDate');
+  const savedRecipes = localStorage.getItem('savedMeals');
+  const savedMealTypes = localStorage.getItem('mealTypes');
+  const savedConversions = localStorage.getItem('conversions');
+  const savedCustomFoods = localStorage.getItem('customFoods');
+  
+  const today = new Date().toDateString();
+  
+  if (savedLastResetDate && savedLastResetDate !== today) {
+    setMeals([]);
+    localStorage.setItem('meals', JSON.stringify([]));
+    localStorage.setItem('lastResetDate', today);
+    setLastResetDate(today);
+  } else {
     if (savedMealsData) setMeals(JSON.parse(savedMealsData));
-    
-    const savedRecipes = localStorage.getItem('savedMeals');
-    if (savedRecipes) setSavedMeals(JSON.parse(savedRecipes));
-    
-    const savedMealTypes = localStorage.getItem('mealTypes');
-    if (savedMealTypes) setMealTypes(JSON.parse(savedMealTypes));
-    
-    const savedConversions = localStorage.getItem('conversions');
-    if (savedConversions) setConversions(JSON.parse(savedConversions));
-
-    const savedCustomFoods = localStorage.getItem('customFoods');
-    if (savedCustomFoods) setCustomFoods(JSON.parse(savedCustomFoods));
-  }, []);
+    if (savedLastResetDate) {
+      setLastResetDate(savedLastResetDate);
+    } else {
+      localStorage.setItem('lastResetDate', today);
+      setLastResetDate(today);
+    }
+  }
+  
+  if (savedRecipes) setSavedMeals(JSON.parse(savedRecipes));
+  if (savedMealTypes) setMealTypes(JSON.parse(savedMealTypes));
+  if (savedConversions) setConversions(JSON.parse(savedConversions));
+  if (savedCustomFoods) setCustomFoods(JSON.parse(savedCustomFoods));
+}, []);
 
   const toggleMacroFilter = (macro) => {
     setMacroFilters(prev => ({ ...prev, [macro]: !prev[macro] }));
